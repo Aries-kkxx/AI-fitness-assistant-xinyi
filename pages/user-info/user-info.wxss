@@ -1,0 +1,65 @@
+/* pages/user-info/user-info.wxss - 用户信息设置页样式 */
+
+.page {
+  padding: 30rpx;
+}
+
+/* 表单一行 */
+.form-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.form-row:last-child {
+  border-bottom: none;
+}
+
+.form-label {
+  font-size: 30rpx;
+  color: #333333;
+  flex-shrink: 0;
+}
+
+.form-value {
+  font-size: 30rpx;
+  color: #07c160;
+}
+
+.form-input {
+  font-size: 30rpx;
+  color: #333333;
+  text-align: right;
+  width: 380rpx;
+}
+
+/* BMI 预览行 */
+.bmi-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx 0;
+}
+
+.bmi-label {
+  font-size: 30rpx;
+  color: #333333;
+}
+
+.bmi-value {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #07c160;
+}
+
+.bmi-tip {
+  font-size: 22rpx;
+  color: #bbbbbb;
+}
+
+/* 保存按钮 */
+.save-btn {
+  margin-top: 40rpx;
+}

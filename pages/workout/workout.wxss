@@ -1,0 +1,145 @@
+/* pages/workout/workout.wxss - 训练页样式 */
+
+.page {
+  padding: 30rpx;
+}
+
+.loading {
+  text-align: center;
+  color: #999999;
+  padding: 100rpx 0;
+}
+
+/* 引导卡片 */
+.guide-card {
+  text-align: center;
+  padding: 80rpx 40rpx;
+}
+
+.guide-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 20rpx;
+}
+
+.guide-desc {
+  font-size: 26rpx;
+  color: #999999;
+  margin-bottom: 40rpx;
+}
+
+.guide-btn {
+  width: 60%;
+  margin: 0 auto;
+}
+
+/* 今日训练 */
+.today-parts {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: #07c160;
+  margin-bottom: 16rpx;
+}
+
+.today-meta {
+  display: flex;
+  margin-bottom: 24rpx;
+}
+
+.meta-item {
+  font-size: 24rpx;
+  color: #999999;
+  margin-right: 30rpx;
+}
+
+.rest-tip {
+  font-size: 30rpx;
+  color: #666666;
+  padding: 30rpx 0;
+}
+
+/* 动作条目 */
+.ex-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.ex-item:last-child {
+  border-bottom: none;
+}
+
+.ex-name {
+  font-size: 30rpx;
+  color: #333333;
+  font-weight: 500;
+}
+
+.ex-tags {
+  margin-top: 10rpx;
+  display: flex;
+}
+
+.ex-rest {
+  font-size: 24rpx;
+  color: #999999;
+  flex-shrink: 0;
+  margin-left: 16rpx;
+}
+
+.source-tip {
+  font-size: 22rpx;
+  color: #bbbbbb;
+  text-align: center;
+  margin: 20rpx 0;
+}
+
+.ex-btn {
+  font-size: 28rpx;
+  padding: 14rpx 0;
+}
+
+/* 本周计划 */
+.week-row {
+  display: flex;
+  align-items: center;
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.week-row:last-child {
+  border-bottom: none;
+}
+
+.week-day {
+  width: 100rpx;
+  font-size: 28rpx;
+  color: #333333;
+  font-weight: 500;
+}
+
+.week-day.active {
+  color: #07c160;
+  font-weight: 700;
+}
+
+.week-parts {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.week-parts.rest {
+  color: #bbbbbb;
+}
+
+.week-today {
+  font-size: 22rpx;
+  color: #ffffff;
+  background-color: #07c160;
+  border-radius: 8rpx;
+  padding: 4rpx 12rpx;
+}

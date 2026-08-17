@@ -1,0 +1,33 @@
+<!-- pages/exercise/exercise.wxml - 动作库页 -->
+<view class="page">
+  <!-- 分类 Tab（横向滚动） -->
+  <scroll-view class="tabs" scroll-x="true" enhanced="true" show-scrollbar="false">
+    <view
+      class="tab {{activeIndex === index ? 'active' : ''}}"
+      wx:for="{{categories}}"
+      wx:key="*this"
+      data-index="{{index}}"
+      bindtap="onTabChange"
+    >{{item}}</view>
+  </scroll-view>
+
+  <!-- 动作列表 -->
+  <view class="loading" wx:if="{{loading}}">加载中...</view>
+  <block wx:else>
+    <view class="card ex-card" wx:for="{{exercises}}" wx:key="_id">
+      <view class="ex-head">
+        <text class="ex-name">{{item.name}}</text>
+        <text class="tag tag-green">{{item.sets}}组 × {{item.reps}}{{item.repsUnit}}</text>
+      </view>
+      <view class="ex-muscle">目标肌肉：{{item.targetMuscle}}</view>
+      <view class="ex-tags">
+        <text class="tag tag-gray">{{item.category}}</text>
+        <text class="tag tag-gray">{{item.difficulty}}</text>
+        <text class="tag tag-gray">{{item.equipment}}</text>
+        <text class="tag tag-gray" wx:if="{{item.restSeconds > 0}}">组间休息 {{item.restSeconds}}s</text>
+      </view>
+    </view>
+
+    <view class="empty" wx:if="{{exercises.length === 0}}">该分类暂无动作</view>
+  </block>
+</view>

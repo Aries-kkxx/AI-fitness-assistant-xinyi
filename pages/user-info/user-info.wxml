@@ -1,0 +1,83 @@
+<!-- pages/user-info/user-info.wxml - 用户信息设置页 -->
+<view class="page">
+  <!-- 基本信息 -->
+  <view class="card">
+    <view class="card-title">基本信息</view>
+
+    <view class="form-row">
+      <text class="form-label">昵称</text>
+      <input class="form-input" value="{{nickname}}" placeholder="请输入昵称" bindinput="onNicknameInput" />
+    </view>
+
+    <view class="form-row">
+      <text class="form-label">性别</text>
+      <picker range="{{genders}}" value="{{genderIndex}}" bindchange="onGenderChange">
+        <view class="form-value">{{genders[genderIndex]}}</view>
+      </picker>
+    </view>
+
+    <view class="form-row">
+      <text class="form-label">年龄</text>
+      <input class="form-input" type="number" value="{{age}}" placeholder="岁" bindinput="onAgeInput" />
+    </view>
+
+    <view class="form-row">
+      <text class="form-label">身高</text>
+      <input class="form-input" type="number" value="{{height}}" placeholder="cm" bindinput="onHeightInput" />
+    </view>
+
+    <view class="form-row">
+      <text class="form-label">体重</text>
+      <input class="form-input" type="number" value="{{weight}}" placeholder="kg" bindinput="onWeightInput" />
+    </view>
+
+    <!-- BMI 实时预览（仅供参考，非医疗诊断） -->
+    <view class="bmi-row" wx:if="{{bmi}}">
+      <text class="bmi-label">BMI</text>
+      <text class="bmi-value">{{bmi}}（参考：{{bmiCategory}}）</text>
+    </view>
+    <view class="bmi-tip">BMI 仅作参考，不作为医疗诊断依据</view>
+  </view>
+
+  <!-- 训练偏好 -->
+  <view class="card">
+    <view class="card-title">训练偏好</view>
+
+    <view class="form-row">
+      <text class="form-label">健身目标</text>
+      <picker range="{{goals}}" value="{{goalIndex}}" bindchange="onGoalChange">
+        <view class="form-value">{{goals[goalIndex]}}</view>
+      </picker>
+    </view>
+
+    <view class="form-row">
+      <text class="form-label">健身经验</text>
+      <picker range="{{experiences}}" value="{{expIndex}}" bindchange="onExpChange">
+        <view class="form-value">{{experiences[expIndex]}}</view>
+      </picker>
+    </view>
+
+    <view class="form-row">
+      <text class="form-label">每周训练</text>
+      <picker range="{{daysOptions}}" value="{{daysIndex}}" bindchange="onDaysChange">
+        <view class="form-value">每周 {{daysOptions[daysIndex]}} 次</view>
+      </picker>
+    </view>
+
+    <view class="form-row">
+      <text class="form-label">每次时长</text>
+      <picker range="{{durations}}" value="{{durationIndex}}" bindchange="onDurationChange">
+        <view class="form-value">{{durations[durationIndex]}} 分钟</view>
+      </picker>
+    </view>
+
+    <view class="form-row">
+      <text class="form-label">器械情况</text>
+      <picker range="{{equipmentOptions}}" value="{{equipmentIndex}}" bindchange="onEquipmentChange">
+        <view class="form-value">{{equipmentOptions[equipmentIndex]}}</view>
+      </picker>
+    </view>
+  </view>
+
+  <view class="btn-primary save-btn" bindtap="onSave">保存资料</view>
+</view>

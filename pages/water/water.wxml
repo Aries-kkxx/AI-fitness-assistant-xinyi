@@ -1,0 +1,54 @@
+<!-- pages/water/water.wxml - 饮水主页 -->
+<view class="page">
+  <!-- 今日饮水统计卡片 -->
+  <view class="card stats-card" wx:if="{{stats}}">
+    <view class="stats-top">
+      <view class="stats-item">
+        <text class="stats-num">{{stats.total}}</text>
+        <text class="stats-unit">ml / {{stats.target}}ml</text>
+      </view>
+      <view class="stats-item">
+        <text class="stats-num">{{stats.cups}}</text>
+        <text class="stats-unit">/ {{stats.dailyCups}}杯</text>
+      </view>
+      <view class="stats-item">
+        <text class="stats-num green">{{stats.percent}}%</text>
+        <text class="stats-unit">完成率</text>
+      </view>
+    </view>
+
+    <!-- 进度条 -->
+    <view class="progress-wrap">
+      <view class="progress-inner" style="width: {{stats.percent}}%;"></view>
+    </view>
+
+    <view class="stats-bottom">
+      <text class="stats-remain">剩余 {{stats.remain}}ml</text>
+      <text class="stats-link" bindtap="onGoSetting">设置目标 ›</text>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-row" wx:if="{{stats}}">
+    <view class="btn-primary drink-btn" bindtap="onDrinkOne">喝一杯</view>
+    <view class="btn-outline add-btn" bindtap="onAddRecord">添加记录</view>
+  </view>
+
+  <!-- 今日饮水记录列表 -->
+  <view class="card list-card">
+    <view class="card-title">今日饮水记录</view>
+
+    <block wx:if="{{records.length > 0}}">
+      <view class="record-row" wx:for="{{records}}" wx:key="_id">
+        <text class="record-time">{{item.drink_time}}</text>
+        <view class="record-info">
+          <text class="record-ml">{{item.amount_ml}}ml</text>
+          <text class="record-type">{{item.drink_type}}</text>
+          <text class="record-remark" wx:if="{{item.remark}}">{{item.remark}}</text>
+        </view>
+        <view class="record-del" data-id="{{item._id}}" catchtap="onDelete">删除</view>
+      </view>
+    </block>
+    <view class="empty" wx:else>今天还没有喝水记录，点击上方「喝一杯」开始吧</view>
+  </view>
+</view>

@@ -1,0 +1,9 @@
+{
+  "name": "aiCoach",
+  "version": "1.0.0",
+  "description": "AI健身教练云函数：Agent调度 + 工具调用 + 大模型",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

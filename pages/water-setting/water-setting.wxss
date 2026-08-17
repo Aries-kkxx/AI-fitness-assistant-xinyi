@@ -1,0 +1,76 @@
+/* pages/water-setting/water-setting.wxss - 饮水设置页样式 */
+
+.page {
+  padding: 30rpx;
+}
+
+/* 设置项一行：左侧文字 + 右侧步进器 */
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.setting-row:last-child {
+  border-bottom: none;
+}
+
+.setting-label {
+  font-size: 30rpx;
+  color: #333333;
+}
+
+/* 步进器：减号 / 数值 / 加号 */
+.stepper {
+  display: flex;
+  align-items: center;
+}
+
+.stepper-btn {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  background-color: #f0faf5;
+  color: #07c160;
+  font-size: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stepper-btn:active {
+  background-color: #d9f2e4;
+}
+
+.stepper-num {
+  min-width: 100rpx;
+  text-align: center;
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #333333;
+}
+
+/* 目标水量展示卡片 */
+.target-card {
+  text-align: center;
+}
+
+.target-label {
+  display: block;
+  font-size: 26rpx;
+  color: #999999;
+  margin-bottom: 12rpx;
+}
+
+.target-value {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #07c160;
+}
+
+/* 保存按钮 */
+.save-btn {
+  margin-top: 40rpx;
+}

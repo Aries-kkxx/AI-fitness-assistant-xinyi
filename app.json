@@ -1,0 +1,51 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/workout/workout",
+    "pages/exercise/exercise",
+    "pages/water/water",
+    "pages/profile/profile",
+    "pages/water-setting/water-setting",
+    "pages/water-add/water-add",
+    "pages/user-info/user-info",
+    "pages/ai/ai"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "AI健身助手",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f7f8fa",
+    "backgroundTextStyle": "light"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#07c160",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/workout/workout",
+        "text": "训练"
+      },
+      {
+        "pagePath": "pages/exercise/exercise",
+        "text": "动作"
+      },
+      {
+        "pagePath": "pages/water/water",
+        "text": "饮水"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents",
+  "sitemapLocation": "sitemap.json"
+}

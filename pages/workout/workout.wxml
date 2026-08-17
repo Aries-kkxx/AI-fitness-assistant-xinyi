@@ -1,0 +1,62 @@
+<!-- pages/workout/workout.wxml - 训练页 -->
+<view class="page">
+
+  <!-- 加载中 -->
+  <view class="loading" wx:if="{{loading}}">加载中...</view>
+
+  <!-- 未填写资料：引导 -->
+  <block wx:elif="{{!hasUser}}">
+    <view class="card guide-card">
+      <view class="guide-title">还没有你的训练资料</view>
+      <view class="guide-desc">填写身高、体重、健身目标和器械情况后，我们将为你生成个性化训练计划</view>
+      <view class="btn-primary guide-btn" bindtap="onGoUserInfo">立即填写资料</view>
+    </view>
+  </block>
+
+  <!-- 已填写资料：展示推荐结果 -->
+  <block wx:else>
+    <!-- 今日训练卡片 -->
+    <view class="card today-card">
+      <view class="card-title">{{workout.isRestDay ? '今日休息' : '今日训练 · ' + workout.weekday}}</view>
+
+      <block wx:if="{{workout.isRestDay}}">
+        <view class="rest-tip">今天是休息日，好好恢复，明天再战！💪</view>
+      </block>
+
+      <block wx:else>
+        <view class="today-parts">{{workout.partsText}}</view>
+        <view class="today-meta">
+          <text class="meta-item">目标：{{workout.goal}}</text>
+          <text class="meta-item">{{workout.count}} 个动作</text>
+          <text class="meta-item">约 {{workout.totalMinutes}} 分钟</text>
+        </view>
+
+        <!-- 动作列表 -->
+        <view class="ex-item" wx:for="{{workout.exercises}}" wx:key="name">
+          <view class="ex-info">
+            <text class="ex-name">{{index + 1}}. {{item.name}}</text>
+            <view class="ex-tags">
+              <text class="tag tag-green">{{item.sets}}组 × {{item.reps}}{{item.repsUnit}}</text>
+              <text class="tag tag-gray">{{item.difficulty}}</text>
+              <text class="tag tag-gray">{{item.equipment}}</text>
+            </view>
+          </view>
+          <text class="ex-rest" wx:if="{{item.restSeconds > 0}}">休息{{item.restSeconds}}s</text>
+        </view>
+
+        <view class="source-tip">动作来自动作库，点击下方可查看全部动作</view>
+        <view class="btn-outline ex-btn" bindtap="onGoExercises">查看动作库</view>
+      </block>
+    </view>
+
+    <!-- 本周计划卡片 -->
+    <view class="card week-card">
+      <view class="card-title">本周训练计划</view>
+      <view class="week-row" wx:for="{{weekPlan}}" wx:key="weekday">
+        <text class="week-day {{item.isToday ? 'active' : ''}}">{{item.weekday}}</text>
+        <text class="week-parts {{item.isRest ? 'rest' : ''}}">{{item.partsText}}</text>
+        <text class="week-today" wx:if="{{item.isToday}}">今天</text>
+      </view>
+    </view>
+  </block>
+</view>

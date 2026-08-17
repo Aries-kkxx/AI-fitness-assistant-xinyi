@@ -1,0 +1,43 @@
+/* pages/water-add/water-add.wxss - 手动添加饮水记录页样式 */
+
+.page {
+  padding: 30rpx;
+}
+
+/* 表单一行：左侧标签 + 右侧输入/选择 */
+.form-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.form-row:last-child {
+  border-bottom: none;
+}
+
+.form-label {
+  font-size: 30rpx;
+  color: #333333;
+  flex-shrink: 0;
+}
+
+/* picker 展示值 */
+.form-value {
+  font-size: 30rpx;
+  color: #07c160;
+}
+
+/* 文本输入框 */
+.form-input {
+  font-size: 30rpx;
+  color: #333333;
+  text-align: right;
+  width: 380rpx;
+}
+
+/* 保存按钮 */
+.save-btn {
+  margin-top: 40rpx;
+}

@@ -1,0 +1,49 @@
+<!-- pages/water-add/water-add.wxml - 手动添加饮水记录页 -->
+<view class="page">
+  <!-- 表单卡片 -->
+  <view class="card">
+    <view class="card-title">饮水记录</view>
+
+    <!-- 饮水时间 -->
+    <view class="form-row">
+      <text class="form-label">饮水时间</text>
+      <picker mode="time" value="{{drinkTime}}" bindchange="onTimeChange">
+        <view class="form-value">{{drinkTime}}</view>
+      </picker>
+    </view>
+
+    <!-- 饮水量 -->
+    <view class="form-row">
+      <text class="form-label">饮水量 (ml)</text>
+      <input
+        class="form-input"
+        type="number"
+        value="{{amountMl}}"
+        placeholder="请输入饮水量"
+        bindinput="onAmountInput"
+      />
+    </view>
+
+    <!-- 饮水类型 -->
+    <view class="form-row">
+      <text class="form-label">饮水类型</text>
+      <picker range="{{drinkTypes}}" value="{{drinkTypeIndex}}" bindchange="onTypeChange">
+        <view class="form-value">{{drinkTypes[drinkTypeIndex]}}</view>
+      </picker>
+    </view>
+
+    <!-- 备注 -->
+    <view class="form-row">
+      <text class="form-label">备注</text>
+      <input
+        class="form-input"
+        value="{{remark}}"
+        placeholder="选填"
+        bindinput="onRemarkInput"
+      />
+    </view>
+  </view>
+
+  <!-- 保存按钮 -->
+  <view class="btn-primary save-btn" bindtap="onSave">保存</view>
+</view>

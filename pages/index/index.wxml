@@ -1,0 +1,76 @@
+<!-- pages/index/index.wxml - 首页 -->
+<view class="page">
+
+  <!-- 身体数据卡片 -->
+  <view class="card body-card">
+    <view class="card-title">我的身体数据</view>
+
+    <!-- 未填写资料 -->
+    <block wx:if="{{!hasUser}}">
+      <view class="no-data">还没有身体数据，填写资料后为你计算 BMI 并生成训练计划</view>
+      <view class="btn-outline fill-btn" bindtap="onGoUserInfo">填写资料</view>
+    </block>
+
+    <!-- 已填写资料 -->
+    <block wx:else>
+      <view class="body-row">
+        <view class="body-item">
+          <text class="body-num">{{user.height}}</text>
+          <text class="body-label">身高 cm</text>
+        </view>
+        <view class="body-item">
+          <text class="body-num">{{user.weight}}</text>
+          <text class="body-label">体重 kg</text>
+        </view>
+        <view class="body-item">
+          <text class="body-num green">{{user.bmi}}</text>
+          <text class="body-label">BMI（{{user.bmiCategory}}）</text>
+        </view>
+        <view class="body-item">
+          <text class="body-num green">{{user.goal}}</text>
+          <text class="body-label">健身目标</text>
+        </view>
+      </view>
+      <view class="body-tip">BMI 仅作参考，不作为医疗诊断依据</view>
+    </block>
+  </view>
+
+  <!-- 今日训练卡片 -->
+  <view class="card workout-card" wx:if="{{hasUser}}">
+    <view class="card-title">今日训练 · {{workout.weekday}}</view>
+
+    <block wx:if="{{workout.isRestDay}}">
+      <view class="no-data">今天是休息日，好好恢复 💪</view>
+    </block>
+    <block wx:else>
+      <view class="workout-parts">{{workout.partsText}}</view>
+      <view class="workout-meta">
+        <text>{{workout.count}} 个动作</text>
+        <text>约 {{workout.totalMinutes}} 分钟</text>
+        <text>{{workout.goal}}</text>
+      </view>
+      <view class="btn-primary go-btn" bindtap="onGoWorkout">查看今日训练</view>
+    </block>
+  </view>
+
+  <!-- 今日饮水卡片 -->
+  <view class="card water-card" wx:if="{{water}}">
+    <view class="card-title">今日饮水</view>
+
+    <view class="water-nums">
+      <text class="water-ml">{{water.total}} / {{water.target}} ml</text>
+      <text class="water-cups">{{water.cups}} / {{water.dailyCups}} 杯</text>
+    </view>
+
+    <view class="progress-wrap">
+      <view class="progress-inner" style="width: {{water.percent}}%;"></view>
+    </view>
+
+    <view class="water-bottom">
+      <text class="water-percent">完成率 {{water.percent}}%</text>
+      <view class="btn-primary drink-btn" bindtap="onDrinkOne">喝一杯</view>
+    </view>
+
+    <view class="water-more" bindtap="onGoWater">查看饮水详情 ›</view>
+  </view>
+</view>

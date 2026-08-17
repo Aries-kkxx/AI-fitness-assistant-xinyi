@@ -1,0 +1,70 @@
+/* pages/exercise/exercise.wxss - 动作库页样式 */
+
+.page {
+  padding: 0 30rpx 30rpx;
+}
+
+/* 分类 Tab 栏 */
+.tabs {
+  white-space: nowrap;
+  padding: 20rpx 0;
+  position: sticky;
+  top: 0;
+  background-color: #f7f8fa;
+  z-index: 10;
+}
+
+.tab {
+  display: inline-block;
+  font-size: 28rpx;
+  color: #666666;
+  background-color: #ffffff;
+  border-radius: 32rpx;
+  padding: 12rpx 30rpx;
+  margin-right: 16rpx;
+}
+
+.tab.active {
+  color: #ffffff;
+  background-color: #07c160;
+  font-weight: 600;
+}
+
+.loading {
+  text-align: center;
+  color: #999999;
+  padding: 100rpx 0;
+}
+
+/* 动作卡片 */
+.ex-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10rpx;
+}
+
+.ex-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+}
+
+.ex-muscle {
+  font-size: 26rpx;
+  color: #666666;
+  margin-bottom: 14rpx;
+}
+
+.ex-tags {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* 空状态 */
+.empty {
+  text-align: center;
+  color: #999999;
+  font-size: 26rpx;
+  padding: 60rpx 0;
+}

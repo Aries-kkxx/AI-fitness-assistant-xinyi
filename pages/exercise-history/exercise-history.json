@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "cat-illustration": "/components/cat-illustration/cat-illustration"
+  },
+  "navigationBarTitleText": "动作历史",
+  "navigationStyle": "custom"
+}

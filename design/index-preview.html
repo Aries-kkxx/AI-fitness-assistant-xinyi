@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI 健身助手 · 首页 UI 预览（Phase 3）</title>
+<style>
+  :root{
+    --orange:#FFB54D; --orange-deep:#FF9F1C; --orange-soft:#FFF3D6;
+    --blue:#4D9EFF; --green:#4CD964; --green-deep:#3FAE85;
+    --bg:#F7F8FA; --white:#fff; --text:#222; --sub:#888; --border:#EEEEEE;
+    --radius:32px; --pill:999px;
+    --shadow:0 8px 24px rgba(31,74,58,.06),0 2px 6px rgba(31,74,58,.04);
+  }
+  *{box-sizing:border-box; font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;}
+  body{margin:0; background:var(--bg); color:var(--text); padding:24px; max-width:420px; margin:0 auto;}
+  .hello{display:flex; align-items:center; justify-content:space-between; background:linear-gradient(135deg,#FFF7E9,#FFEFD2); border:2px solid rgba(255,181,77,.28); border-radius:var(--radius); padding:24px; margin-bottom:24px; box-shadow:var(--shadow);}
+  .hello h1{font-size:28px; margin:0;}
+  .hello p{color:var(--orange-deep); font-size:15px; margin:6px 0 0; font-weight:600;}
+  .hello img{width:110px; height:110px;}
+  .hero{position:relative; border-radius:var(--radius); padding:24px; margin-bottom:24px; background:linear-gradient(135deg,#FFF9F2,#FFECD6); color:#E86C3A; border:2px solid rgba(255,181,77,.22); box-shadow:0 12px 32px rgba(255,159,28,.14); overflow:hidden;}
+  .hero img{position:absolute; right:12px; top:12px; width:96px; height:96px;}
+  .hero .label{font-size:14px; color:rgba(232,108,58,.85);}
+  .hero .parts{font-size:34px; font-weight:800; margin:10px 0; display:block;}
+  .hero .meta{font-size:14px; color:rgba(232,108,58,.75); margin-bottom:18px;}
+  .hero .btn{display:inline-block; background:linear-gradient(135deg,#FFB54D,#FF9F1C); color:#fff; font-weight:800; font-size:16px; padding:12px 28px; border-radius:var(--pill); box-shadow:0 6px 16px rgba(255,159,28,.28);}
+  .card{background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); padding:24px; margin-bottom:24px; border:1px solid rgba(31,74,58,.08);}
+  .card-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;}
+  .card-head .t{font-size:20px; font-weight:700;}
+  .card-head img{width:64px; height:64px;}
+  .water-big{font-size:18px; margin:6px 0 14px;}
+  .water-big b{font-size:40px;}
+  .blue{color:var(--blue);}
+  .progress{height:14px; background:#edf0f2; border-radius:var(--pill); overflow:hidden; margin-bottom:12px;}
+  .progress > i{display:block; height:100%; background:linear-gradient(90deg,#66CDAA,#4CD964); width:88%;}
+  .water-meta{display:flex; justify-content:space-between; align-items:baseline;}
+  .water-meta .num{font-size:28px; font-weight:800; color:var(--blue);}
+  .water-meta .pct{color:var(--green-deep); font-weight:700;}
+  .actions{display:flex; align-items:center; gap:16px; margin-top:16px;}
+  .btn-green{background:linear-gradient(135deg,#7BDCB8,#66CDAA,#4CD964); color:#fff; font-weight:700; padding:12px 24px; border-radius:var(--pill); flex:1; text-align:center; box-shadow:0 8px 20px rgba(76,217,100,.32);}
+  .link{color:var(--blue); font-weight:600;}
+  .summary{display:flex; text-align:center;}
+  .summary .it{flex:1;}
+  .summary .n{font-size:40px; font-weight:800;}
+  .summary .l{font-size:13px; color:var(--sub); margin-top:4px;}
+  .div{width:2px; height:64px; background:rgba(255,181,77,.25); margin:auto 0;}
+  .grid4{display:flex; text-align:center;}
+  .grid4 .it{flex:1;}
+  .grid4 .n{font-size:20px; font-weight:700; display:block;}
+  .grid4 .l{font-size:12px; color:var(--sub); margin-top:4px;}
+  .weight{display:flex; align-items:baseline;}
+  .weight .n{font-size:40px; font-weight:800;}
+  .weight .d{margin-left:12px; color:var(--orange-deep); background:var(--orange-soft); padding:4px 12px; border-radius:12px; font-weight:600;}
+  .chart{height:120px; background:linear-gradient(180deg,#EAFBF4,#fff); border-radius:16px; margin-top:12px;}
+</style>
+</head>
+<body>
+  <!-- 顶部问候 -->
+  <div class="hello">
+    <div>
+      <h1>Hi，小明 👋</h1>
+      <p>今天也要加油哦！</p>
+    </div>
+    <img src="../assets/cat/cat-home.png"/>
+  </div>
+
+  <!-- 今日训练 Hero -->
+  <div class="hero">
+    <img src="../assets/cat/cat-workout.png"/>
+    <div class="label">今日训练 · 周三</div>
+    <span class="parts">胸 + 三头</span>
+    <div class="meta">4 个动作 · 约 60 分钟</div>
+    <div class="btn">开始训练 ›</div>
+  </div>
+
+  <!-- 今日饮水 -->
+  <div class="card">
+    <div class="card-head"><span class="t">今日饮水 💧</span><img src="../assets/cat/cat-water.png"/></div>
+    <div class="water-big"><b>1750</b> / <span class="blue">2000</span> ml</div>
+    <div class="progress"><i></i></div>
+    <div class="water-meta">
+      <div><span class="num">7</span> / 8 杯</div>
+      <div class="pct">完成率 88%</div>
+    </div>
+    <div class="actions">
+      <div class="btn-green">喝一杯 💧</div>
+      <div class="link">查看详情 ›</div>
+    </div>
+  </div>
+
+  <!-- 数据摘要 -->
+  <div class="card">
+    <div class="card-head"><span class="t">数据摘要 🐾</span><img src="../assets/cat/cat-home.png" style="width:48px;height:48px"/></div>
+    <div class="summary">
+      <div class="it"><div class="n">4</div><div class="l">本周训练(次)</div></div>
+      <div class="div"></div>
+      <div class="it"><div class="n" style="color:var(--green-deep)">5</div><div class="l">饮水达标(天)</div></div>
+    </div>
+  </div>
+
+  <!-- 身体数据 -->
+  <div class="card">
+    <div class="t" style="font-size:20px;font-weight:700;margin-bottom:14px;">我的身体数据</div>
+    <div class="grid4">
+      <div class="it"><span class="n">175</span><span class="l">身高 cm</span></div>
+      <div class="it"><span class="n">80</span><span class="l">体重 kg</span></div>
+      <div class="it"><span class="n" style="color:var(--green-deep)">26.1</span><span class="l">BMI（超重）</span></div>
+      <div class="it"><span class="n" style="color:var(--orange-deep);font-size:16px">减脂</span><span class="l">健身目标</span></div>
+    </div>
+  </div>
+
+  <!-- 体重趋势 -->
+  <div class="card">
+    <div class="t" style="font-size:20px;font-weight:700;">体重趋势</div>
+    <div class="weight"><span class="n">80</span> kg <span class="d">↓ 2 kg</span> <span style="color:var(--sub);font-size:13px;margin-left:8px">过去30天</span></div>
+    <div class="chart"></div>
+  </div>
+</body>
+</html>

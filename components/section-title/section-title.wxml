@@ -1,0 +1,6 @@
+<!-- components/section-title/section-title.wxml - 统一区块标题 -->
+<view class="sec-title {{border ? 'with-border' : ''}}">
+  <view class="sec-icon" wx:if="{{icon}}">{{icon}}</view>
+  <text class="sec-text">{{title}}</text>
+  <view class="sec-link" wx:if="{{link}}" bindtap="onTap">{{link}} ›</view>
+</view>

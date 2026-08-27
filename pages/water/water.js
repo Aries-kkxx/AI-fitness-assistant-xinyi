@@ -58,6 +58,11 @@ Page({
     wx.navigateTo({ url: '/pages/water-setting/water-setting' });
   },
 
+  // 跳转历史记录页
+  onGoHistory() {
+    wx.navigateTo({ url: '/pages/water-history/water-history' });
+  },
+
   // 删除一条记录（先确认再删除）
   onDelete(e) {
     const id = e.currentTarget.dataset.id;

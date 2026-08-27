@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "cat-illustration": "/components/cat-illustration/cat-illustration"
+  },
+  "navigationBarTitleText": "训练详情",
+  "navigationStyle": "custom"
+}

@@ -21,13 +21,26 @@ Page({
   },
 
   // 功能入口
-  onGoAI() {
-    wx.navigateTo({ url: '/pages/ai/ai' });
-  },
   onGoUserInfo() {
     wx.navigateTo({ url: '/pages/user-info/user-info' });
   },
   onGoWaterSetting() {
     wx.navigateTo({ url: '/pages/water-setting/water-setting' });
+  },
+  onGoWeight() {
+    wx.navigateTo({ url: '/pages/weight/weight' });
+  },
+  onGoStats() {
+    wx.navigateTo({ url: '/pages/stats/stats' });
+  },
+
+  // 长期健身记忆（欣一记住的事情）
+  onGoFitnessMemory() {
+    wx.navigateTo({ url: '/pages/fitness-memory/fitness-memory' });
+  },
+
+  // 训练周期（4~8 周长期训练）
+  onGoCycle() {
+    wx.navigateTo({ url: '/pages/cycle/cycle' });
   }
 });

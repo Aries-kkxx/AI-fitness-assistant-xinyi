@@ -1,0 +1,13 @@
+<!-- components/cat-illustration/cat-illustration.wxml -->
+<!-- 统一卡通猫咪插画（量化 PNG 素材，替换同名 PNG 即可升级） -->
+<view
+  class="cat-illust {{shape}} {{animate}}"
+  style="width:{{size}}rpx;height:{{size}}rpx;{{bg ? 'background-color:' + bg + ';' : ''}}"
+>
+  <image
+    class="cat-illust-img"
+    src="/assets/cat/cat-{{_pose}}.png"
+    mode="aspectFit"
+    lazy-load="true"
+  />
+</view>

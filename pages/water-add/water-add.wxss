@@ -1,7 +1,7 @@
 /* pages/water-add/water-add.wxss - 手动添加饮水记录页样式 */
 
 .page {
-  padding: 30rpx;
+  padding: 30rpx 30rpx 200rpx; /* 底部预留固定保存栏空间 */
 }
 
 /* 表单一行：左侧标签 + 右侧输入/选择 */
@@ -26,7 +26,8 @@
 /* picker 展示值 */
 .form-value {
   font-size: 30rpx;
-  color: #07c160;
+  color: #ff9f1c;
+  font-weight: 600;
 }
 
 /* 文本输入框 */
@@ -37,7 +38,18 @@
   width: 380rpx;
 }
 
-/* 保存按钮 */
+/* 固定底部保存栏（滚动不跟随） */
+.save-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ffffff;
+  padding: 16rpx 30rpx calc(16rpx + env(safe-area-inset-bottom));
+  box-shadow: 0 -4rpx 16rpx rgba(0, 0, 0, 0.06);
+  z-index: 100;
+}
+
 .save-btn {
-  margin-top: 40rpx;
+  margin-top: 0;
 }

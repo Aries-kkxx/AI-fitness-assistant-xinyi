@@ -1,0 +1,15 @@
+<!-- components/float-ball/float-ball.wxml - 「欣一」小猫悬浮球 -->
+<!-- 使用普通 view + 绝对定位，无 movable-view 内置动画 -->
+<view
+  class="float-ball"
+  style="left: {{x}}px; top: {{y}}px;"
+  wx:if="{{visible && ready}}"
+  catchtouchstart="onTouchStart"
+  catchtouchmove="onTouchMove"
+  catchtouchend="onTouchEnd"
+  catchtouchcancel="onTouchCancel"
+  catchtap="onTap"
+>
+  <image class="float-ball-icon" src="/assets/cat/cat-avatar.png" mode="aspectFill" />
+  <text class="float-ball-name">欣一</text>
+</view>

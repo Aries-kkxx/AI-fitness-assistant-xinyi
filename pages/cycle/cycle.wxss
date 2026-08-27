@@ -1,0 +1,469 @@
+/* pages/cycle/cycle.wxss - 训练周期页 */
+
+.page {
+  min-height: 100vh;
+  padding: calc(88rpx + env(safe-area-inset-top)) var(--space-xl) calc(var(--space-3xl) + env(safe-area-inset-bottom));
+}
+
+.sky-bg {
+  background: linear-gradient(180deg, #E8F7FF 0%, #F7F8FA 30%, #F7F8FA 100%);
+}
+
+/* ===== 自定义导航栏 ===== */
+.nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(88rpx + env(safe-area-inset-top));
+  padding-top: env(safe-area-inset-top);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: var(--space-md);
+  padding-right: var(--space-md);
+  background-color: #E8F7FF;
+  z-index: 100;
+}
+
+.nav-back {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+  color: #222222;
+  font-weight: 700;
+}
+
+.nav-title {
+  font-size: 34rpx;
+  font-weight: 800;
+  color: #222222;
+}
+
+.nav-create {
+  width: 120rpx;
+  text-align: right;
+  font-size: 24rpx;
+  color: #FF9F1C;
+  font-weight: 700;
+}
+
+/* ===== 通用 ===== */
+.card {
+  background-color: #FFFFFF;
+  border-radius: var(--cat-radius-lg);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-xl);
+  box-shadow: var(--cat-shadow-md);
+}
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--space-md);
+}
+
+.card-title {
+  font-size: var(--fs-card-title);
+  font-weight: 800;
+  color: #222222;
+  margin-bottom: var(--space-md);
+}
+
+.card-sub {
+  font-size: 20rpx;
+  color: #999999;
+}
+
+.loading {
+  text-align: center;
+  padding: var(--space-3xl);
+  color: #999999;
+}
+
+/* ===== 空状态 ===== */
+.empty-card {
+  margin-top: var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.empty-title {
+  margin-top: var(--space-md);
+  font-size: var(--fs-card-title);
+  font-weight: 800;
+  color: #222222;
+}
+
+.empty-sub {
+  margin-top: var(--space-sm);
+  font-size: var(--fs-caption);
+  color: #888888;
+  line-height: 1.6;
+}
+
+.create-btn {
+  margin-top: var(--space-xl);
+  height: 80rpx;
+  padding: 0 var(--space-3xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-btn);
+  font-weight: 800;
+  color: #FFFFFF;
+  background: linear-gradient(135deg, #FFB54D 0%, #FF9F1C 100%);
+  border-radius: var(--cat-radius-pill);
+  box-shadow: 0 8rpx 20rpx rgba(255, 159, 28, 0.28);
+}
+
+/* ===== 周期卡 ===== */
+.cycle-card {
+  margin-top: var(--space-xl);
+  background: linear-gradient(135deg, #FFF9E8 0%, #FFF3D6 100%);
+  border: 2rpx solid rgba(255, 209, 102, 0.35);
+}
+
+.cycle-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cycle-name {
+  font-size: 40rpx;
+  font-weight: 800;
+  color: #222222;
+}
+
+.cycle-status {
+  font-size: 22rpx;
+  font-weight: 700;
+  color: #2E9E63;
+  background-color: #D8F5E7;
+  padding: 4rpx 20rpx;
+  border-radius: var(--cat-radius-pill);
+}
+
+.cycle-meta {
+  margin-top: var(--space-sm);
+  font-size: 24rpx;
+  color: #88775A;
+}
+
+.cycle-progress {
+  margin-top: var(--space-lg);
+}
+
+.cycle-week {
+  font-size: 24rpx;
+  font-weight: 700;
+  color: #FF9F1C;
+}
+
+.cycle-bar {
+  margin-top: var(--space-sm);
+  height: 16rpx;
+  background-color: #FFFFFF;
+  border-radius: var(--cat-radius-pill);
+  overflow: hidden;
+}
+
+.cycle-inner {
+  height: 100%;
+  background: linear-gradient(90deg, #FFB54D 0%, #FF9F1C 100%);
+  border-radius: var(--cat-radius-pill);
+}
+
+.cycle-deload {
+  margin-top: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  display: flex;
+  align-items: center;
+  font-size: 22rpx;
+  color: #4D9EFF;
+  background-color: #E6EEFF;
+  border-radius: var(--cat-radius-md);
+}
+
+.deload-icon {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  margin-right: var(--space-sm);
+  background-color: #FFFFFF;
+  border: 2rpx solid rgba(77, 158, 255, 0.3);
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.deload-text {
+  flex: 1;
+}
+
+.cycle-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--space-lg);
+}
+
+.cycle-actions .btn-outline {
+  height: 60rpx;
+  padding: 0 var(--space-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #FF6B6B;
+  background-color: #FFEDED;
+  border: 2rpx solid rgba(255, 107, 107, 0.3);
+  border-radius: var(--cat-radius-pill);
+}
+
+/* ===== 本周计划 ===== */
+.adjust-tip {
+  font-size: 22rpx;
+  color: #FF9F1C;
+  margin-bottom: var(--space-md);
+  font-weight: 600;
+}
+
+.week-days {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-lg);
+}
+
+.week-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 72rpx;
+}
+
+.week-day-name {
+  font-size: 20rpx;
+  color: #999999;
+}
+
+.week-day-count {
+  margin-top: var(--space-xs);
+  font-size: 20rpx;
+  font-weight: 700;
+  color: #2E9E63;
+  background-color: #EAFBF4;
+  padding: 2rpx 12rpx;
+  border-radius: var(--cat-radius-pill);
+}
+
+.week-day.today .week-day-name {
+  color: #FF9F1C;
+  font-weight: 800;
+}
+
+.week-day.rest .week-day-name {
+  color: #CCCCCC;
+}
+
+/* 今日动作 */
+.today-ex-title {
+  display: block;
+  font-size: 24rpx;
+  font-weight: 700;
+  color: #666666;
+  margin-bottom: var(--space-sm);
+}
+
+.today-ex-item {
+  display: flex;
+  align-items: center;
+  padding: var(--space-md) 0;
+  border-bottom: 1rpx solid #F5F5F5;
+}
+
+.today-ex-item:last-child {
+  border-bottom: none;
+}
+
+.today-ex-name {
+  flex: 1;
+  font-size: 26rpx;
+  font-weight: 700;
+  color: #222222;
+}
+
+.today-ex-tags {
+  font-size: 22rpx;
+  color: #66CDAA;
+  font-weight: 600;
+  margin-left: var(--space-sm);
+}
+
+.today-ex-weight {
+  font-size: 22rpx;
+  color: #FF9F1C;
+  font-weight: 600;
+  margin-left: var(--space-sm);
+}
+
+.today-go {
+  margin-top: var(--space-md);
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+  background: linear-gradient(135deg, #66CDAA 0%, #4CD964 100%);
+  border-radius: var(--cat-radius-pill);
+}
+
+/* ===== 每周总结 ===== */
+.week-summary {
+  padding: var(--space-md) 0;
+  border-bottom: 1rpx solid #F5F5F5;
+}
+
+.week-summary:last-child {
+  border-bottom: none;
+}
+
+.ws-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ws-title {
+  font-size: 28rpx;
+  font-weight: 800;
+  color: #222222;
+}
+
+.ws-rate {
+  font-size: 22rpx;
+  font-weight: 700;
+  color: #FF9F1C;
+  background-color: #FFF9E8;
+  padding: 2rpx 16rpx;
+  border-radius: var(--cat-radius-pill);
+}
+
+.ws-arrow {
+  font-size: 20rpx;
+  color: #BBBBBB;
+}
+
+.ws-stats {
+  display: flex;
+  gap: var(--space-lg);
+  margin-top: var(--space-sm);
+  font-size: 22rpx;
+  color: #888888;
+}
+
+.ws-detail {
+  margin-top: var(--space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.ws-line {
+  font-size: 22rpx;
+  color: #555555;
+  line-height: 1.6;
+}
+
+/* ===== 周期总结 ===== */
+.summary-card {
+  background: linear-gradient(135deg, #EAFBF4 0%, #D8F5E7 100%);
+  border: 2rpx solid rgba(102, 205, 170, 0.35);
+}
+
+.fs-stats {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.fs-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.75);
+  border-radius: var(--cat-radius-md);
+  padding: var(--space-md);
+}
+
+.fs-value {
+  font-size: 32rpx;
+  font-weight: 800;
+  color: #1F6B4C;
+}
+
+.fs-label {
+  margin-top: var(--space-xs);
+  font-size: 20rpx;
+  color: #4C9C78;
+}
+
+.fs-line {
+  display: block;
+  font-size: 22rpx;
+  color: #44684F;
+  line-height: 1.6;
+  margin-top: var(--space-xs);
+}
+
+/* ===== 历史周期 ===== */
+.his-cycle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) 0;
+  border-bottom: 1rpx solid #F5F5F5;
+}
+
+.his-cycle:last-child {
+  border-bottom: none;
+}
+
+.his-cycle-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.his-cycle-name {
+  font-size: 26rpx;
+  font-weight: 700;
+  color: #222222;
+}
+
+.his-cycle-meta {
+  margin-top: var(--space-xs);
+  font-size: 20rpx;
+  color: #999999;
+}
+
+.his-cycle-status {
+  font-size: 22rpx;
+  font-weight: 600;
+  color: #2E9E63;
+  flex-shrink: 0;
+  margin-left: var(--space-md);
+}
+
+.his-cycle-status.abandoned {
+  color: #999999;
+}

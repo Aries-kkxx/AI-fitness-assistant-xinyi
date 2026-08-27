@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "cat-illustration": "/components/cat-illustration/cat-illustration"
+  },
+  "navigationBarTitleText": "饮水历史",
+  "navigationStyle": "custom"
+}

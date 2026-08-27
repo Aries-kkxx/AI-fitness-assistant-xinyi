@@ -1,0 +1,319 @@
+/* components/cat-mascot/cat-mascot.wxss - 纯 CSS 卡通橘白猫
+   画布固定 240x240rpx，调用处通过 size 属性等比缩放 */
+.ct-root {
+  position: relative;
+  transform-origin: 0 0;
+  flex-shrink: 0;
+}
+
+.ct-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 240rpx;
+  height: 240rpx;
+}
+
+/* ===== 尾巴 ===== */
+.ct-tail {
+  position: absolute;
+  right: 34rpx;
+  top: 198rpx;
+  width: 40rpx;
+  height: 20rpx;
+  background: #ffb54d;
+  border: 3rpx solid #5b3a29;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+/* ===== 身体 ===== */
+.ct-body {
+  position: absolute;
+  left: 56rpx;
+  top: 150rpx;
+  width: 128rpx;
+  height: 80rpx;
+  background: #ffb54d;
+  border: 3rpx solid #5b3a29;
+  border-radius: 46% 46% 50% 50%;
+  z-index: 2;
+}
+
+.ct-belly {
+  position: absolute;
+  left: 24rpx;
+  top: 16rpx;
+  width: 76rpx;
+  height: 54rpx;
+  background: #fff6ec;
+  border-radius: 50% 50% 45% 45%;
+}
+
+/* ===== 水杯（drink） ===== */
+.ct-cup {
+  position: absolute;
+  left: 44rpx;
+  top: 2rpx;
+  width: 40rpx;
+  height: 44rpx;
+  background: #4d9eff;
+  border: 3rpx solid #2f6bc0;
+  border-radius: 8rpx;
+  z-index: 3;
+}
+
+.ct-cup-rim {
+  position: absolute;
+  top: -8rpx;
+  left: -5rpx;
+  width: 44rpx;
+  height: 8rpx;
+  background: #ffffff;
+  border: 2rpx solid #2f6bc0;
+  border-radius: 6rpx;
+}
+
+.ct-cup-water {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 16rpx;
+  background: #7fd4ff;
+  border-radius: 0 0 6rpx 6rpx;
+}
+
+/* ===== 前爪 ===== */
+.ct-paw {
+  position: absolute;
+  bottom: 14rpx;
+  width: 32rpx;
+  height: 24rpx;
+  background: #fff6ec;
+  border: 3rpx solid #5b3a29;
+  border-radius: 50% 50% 40% 40%;
+  z-index: 4;
+}
+
+.ct-paw.left {
+  left: 82rpx;
+}
+
+.ct-paw.right {
+  right: 82rpx;
+}
+
+/* wave：右爪抬起挥手 */
+.ct-paw.right.wave {
+  transform: translate(-8rpx, -34rpx) rotate(20deg);
+  animation: wave-hand 1.1s ease-in-out infinite;
+  z-index: 6;
+}
+
+@keyframes wave-hand {
+  0%,
+  100% {
+    transform: translate(-8rpx, -34rpx) rotate(20deg);
+  }
+  50% {
+    transform: translate(-4rpx, -38rpx) rotate(-6deg);
+  }
+}
+
+/* ===== 头 ===== */
+.ct-head {
+  position: absolute;
+  left: 42rpx;
+  top: 44rpx;
+  width: 156rpx;
+  height: 132rpx;
+  background: #fff6ec;
+  border: 3rpx solid #5b3a29;
+  border-radius: 50%;
+  z-index: 5;
+}
+
+/* 耳朵（容器旋转） */
+.ct-ear {
+  position: absolute;
+  width: 52rpx;
+  height: 46rpx;
+  top: -30rpx;
+}
+
+.ct-ear.left {
+  left: 8rpx;
+  transform: rotate(-18deg);
+}
+
+.ct-ear.right {
+  right: 8rpx;
+  transform: rotate(18deg);
+}
+
+.ct-ear-shape {
+  width: 52rpx;
+  height: 46rpx;
+  background: #ffb54d;
+  border: 3rpx solid #5b3a29;
+  border-radius: 50% 50% 0 0;
+}
+
+.ct-ear-in {
+  position: absolute;
+  left: 12rpx;
+  top: 10rpx;
+  width: 24rpx;
+  height: 20rpx;
+  background: #ffb3c7;
+  border-radius: 50% 50% 0 0;
+}
+
+/* 头顶橘色斑 */
+.ct-cap {
+  position: absolute;
+  left: 30rpx;
+  top: 2rpx;
+  width: 96rpx;
+  height: 52rpx;
+  background: #ffb54d;
+  border-radius: 50% 50% 34% 34%;
+  z-index: 2;
+}
+
+/* 眼睛 */
+.ct-eye {
+  position: absolute;
+  top: 60rpx;
+  width: 20rpx;
+  height: 26rpx;
+  background: #3a2a1d;
+  border-radius: 50%;
+  z-index: 3;
+}
+
+.ct-eye.left {
+  left: 40rpx;
+}
+
+.ct-eye.right {
+  right: 40rpx;
+}
+
+.ct-gleam {
+  position: absolute;
+  top: 4rpx;
+  right: 3rpx;
+  width: 7rpx;
+  height: 9rpx;
+  background: #ffffff;
+  border-radius: 50%;
+}
+
+/* 闭眼（睡觉） */
+.ct-sleep-eye {
+  position: absolute;
+  top: 66rpx;
+  width: 24rpx;
+  height: 12rpx;
+  border-bottom: 3rpx solid #3a2a1d;
+  border-radius: 0 0 50% 50%;
+  z-index: 3;
+}
+
+.ct-sleep-eye.left {
+  left: 38rpx;
+}
+
+.ct-sleep-eye.right {
+  right: 38rpx;
+}
+
+/* 腮红 */
+.ct-cheek {
+  position: absolute;
+  top: 84rpx;
+  width: 24rpx;
+  height: 14rpx;
+  background: #ffb3c7;
+  border-radius: 50%;
+  opacity: 0.85;
+  z-index: 3;
+}
+
+.ct-cheek.left {
+  left: 22rpx;
+}
+
+.ct-cheek.right {
+  right: 22rpx;
+}
+
+/* 鼻子 */
+.ct-nose {
+  position: absolute;
+  left: 70rpx;
+  top: 88rpx;
+  width: 14rpx;
+  height: 11rpx;
+  background: #f08a8a;
+  border-radius: 50% 50% 60% 60%;
+  z-index: 3;
+}
+
+/* 嘴（微笑弧线） */
+.ct-mouth {
+  position: absolute;
+  left: 61rpx;
+  top: 100rpx;
+  width: 34rpx;
+  height: 14rpx;
+  border-bottom: 3rpx solid #5b3a29;
+  border-radius: 0 0 50% 50%;
+  z-index: 3;
+}
+
+/* ===== 睡觉 Zzz ===== */
+.ct-zzz {
+  position: absolute;
+  right: 8rpx;
+  top: 30rpx;
+  font-size: 22rpx;
+  font-weight: 800;
+  color: #7a9bb5;
+  letter-spacing: 2rpx;
+  z-index: 6;
+}
+
+/* ===== 轻量动画 ===== */
+.ct-inner.float {
+  animation: cat-float 2.4s ease-in-out infinite;
+}
+
+@keyframes cat-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10rpx);
+  }
+}
+
+.ct-inner.bounce {
+  animation: cat-bounce 0.9s ease-in-out infinite;
+}
+
+@keyframes cat-bounce {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  40% {
+    transform: translateY(-14rpx) scale(1.04);
+  }
+  60% {
+    transform: translateY(-6rpx) scale(0.98);
+  }
+}

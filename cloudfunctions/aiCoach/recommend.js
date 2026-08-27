@@ -120,6 +120,35 @@ function splitCount(total, partCount) {
   return result;
 }
 
+/**
+ * 过滤掉需要排除的部位（如昨天练过胸 → 排除 ['胸']）
+ * @param {Array} parts 部位列表
+ * @param {Array} excludeParts 排除的部位关键词
+ * @returns {Array} 过滤后的部位
+ */
+function filterExcluded(parts, excludeParts) {
+  if (!excludeParts || excludeParts.length === 0) return parts.slice();
+  return parts.filter((p) => excludeParts.indexOf(p) < 0);
+}
+
+/**
+ * 从一周模板中寻找下一个「不被排除部位影响」的训练日
+ * 从今天之后开始找，最多找 7 天；返回过滤后的部位组合
+ */
+function findAlternative(week, fromIndex, excludeParts) {
+  for (let i = 1; i <= 7; i++) {
+    const idx = (fromIndex + i) % 7;
+    const day = week[idx];
+    if (day) {
+      const kept = filterExcluded(day.parts, excludeParts);
+      if (kept.length > 0) {
+        return { parts: kept };
+      }
+    }
+  }
+  return null;
+}
+
 // ===== 数据库查询 + 过滤（动作全部来自 exercises 集合） =====
 async function queryExercisesByCategory(category) {
   const res = await db
@@ -173,17 +202,23 @@ async function pickExercises(part, opts, count) {
  * @param {string} param.experience 经验
  * @param {number} param.duration 时长（分钟）
  * @param {Array} param.parts 部位组合（如 ['胸','三头']）
+ * @param {Array} param.excludeParts 排除的部位（可选）
  */
-async function generatePlan({ goal, equipment, experience, duration, parts }) {
+async function generatePlan({ goal, equipment, experience, duration, parts, excludeParts }) {
   if (!parts || parts.length === 0) {
     return { ok: false, message: '缺少部位组合 parts' };
   }
+  // 排除用户不想要的部位（如昨天刚练过）
+  const finalParts = filterExcluded(parts, excludeParts);
+  if (finalParts.length === 0) {
+    return { ok: false, message: '部位组合全部被排除，请指定其他部位' };
+  }
   const totalCount = DURATION_COUNT[String(duration)] || 5;
-  const counts = splitCount(totalCount, parts.length);
+  const counts = splitCount(totalCount, finalParts.length);
 
   const exercises = [];
   const pickedList = await Promise.all(
-    parts.map((part, i) => pickExercises(part, { equipment, experience }, counts[i]))
+    finalParts.map((part, i) => pickExercises(part, { equipment, experience }, counts[i]))
   );
   pickedList.forEach((list) => {
     list.forEach((e) => {
@@ -203,7 +238,7 @@ async function generatePlan({ goal, equipment, experience, duration, parts }) {
 
   return {
     ok: true,
-    partsText: parts.join(' + '),
+    partsText: finalParts.join(' + '),
     exercises,
     totalMinutes: Number(duration) || 45,
     count: exercises.length
@@ -212,12 +247,32 @@ async function generatePlan({ goal, equipment, experience, duration, parts }) {
 
 /**
  * 获取今日推荐训练（按目标模板 + 星期几）
+ * @param {Object} param
+ * @param {Array} param.excludeParts 排除的部位（可选，如昨天练过胸传 ['胸']）
+ * 当今天模板的部位全部被排除时，自动从模板中寻找下一个不冲突的训练日
  */
-async function getTodayWorkout({ goal, equipment, experience, training_days, duration }) {
+async function getTodayWorkout({ goal, equipment, experience, training_days, duration, excludeParts }) {
   const weekdayIndex = (new Date().getDay() + 6) % 7;
   const week = buildWeekTemplate(goal, training_days);
-  const today = week[weekdayIndex];
-  if (!today) {
+  let today = week[weekdayIndex];
+  let partsText = '';
+  let isRestDay = false;
+
+  if (today) {
+    const kept = filterExcluded(today.parts, excludeParts);
+    if (kept.length === 0) {
+      // 今天模板部位全被排除 → 从模板中找下一个不冲突的训练日
+      today = findAlternative(week, weekdayIndex, excludeParts);
+    } else if (kept.length < 2 && today.parts.length >= 2) {
+      // 排除后只剩 1 个部位（内容过少）→ 优先找更完整的替代训练日
+      const alt = findAlternative(week, weekdayIndex, excludeParts);
+      today = alt || { parts: kept };
+    } else {
+      today = { parts: kept };
+    }
+  }
+
+  if (isRestDay || !today) {
     return {
       ok: true,
       isRestDay: true,
@@ -228,7 +283,14 @@ async function getTodayWorkout({ goal, equipment, experience, training_days, dur
       count: 0
     };
   }
-  const plan = await generatePlan({ goal, equipment, experience, duration, parts: today.parts });
+  const plan = await generatePlan({
+    goal,
+    equipment,
+    experience,
+    duration,
+    parts: today.parts,
+    excludeParts
+  });
   return Object.assign({ isRestDay: false, weekday: WEEK_DAYS[weekdayIndex] }, plan);
 }
 

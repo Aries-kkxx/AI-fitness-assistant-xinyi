@@ -1,0 +1,31 @@
+/* components/section-title/section-title.wxss - 统一区块标题 */
+.sec-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--space-xl);
+}
+
+.sec-title.with-border {
+  padding-bottom: var(--space-sm);
+  border-bottom: 1rpx solid var(--cat-border);
+}
+
+.sec-icon {
+  font-size: 32rpx;
+  margin-right: var(--space-xs);
+  flex-shrink: 0;
+}
+
+.sec-text {
+  flex: 1;
+  font-size: var(--fs-section);
+  font-weight: 700;
+  color: var(--cat-text);
+}
+
+.sec-link {
+  font-size: var(--fs-caption);
+  color: var(--cat-blue);
+  font-weight: 600;
+  flex-shrink: 0;
+}

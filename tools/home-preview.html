@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>SPORT 首页改造预览（Phase 3）</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #eef1f0; display: flex; justify-content: center; padding: 20px; }
+  .phone { width: 375px; background: #f8fbfa; border-radius: 28px; overflow: hidden; box-shadow: 0 12px 40px rgba(0,0,0,0.18); border: 6px solid #222; }
+  .statusbar { height: 28px; background: #f8fbfa; }
+  .navbar { height: 40px; background: #f8fbfa; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 600; color: #333; }
+  .page { padding: 15px; padding-bottom: 70px; }
+  .card { background: #fff; border-radius: 16px; padding: 16px; margin-bottom: 12px; border: 1px solid rgba(31,74,58,0.08); box-shadow: 0 4px 12px rgba(31,74,58,0.06); }
+  .card-title { font-size: 15px; font-weight: 700; color: #333; margin-bottom: 10px; }
+
+  /* ===== 问候卡 ===== */
+  .hello { display: flex; align-items: center; justify-content: space-between; background: linear-gradient(135deg,#eafbf4,#ddf5e9); border-radius: 18px; padding: 16px 18px; margin-bottom: 12px; border: 1px solid rgba(102,205,170,0.22); box-shadow: 0 4px 12px rgba(102,205,170,0.16); position: relative; overflow: hidden; }
+  .hello .hi { font-size: 22px; font-weight: 800; color: #333; }
+  .hello .sub { font-size: 13px; color: #3fae85; margin-top: 4px; font-weight: 500; }
+  .star { position: absolute; }
+  .s1 { top: 8px; right: 110px; font-size: 14px; } .s2 { bottom: 10px; left: 110px; font-size: 12px; }
+
+  /* ===== CSS 猫（240rpx=120px 画布，px 版） ===== */
+  .ct { position: relative; width: 120px; height: 120px; transform-origin: 0 0; flex-shrink: 0; }
+  .ct-inner { position: absolute; top: 0; left: 0; width: 120px; height: 120px; }
+  .ct-inner.float { animation: cf 2.4s ease-in-out infinite; }
+  @keyframes cf { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+  .ct-tail { position:absolute; right:17px; top:99px; width:20px; height:10px; background:#ffb54d; border:1.5px solid #5b3a29; border-radius:50%; z-index:1; }
+  .ct-body { position:absolute; left:28px; top:75px; width:64px; height:40px; background:#ffb54d; border:1.5px solid #5b3a29; border-radius:46% 46% 50% 50%; z-index:2; }
+  .ct-belly { position:absolute; left:12px; top:8px; width:38px; height:27px; background:#fff6ec; border-radius:50% 50% 45% 45%; }
+  .ct-cup { position:absolute; left:22px; top:1px; width:20px; height:22px; background:#4d9eff; border:1.5px solid #2f6bc0; border-radius:4px; z-index:3; }
+  .ct-cup-rim { position:absolute; top:-4px; left:-2.5px; width:22px; height:4px; background:#fff; border:1px solid #2f6bc0; border-radius:3px; }
+  .ct-cup-water { position:absolute; left:0; right:0; bottom:0; height:8px; background:#7fd4ff; border-radius:0 0 4px 4px; }
+  .ct-paw { position:absolute; bottom:7px; width:16px; height:12px; background:#fff6ec; border:1.5px solid #5b3a29; border-radius:50% 50% 40% 40%; z-index:4; }
+  .ct-paw.left { left:41px; } .ct-paw.right { right:41px; }
+  .ct-paw.right.wave { transform: translate(-4px,-17px) rotate(20deg); animation: wh 1.1s ease-in-out infinite; z-index:6; }
+  @keyframes wh { 0%,100%{transform:translate(-4px,-17px) rotate(20deg)} 50%{transform:translate(-2px,-19px) rotate(-6deg)} }
+  .ct-head { position:absolute; left:21px; top:22px; width:78px; height:66px; background:#fff6ec; border:1.5px solid #5b3a29; border-radius:50%; z-index:5; }
+  .ct-ear { position:absolute; width:26px; height:23px; top:-15px; }
+  .ct-ear.left { left:4px; transform:rotate(-18deg); } .ct-ear.right { right:4px; transform:rotate(18deg); }
+  .ct-ear-shape { width:26px; height:23px; background:#ffb54d; border:1.5px solid #5b3a29; border-radius:50% 50% 0 0; }
+  .ct-ear-in { position:absolute; left:6px; top:5px; width:12px; height:10px; background:#ffb3c7; border-radius:50% 50% 0 0; }
+  .ct-cap { position:absolute; left:15px; top:1px; width:48px; height:26px; background:#ffb54d; border-radius:50% 50% 34% 34%; z-index:2; }
+  .ct-eye { position:absolute; top:30px; width:10px; height:13px; background:#3a2a1d; border-radius:50%; z-index:3; }
+  .ct-eye.left { left:20px; } .ct-eye.right { right:20px; }
+  .ct-gleam { position:absolute; top:2px; right:1.5px; width:3.5px; height:4.5px; background:#fff; border-radius:50%; }
+  .ct-sleep-eye { position:absolute; top:33px; width:12px; height:6px; border-bottom:1.5px solid #3a2a1d; border-radius:0 0 50% 50%; z-index:3; }
+  .ct-sleep-eye.left { left:19px; } .ct-sleep-eye.right { right:19px; }
+  .ct-cheek { position:absolute; top:42px; width:12px; height:7px; background:#ffb3c7; border-radius:50%; opacity:.85; z-index:3; }
+  .ct-cheek.left { left:11px; } .ct-cheek.right { right:11px; }
+  .ct-nose { position:absolute; left:35px; top:44px; width:7px; height:5.5px; background:#f08a8a; border-radius:50% 50% 60% 60%; z-index:3; }
+  .ct-mouth { position:absolute; left:30.5px; top:50px; width:17px; height:7px; border-bottom:1.5px solid #5b3a29; border-radius:0 0 50% 50%; z-index:3; }
+  .ct-zzz { position:absolute; right:4px; top:15px; font-size:11px; font-weight:800; color:#7a9bb5; letter-spacing:1px; z-index:6; }
+
+  /* ===== Hero 卡 ===== */
+  .hero { background: linear-gradient(135deg,#7bdcb8,#66cdaa 50%,#4cd964); border-radius: 18px; padding: 20px 18px; margin-bottom: 12px; color: #fff; box-shadow: 0 6px 16px rgba(102,205,170,0.35); }
+  .hero-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .hero-label { font-size: 13px; opacity: .92; }
+  .hero-goal { font-size: 12px; color: #3fae85; background: #fff; border-radius: 10px; padding: 3px 10px; font-weight: 700; }
+  .hero-parts { font-size: 28px; font-weight: 800; margin-bottom: 6px; }
+  .hero-meta { font-size: 12px; opacity: .9; margin-bottom: 14px; }
+  .hero-meta span { margin-right: 15px; }
+  .hero-btn { display: inline-block; font-size: 14px; font-weight: 800; color: #2e9e6a; background: #fff; border-radius: 22px; padding: 8px 24px; box-shadow: 0 3px 8px rgba(20,110,70,.2); }
+
+  /* ===== 身体数据 ===== */
+  .body-row { display: flex; }
+  .body-item { flex: 1; text-align: center; }
+  .body-num { display: block; font-size: 17px; font-weight: 700; color: #333; }
+  .body-num.green { color: #3fae85; font-size: 14px; padding-top: 4px; }
+  .body-num.goal { color: #ff9f1c; font-size: 13px; padding-top: 4px; font-weight: 700; }
+  .body-label { display: block; font-size: 11px; color: #999; margin-top: 3px; }
+  .body-tip { font-size: 10px; color: #ccc; text-align: center; margin-top: 8px; }
+
+  /* ===== 周概览 ===== */
+  .week-card { background: linear-gradient(180deg,#fffdf5,#fff8e8); border-color: rgba(255,181,77,.24); }
+  .week-row { display: flex; align-items: center; }
+  .week-item { flex: 1; text-align: center; position: relative; padding: 5px 0; }
+  .week-num { display: block; font-size: 28px; font-weight: 800; color: #333; line-height: 1.2; }
+  .week-num.green { color: #3fae85; }
+  .week-label { display: block; font-size: 12px; color: #999; margin-top: 3px; }
+  .week-icon { position: absolute; top: 0; right: 22px; font-size: 13px; opacity: .55; }
+  .week-divider { width: 1px; height: 40px; background: rgba(255,181,77,.25); }
+
+  /* ===== 饮水卡 ===== */
+  .water-card { background: linear-gradient(135deg,#e8f7ff,#f2fbff); border-color: rgba(77,158,255,.18); }
+  .water-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+  .water-nums { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+  .water-ml { font-size: 20px; font-weight: 800; color: #333; }
+  .water-cups { font-size: 15px; color: #4d9eff; font-weight: 600; }
+  .prog { height: 9px; background: #edf4f1; border-radius: 5px; overflow: hidden; }
+  .prog .in { width: 88%; height: 100%; background: linear-gradient(90deg,#66cdaa,#4cd964); border-radius: 5px; }
+  .water-bottom { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; }
+  .water-percent { font-size: 13px; color: #4d9eff; font-weight: 600; }
+  .drink-btn { width: 110px; text-align: center; font-size: 14px; font-weight: 700; color: #fff; background: linear-gradient(135deg,#7bdcb8,#66cdaa 50%,#4cd964); border-radius: 22px; padding: 7px 0; box-shadow: 0 4px 10px rgba(102,205,170,.35); }
+  .water-more { margin-top: 10px; text-align: center; font-size: 13px; color: #4d9eff; font-weight: 600; }
+
+  /* ===== TabBar ===== */
+  .tabbar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 375px; background: #fff; display: flex; border-top: 1px solid #eee; padding: 6px 0 calc(6px + env(safe-area-inset-bottom)); }
+  .tab { flex: 1; text-align: center; font-size: 10px; color: #999; }
+  .tab img { width: 24px; height: 24px; display: block; margin: 0 auto 2px; }
+  .tab.on { color: #66cdaa; }
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="statusbar"></div>
+  <div class="navbar">首页</div>
+  <div class="page">
+
+    <!-- 问候卡 -->
+    <div class="hello">
+      <div>
+        <div class="hi">Hi，小明 🐱</div>
+        <div class="sub">今天也要加油哦！</div>
+      </div>
+      <div class="ct" style="transform: scale(0.83)">
+        <div class="ct-inner float">
+          <div class="ct-tail"></div>
+          <div class="ct-body"><div class="ct-belly"></div></div>
+          <div class="ct-paw left"></div>
+          <div class="ct-paw right wave"></div>
+          <div class="ct-head">
+            <div class="ct-ear left"><div class="ct-ear-shape"></div><div class="ct-ear-in"></div></div>
+            <div class="ct-ear right"><div class="ct-ear-shape"></div><div class="ct-ear-in"></div></div>
+            <div class="ct-cap"></div>
+            <div class="ct-eye left"><div class="ct-gleam"></div></div>
+            <div class="ct-eye right"><div class="ct-gleam"></div></div>
+            <div class="ct-cheek left"></div><div class="ct-cheek right"></div>
+            <div class="ct-nose"></div><div class="ct-mouth"></div>
+          </div>
+        </div>
+      </div>
+      <div class="star s1">⭐</div><div class="star s2">✨</div>
+    </div>
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-top"><span class="hero-label">今日训练 · 星期一</span><span class="hero-goal">减脂</span></div>
+      <div class="hero-parts">胸 + 三头</div>
+      <div class="hero-meta"><span>4 个动作</span><span>约 60 分钟</span></div>
+      <div class="hero-btn">开始训练 🏋️</div>
+    </div>
+
+    <!-- 身体数据 -->
+    <div class="card">
+      <div class="card-title">我的身体数据</div>
+      <div class="body-row">
+        <div class="body-item"><span class="body-num">172</span><span class="body-label">身高 cm</span></div>
+        <div class="body-item"><span class="body-num">62</span><span class="body-label">体重 kg</span></div>
+        <div class="body-item"><span class="body-num green">21.0</span><span class="body-label">BMI（正常）</span></div>
+        <div class="body-item"><span class="body-num goal">减脂</span><span class="body-label">健身目标</span></div>
+      </div>
+      <div class="body-tip">BMI 仅作参考，不作为医疗诊断依据</div>
+    </div>
+
+    <!-- 本周概览 -->
+    <div class="card week-card">
+      <div class="card-title">本周概览 🐾</div>
+      <div class="week-row">
+        <div class="week-item"><span class="week-icon">🏋️</span><span class="week-num">4</span><span class="week-label">训练次数</span></div>
+        <div class="week-divider"></div>
+        <div class="week-item"><span class="week-icon">💧</span><span class="week-num green">5</span><span class="week-label">饮水达标天数</span></div>
+      </div>
+    </div>
+
+    <!-- 体重趋势 -->
+    <div class="card">
+      <div class="card-title">体重趋势</div>
+      <div style="display:flex;align-items:baseline;margin-bottom:8px"><span style="font-size:26px;font-weight:700;color:#333">62.0</span><span style="font-size:13px;color:#999;margin-left:3px">kg</span><span style="margin-left:10px;font-size:13px;font-weight:600;color:#ff9f1c;background:#fff3d6;border-radius:6px;padding:2px 7px">↓ 1.5 kg</span><span style="margin-left:6px;font-size:11px;color:#999">过去30天</span></div>
+      <div style="height:90px;background:linear-gradient(180deg,#eafbf4,#fff);border-radius:8px;display:flex;align-items:flex-end;padding:8px;gap:3px">
+        <div style="flex:1;height:60%;background:#9fe3c6;border-radius:3px"></div><div style="flex:1;height:55%;background:#9fe3c6;border-radius:3px"></div><div style="flex:1;height:63%;background:#9fe3c6;border-radius:3px"></div><div style="flex:1;height:58%;background:#9fe3c6;border-radius:3px"></div><div style="flex:1;height:50%;background:#9fe3c6;border-radius:3px"></div><div style="flex:1;height:45%;background:#66cdaa;border-radius:3px"></div><div style="flex:1;height:38%;background:#66cdaa;border-radius:3px"></div>
+      </div>
+      <div style="margin-top:10px;font-size:13px;color:#4d9eff;border:1px solid #4d9eff;border-radius:24px;padding:6px 0;text-align:center;font-weight:600">记录 / 查看体重 ›</div>
+    </div>
+
+    <!-- 饮水 -->
+    <div class="card water-card">
+      <div class="water-head">
+        <div class="card-title" style="margin-bottom:0">今日饮水 💧</div>
+        <div class="ct" style="transform: scale(0.62)">
+          <div class="ct-inner">
+            <div class="ct-tail"></div>
+            <div class="ct-body"><div class="ct-belly"></div><div class="ct-cup"><div class="ct-cup-rim"></div><div class="ct-cup-water"></div></div></div>
+            <div class="ct-paw left"></div>
+            <div class="ct-paw right"></div>
+            <div class="ct-head">
+              <div class="ct-ear left"><div class="ct-ear-shape"></div><div class="ct-ear-in"></div></div>
+              <div class="ct-ear right"><div class="ct-ear-shape"></div><div class="ct-ear-in"></div></div>
+              <div class="ct-cap"></div>
+              <div class="ct-eye left"><div class="ct-gleam"></div></div>
+              <div class="ct-eye right"><div class="ct-gleam"></div></div>
+              <div class="ct-cheek left"></div><div class="ct-cheek right"></div>
+              <div class="ct-nose"></div><div class="ct-mouth"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="water-nums"><span class="water-ml">1750 / 2000 ml</span><span class="water-cups">7 / 8 杯</span></div>
+      <div class="prog"><div class="in"></div></div>
+      <div class="water-bottom"><span class="water-percent">完成率 88%</span><div class="drink-btn">喝一杯 💧</div></div>
+      <div class="water-more">查看饮水详情 ›</div>
+    </div>
+  </div>
+
+  <div class="tabbar">
+    <div class="tab on"><img src="../assets/tabbar/home-active.png" alt="">首页</div>
+    <div class="tab"><img src="../assets/tabbar/dumbbell.png" alt="">训练</div>
+    <div class="tab"><img src="../assets/tabbar/sneaker.png" alt="">动作</div>
+    <div class="tab"><img src="../assets/tabbar/drop.png" alt="">饮水</div>
+    <div class="tab"><img src="../assets/tabbar/cat.png" alt="">我的</div>
+  </div>
+</div>
+</body>
+</html>

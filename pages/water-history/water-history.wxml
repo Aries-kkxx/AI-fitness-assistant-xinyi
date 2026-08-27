@@ -1,0 +1,50 @@
+<!-- pages/water-history/water-history.wxml - 饮水历史（卡通猫咪健身风格 · 新参考图 1:1 还原） -->
+<view class="page sky-bg">
+  <!-- 自定义导航栏 -->
+  <view class="nav-bar">
+    <view class="nav-back" bindtap="onBack">‹</view>
+    <text class="nav-title">饮水历史</text>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <!-- 加载中 -->
+  <view class="loading" wx:if="{{loading}}">加载中...</view>
+
+  <!-- 空状态 -->
+  <view class="empty" wx:elif="{{empty}}">
+    <cat-illustration pose="empty" size="200" />
+    <text class="empty-text">还没有饮水记录，快去喝杯水吧</text>
+    <view class="btn-primary empty-btn" bindtap="onGoWater">去记录</view>
+  </view>
+
+  <!-- 历史列表 -->
+  <block wx:else>
+    <view class="history-list">
+      <view class="history-card" wx:for="{{list}}" wx:key="date" bindtap="onGoDetail" data-date="{{item.date}}">
+        <view class="history-main">
+          <text class="history-date">{{item.date}}</text>
+          <view class="history-big">
+            <text class="history-num">{{item.total}}</text>
+            <text class="history-sep">/</text>
+            <text class="history-target">{{item.target}}ml</text>
+          </view>
+          <view class="history-meta">
+            <text class="history-cups">{{item.cups}} / {{item.dailyCups}} 杯</text>
+            <text class="history-rate">{{item.rate}}%</text>
+          </view>
+          <view class="history-progress">
+            <view class="progress-wrap">
+              <view class="progress-inner" style="width: {{item.rate}}%;"></view>
+            </view>
+          </view>
+        </view>
+        <view class="history-deco">
+          <image class="history-cup" src="/assets/icons/cup.png" mode="aspectFit" />
+          <image class="history-badge" src="/assets/icons/{{item.rate >= 100 ? 'star' : (item.rate >= 75 ? 'heart' : 'flame')}}.png" mode="aspectFit" />
+        </view>
+      </view>
+    </view>
+
+    <view class="load-more" wx:if="{{hasMore}}" bindtap="onLoadMore">加载更多 ›</view>
+  </block>
+</view>

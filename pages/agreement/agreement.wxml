@@ -1,0 +1,23 @@
+<!-- pages/agreement/agreement.wxml - 协议/隐私政策查看页（原生页，无需域名） -->
+<view class="agree-page">
+  <!-- 页头：猫咪 + 标题 -->
+  <view class="agree-header">
+    <image class="agree-cat" src="/assets/cat/cat-avatar.png" mode="aspectFit" />
+    <view class="agree-title">{{title}}</view>
+    <view class="agree-subtitle">{{subtitle}}</view>
+  </view>
+
+  <!-- 正文内容 -->
+  <view class="agree-body">
+    <view class="section" wx:for="{{sections}}" wx:key="heading">
+      <view class="heading">{{item.heading}}</view>
+      <view
+        class="para"
+        wx:for="{{item.paragraphs}}"
+        wx:for-item="p"
+        wx:key="*this">{{p}}</view>
+    </view>
+  </view>
+
+  <view class="agree-footer">健身小助手欣一 · 更新日期：2026 年 8 月</view>
+</view>

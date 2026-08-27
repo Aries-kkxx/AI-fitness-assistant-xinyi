@@ -11,10 +11,21 @@
     >{{item}}</view>
   </scroll-view>
 
+  <!-- 推荐栏说明 -->
+  <view class="rec-banner" wx:if="{{isRecommend && !noUser && recUser}}">
+    根据你的资料推荐：器械「{{recUser.equipment}}」· 经验「{{recUser.experience}}」· 目标「{{recUser.goal}}」
+  </view>
+
+  <!-- 推荐栏：未填资料引导 -->
+  <view class="card rec-guide" wx:if="{{isRecommend && noUser}}">
+    <view class="rec-guide-text">填写个人资料后，为你推荐适合你器械和经验的动作</view>
+    <view class="btn-outline rec-guide-btn" bindtap="onGoUserInfo">去填写资料</view>
+  </view>
+
   <!-- 动作列表 -->
   <view class="loading" wx:if="{{loading}}">加载中...</view>
   <block wx:else>
-    <view class="card ex-card" wx:for="{{exercises}}" wx:key="_id">
+    <view class="card ex-card" wx:for="{{exercises}}" wx:key="_id" bindtap="onGoHistory" data-id="{{item._id}}" data-name="{{item.name}}">
       <view class="ex-head">
         <text class="ex-name">{{item.name}}</text>
         <text class="tag tag-green">{{item.sets}}组 × {{item.reps}}{{item.repsUnit}}</text>
@@ -26,8 +37,13 @@
         <text class="tag tag-gray">{{item.equipment}}</text>
         <text class="tag tag-gray" wx:if="{{item.restSeconds > 0}}">组间休息 {{item.restSeconds}}s</text>
       </view>
+      <view class="ex-history-link">查看训练记录与个人最佳 ›</view>
     </view>
 
     <view class="empty" wx:if="{{exercises.length === 0}}">该分类暂无动作</view>
   </block>
 </view>
+
+<!-- 全局AI悬浮球 -->
+<float-ball />
+

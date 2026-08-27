@@ -1,0 +1,87 @@
+<!-- pages/week-plan-edit/week-plan-edit.wxml - 自定义周训练计划编辑页 -->
+<view class="page">
+
+  <view class="loading" wx:if="{{loading}}">加载中...</view>
+
+  <block wx:else>
+    <!-- 周几选择 -->
+    <view class="day-tabs">
+      <view
+        class="day-tab {{currentDay === index ? 'active' : ''}} {{days[index] && days[index].isRest ? 'rest' : ''}}"
+        wx:for="{{weekLabels}}"
+        wx:key="*this"
+        data-day="{{index}}"
+        bindtap="onDayTap"
+      >
+        {{item}}
+        <text class="day-count" wx:if="{{days[index] && !days[index].isRest && days[index].exercise_ids.length > 0}}">
+          {{days[index].exercise_ids.length}}
+        </text>
+      </view>
+    </view>
+
+    <!-- 当天编辑区 -->
+    <view class="card edit-card">
+      <view class="edit-head">
+        <text class="edit-title">{{weekLabels[currentDay]}}的训练</text>
+        <view class="edit-tools">
+          <text class="clear-all" bindtap="onClearAll">清空所有</text>
+          <view class="rest-switch">
+            <text class="rest-label">设为休息</text>
+            <switch checked="{{days[currentDay].isRest}}" bindchange="onRestChange" color="#ffb54d" />
+          </view>
+        </view>
+      </view>
+
+      <block wx:if="{{days[currentDay].isRest}}">
+        <view class="rest-tip">{{weekLabels[currentDay]}}已设为休息日，不安排训练</view>
+      </block>
+
+      <block wx:else>
+        <!-- 已选摘要 -->
+        <view class="selected-bar">
+          <text class="selected-text">已选 {{selectedIds.length}} 个动作</text>
+          <text class="selected-clear" wx:if="{{selectedIds.length > 0}}" bindtap="onToggleExercise" data-id="__clear__">清空</text>
+        </view>
+
+        <!-- 分类筛选 -->
+        <scroll-view class="cats" scroll-x="true" enhanced="true" show-scrollbar="false">
+          <view
+            class="cat {{activeCat === index ? 'active' : ''}}"
+            wx:for="{{categories}}"
+            wx:key="*this"
+            data-index="{{index}}"
+            bindtap="onCatChange"
+          >{{item}}</view>
+        </scroll-view>
+
+        <!-- 动作勾选列表 -->
+        <view class="ex-check" wx:for="{{catExercises}}" wx:key="_id" data-id="{{item._id}}" bindtap="onToggleExercise">
+          <view class="ex-check-info">
+            <text class="ex-check-name">{{item.name}}</text>
+            <view class="ex-check-tags">
+              <text class="tag tag-green">{{item.recommended_sets}}组 × {{item.recommended_reps}}{{item.reps_unit || '次'}}</text>
+              <text class="tag tag-gray">{{item.difficulty}}</text>
+              <text class="tag tag-gray">{{item.equipment}}</text>
+            </view>
+          </view>
+          <view class="check-box {{item.selected ? 'checked' : ''}}">{{item.selected ? '✓' : ''}}</view>
+        </view>
+
+        <view class="empty" wx:if="{{catExercises.length === 0}}">该分类暂无动作</view>
+      </block>
+    </view>
+
+    <!-- 初始来源提示 -->
+    <view class="plan-source-tip" wx:if="{{planSource === 'custom'}}">已加载你的自定义计划，可直接修改后保存</view>
+    <view class="plan-source-tip" wx:elif="{{planSource === 'recommend'}}">已按智能推荐预填（基于你的资料），可在此基础上增删修改</view>
+
+    <!-- 保存（固定底部，滚动不跟随） -->
+    <view class="save-bar">
+      <view class="btn-primary save-btn {{saving ? 'disabled' : ''}}" bindtap="onSave">
+        {{saving ? '保存中...' : '保存计划'}}
+      </view>
+    </view>
+  </block>
+</view>
+

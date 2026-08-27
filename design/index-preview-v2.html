@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI 健身助手 · 首页 UI 预览 V2</title>
+<style>
+  :root{
+    --orange:#FFB54D; --orange-deep:#FF9F1C; --green:#66CDAA; --green-bright:#4CD964; --blue:#4D9EFF;
+    --bg:#F7F8FA; --sky:#E8F7FF; --text:#222; --sub:#888; --card:#fff;
+    --radius:32px; --pill:999px;
+    --shadow:0 8px 24px rgba(31,74,58,.06),0 2px 6px rgba(31,74,58,.04);
+  }
+  *{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;}
+  body{margin:0;background:linear-gradient(180deg,#E8F7FF 0%,#F7F8FA 40%);color:var(--text);padding:24px 20px 40px;max-width:420px;margin:0 auto;min-height:100vh;}
+  .hello{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-top:8px;}
+  .hello h1{font-size:30px;margin:0;display:flex;align-items:center;gap:6px;}
+  .hello h1 img{width:28px;height:28px;}
+  .hello p{color:#888;font-size:16px;margin:6px 0 0;}
+  .hello>img:last-child{width:120px;height:120px;}
+  .card{background:var(--card);border-radius:var(--radius);padding:22px;margin-bottom:20px;box-shadow:var(--shadow);}
+  .hero{display:flex;justify-content:space-between;}
+  .hero-main{display:flex;flex-direction:column;justify-content:space-between;flex:1;}
+  .hero .label{color:#666;font-size:15px;margin-bottom:6px;}
+  .hero .parts{font-size:34px;font-weight:800;margin:6px 0;}
+  .hero .meta{color:#999;font-size:14px;margin-bottom:18px;}
+  .hero .btn{width:160px;height:46px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#FFB54D,#FF9F1C);color:#fff;font-weight:700;border-radius:var(--pill);box-shadow:0 6px 16px rgba(255,159,28,.25);}
+  .hero-deco{position:relative;width:120px;height:170px;}
+  .hero-deco img{position:absolute;right:0;bottom:0;width:110px;height:110px;}
+  .hero-deco .plant{position:absolute;right:10px;bottom:90px;width:56px;height:56px;}
+  .water-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+  .water-head .t{font-size:20px;font-weight:700;}
+  .water-head img{width:70px;height:70px;}
+  .water-big{display:flex;align-items:baseline;margin-bottom:14px;}
+  .water-big b{font-size:54px;line-height:1;}
+  .water-big span{font-size:22px;color:#999;margin-left:4px;}
+  .water-progress-row{display:flex;align-items:center;margin-bottom:10px;}
+  .progress{flex:1;height:12px;background:#eee;border-radius:var(--pill);overflow:hidden;}
+  .progress i{display:block;height:100%;background:linear-gradient(90deg,#66CDAA,#4CD964);width:88%;}
+  .water-percent{font-weight:700;margin-left:14px;}
+  .water-cups{color:#666;font-weight:600;margin-bottom:18px;}
+  .actions{display:flex;gap:14px;}
+  .btn-green{flex:1;height:46px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#66CDAA,#4CD964);color:#fff;font-weight:700;border-radius:var(--pill);box-shadow:0 6px 16px rgba(76,217,100,.25);}
+  .btn-blue{flex:1;height:46px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#4D9EFF,#2B7BBD);color:#fff;font-weight:700;border-radius:var(--pill);box-shadow:0 6px 16px rgba(77,158,255,.25);}
+  .week{display:flex;justify-content:space-between;align-items:center;}
+  .week .t{font-size:20px;font-weight:700;margin-bottom:10px;display:block;}
+  .week .line{color:#666;font-weight:600;margin-bottom:6px;display:block;}
+  .week img{width:100px;height:100px;}
+</style>
+</head>
+<body>
+  <div class="hello">
+    <div>
+      <h1>Hi，小明 <img src="../assets/icons/star.png"/></h1>
+      <p>今天也要加油哦！</p>
+    </div>
+    <img src="../assets/cat/cat-home.png"/>
+  </div>
+
+  <div class="card hero">
+    <div class="hero-main">
+      <div>
+        <div class="label">今日训练</div>
+        <div class="parts">胸 + 三头</div>
+        <div class="meta">4 个动作 · 约 60 分钟</div>
+      </div>
+      <div class="btn">开始训练 ›</div>
+    </div>
+    <div class="hero-deco">
+      <img class="plant" src="../assets/icons/calendar-check.png"/>
+      <img src="../assets/cat/cat-workout.png"/>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="water-head">
+      <span class="t">今日饮水 💧</span>
+      <img src="../assets/cat/cat-water.png"/>
+    </div>
+    <div class="water-big"><b>1750</b><span>/ 2000ml</span></div>
+    <div class="water-progress-row">
+      <div class="progress"><i></i></div>
+      <span class="water-percent">88%</span>
+    </div>
+    <div class="water-cups">7 / 8 杯</div>
+    <div class="actions">
+      <div class="btn-green">喝一杯</div>
+      <div class="btn-blue">添加记录</div>
+    </div>
+  </div>
+
+  <div class="card week">
+    <div>
+      <span class="t">本周概览</span>
+      <span class="line">训练 4 次</span>
+      <span class="line">饮水达标 5 天</span>
+    </div>
+    <img src="../assets/cat/cat-calendar.png"/>
+  </div>
+</body>
+</html>

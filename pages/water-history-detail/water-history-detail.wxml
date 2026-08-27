@@ -1,0 +1,53 @@
+<!-- pages/water-history-detail/water-history-detail.wxml - 饮水历史详情页 -->
+<view class="page">
+
+  <view class="loading" wx:if="{{loading}}">加载中...</view>
+
+  <block wx:elif="{{stats}}">
+    <!-- 当天统计卡片 -->
+    <view class="card">
+      <view class="card-title">{{date}}</view>
+      <view class="detail-row">
+        <view class="detail-item">
+          <text class="detail-num">{{stats.total}} / {{stats.target}}</text>
+          <text class="detail-label">实际饮水 / 目标 ml</text>
+        </view>
+        <view class="detail-item">
+          <text class="detail-num">{{stats.cups}} / {{stats.targetCups}}</text>
+          <text class="detail-label">杯数 / 目标</text>
+        </view>
+        <view class="detail-item">
+          <text class="detail-num green">{{stats.rate}}%</text>
+          <text class="detail-label">完成率</text>
+        </view>
+      </view>
+      <view class="progress-wrap">
+        <view class="progress-inner" style="width: {{stats.rate > 100 ? 100 : stats.rate}}%;"></view>
+      </view>
+      <view class="status-tip {{stats.status === '已完成' ? 'done' : (stats.status === '进行中' ? 'going' : 'todo')}}">
+        {{stats.status}}
+      </view>
+    </view>
+
+    <!-- 当天饮水明细 -->
+    <view class="card">
+      <view class="card-title">饮水明细（{{stats.records.length}} 条）</view>
+
+      <block wx:if="{{stats.records.length > 0}}">
+        <view class="record-row" wx:for="{{stats.records}}" wx:key="_id">
+          <text class="record-time">{{item.drink_time}}</text>
+          <view class="record-info">
+            <text class="record-ml">{{item.amount_ml}}ml</text>
+            <text class="record-type">{{item.drink_type}}</text>
+            <text class="record-remark" wx:if="{{item.remark}}">{{item.remark}}</text>
+          </view>
+          <view class="record-del" data-id="{{item._id}}" catchtap="onDelete">删除</view>
+        </view>
+      </block>
+      <view class="empty" wx:else>当天暂无记录</view>
+    </view>
+
+    <view class="btn-outline back-btn" bindtap="onGoWater">去记录今天的饮水</view>
+  </block>
+</view>
+

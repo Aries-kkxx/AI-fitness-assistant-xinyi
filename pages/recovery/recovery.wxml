@@ -1,0 +1,107 @@
+<!-- pages/recovery/recovery.wxml - 每日身体状态记录（极简交互） -->
+<view class="page sky-bg">
+
+  <!-- 自定义导航栏 -->
+  <view class="nav-bar">
+    <view class="nav-back" bindtap="onBack">‹</view>
+    <text class="nav-title">每日状态</text>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <view class="loading" wx:if="{{loading}}">加载中...</view>
+
+  <block wx:else>
+    <!-- 今日记录卡 -->
+    <view class="card form-card">
+      <view class="form-head">
+        <view class="form-title-wrap">
+          <text class="form-title">{{isToday ? '今天的状态' : '编辑 ' + currentDate}}</text>
+          <text class="form-sub">{{isToday ? '10 秒快速记录' : '修改后保存将覆盖该天记录'}}</text>
+        </view>
+        <view class="back-today" wx:if="{{!isToday}}" bindtap="onBackToToday">回到今天</view>
+      </view>
+
+      <!-- 睡眠质量 -->
+      <view class="score-item">
+        <view class="score-head">
+          <text class="score-label">睡眠质量</text>
+          <text class="score-text">{{texts.sleepText}}</text>
+        </view>
+        <slider class="score-slider" min="1" max="5" step="1" value="{{form.sleepQuality}}" activeColor="#FFB54D" backgroundColor="#F2F2F2" block-size="22" data-key="sleepQuality" bindchange="onSliderChange" />
+      </view>
+
+      <!-- 疲劳程度 -->
+      <view class="score-item">
+        <view class="score-head">
+          <text class="score-label">疲劳程度</text>
+          <text class="score-text">{{texts.fatigueText}}</text>
+        </view>
+        <slider class="score-slider" min="1" max="5" step="1" value="{{form.fatigue}}" activeColor="#FFB54D" backgroundColor="#F2F2F2" block-size="22" data-key="fatigue" bindchange="onSliderChange" />
+      </view>
+
+      <!-- 肌肉酸痛 -->
+      <view class="score-item">
+        <view class="score-head">
+          <text class="score-label">肌肉酸痛</text>
+          <text class="score-text">{{texts.sorenessText}}</text>
+        </view>
+        <slider class="score-slider" min="1" max="5" step="1" value="{{form.soreness}}" activeColor="#FFB54D" backgroundColor="#F2F2F2" block-size="22" data-key="soreness" bindchange="onSliderChange" />
+      </view>
+
+      <!-- 训练意愿 -->
+      <view class="score-item">
+        <view class="score-head">
+          <text class="score-label">训练意愿</text>
+          <text class="score-text">{{texts.motivationText}}</text>
+        </view>
+        <slider class="score-slider" min="1" max="5" step="1" value="{{form.motivation}}" activeColor="#FFB54D" backgroundColor="#F2F2F2" block-size="22" data-key="motivation" bindchange="onSliderChange" />
+      </view>
+
+      <!-- 今日身体状态 -->
+      <view class="score-item">
+        <view class="score-head">
+          <text class="score-label">今日身体状态</text>
+          <text class="score-text">{{texts.bodyText}}</text>
+        </view>
+        <slider class="score-slider" min="1" max="5" step="1" value="{{form.bodyStatus}}" activeColor="#4D9EFF" backgroundColor="#F2F2F2" block-size="22" data-key="bodyStatus" bindchange="onSliderChange" />
+      </view>
+
+      <!-- 备注 -->
+      <view class="note-row">
+        <textarea
+          class="note-input"
+          placeholder="备注（可选，如：昨晚没睡好 / 膝盖有点酸 / 加班很累）"
+          value="{{form.note}}"
+          bindinput="onNoteInput"
+          maxlength="200"
+          auto-height
+        />
+      </view>
+
+      <view class="form-actions">
+        <view class="btn-primary save-btn" bindtap="onSave">保存</view>
+        <view class="btn-delete" wx:if="{{hasCurrent}}" bindtap="onDelete">删除当天</view>
+      </view>
+    </view>
+
+    <!-- 历史记录 -->
+    <view class="card history-card">
+      <view class="form-title-wrap">
+        <text class="form-title">历史记录</text>
+        <text class="form-sub">点击可修改 · 共 {{history.length}} 条</text>
+      </view>
+
+      <view class="his-empty" wx:if="{{history.length === 0}}">还没有记录，今天开始记录你的身体状态吧</view>
+
+      <view class="his-item" wx:for="{{history}}" wx:key="date" data-date="{{item.date}}" bindtap="onEditHistory">
+        <view class="his-info">
+          <text class="his-date">{{item.date}}</text>
+          <text class="his-summary">{{item.summary}}</text>
+          <text class="his-body" wx:if="{{item.body}}">身体状态 · {{item.body}}</text>
+          <text class="his-note" wx:if="{{item.note}}">备注：{{item.note}}</text>
+        </view>
+        <view class="his-del" catchtap="onDeleteHistory" data-date="{{item.date}}">删除</view>
+      </view>
+    </view>
+  </block>
+</view>

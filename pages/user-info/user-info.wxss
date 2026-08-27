@@ -1,7 +1,7 @@
 /* pages/user-info/user-info.wxss - 用户信息设置页样式 */
 
 .page {
-  padding: 30rpx;
+  padding: 30rpx 30rpx 200rpx; /* 底部预留固定保存栏空间 */
 }
 
 /* 表单一行 */
@@ -23,16 +23,34 @@
   flex-shrink: 0;
 }
 
-.form-value {
+.form-value,
+.form-input {
   font-size: 30rpx;
-  color: #07c160;
+  text-align: right;
+  width: 380rpx;
+  line-height: 42rpx;
+  min-height: 42rpx;
+}
+
+.form-value {
+  color: #ff9f1c;
+  font-weight: 600;
+}
+
+/* 与输入框样式一致：深灰色、常规字重 */
+.form-value-plain {
+  color: #333333;
+  font-weight: 400;
 }
 
 .form-input {
-  font-size: 30rpx;
   color: #333333;
-  text-align: right;
-  width: 380rpx;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  height: 42rpx;
 }
 
 /* BMI 预览行 */
@@ -50,8 +68,8 @@
 
 .bmi-value {
   font-size: 30rpx;
-  font-weight: 600;
-  color: #07c160;
+  font-weight: 700;
+  color: #ff9f1c;
 }
 
 .bmi-tip {
@@ -59,7 +77,18 @@
   color: #bbbbbb;
 }
 
-/* 保存按钮 */
+/* 固定底部保存栏（滚动不跟随） */
+.save-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ffffff;
+  padding: 16rpx 30rpx calc(16rpx + env(safe-area-inset-bottom));
+  box-shadow: 0 -4rpx 16rpx rgba(0, 0, 0, 0.06);
+  z-index: 100;
+}
+
 .save-btn {
-  margin-top: 40rpx;
+  margin-top: 0;
 }

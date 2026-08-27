@@ -3,7 +3,7 @@
 
   <!-- 未填资料提示条 -->
   <view class="banner" wx:if="{{!hasUser}}" bindtap="onGoUserInfo">
-    建议先填写个人资料，AI 推荐会更精准 → 去填写
+    建议先填写个人资料，欣一推荐会更精准 → 去填写
   </view>
 
   <!-- 消息列表 -->
@@ -54,7 +54,7 @@
       bindinput="onInput"
       confirm-type="send"
       bindconfirm="onSend"
-      placeholder="问问 AI 教练..."
+      placeholder="问问 欣一..."
       disabled="{{sending}}"
     />
     <view class="send-btn {{sending ? 'disabled' : ''}}" bindtap="onSend">

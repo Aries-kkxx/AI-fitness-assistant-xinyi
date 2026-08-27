@@ -1,0 +1,39 @@
+<!-- pages/login/login.wxml - 欢迎页（无需登录，勾选协议后进入小程序） -->
+<view class="login-page">
+  <!-- 1. 小程序 Logo（复用现有猫咪健身素材，不新增二进制） -->
+  <view class="logo-wrap">
+    <image class="logo" src="/assets/cat/cat-avatar.png" mode="aspectFit" />
+  </view>
+
+  <!-- 2. 小程序名称 -->
+  <view class="app-name">健身小助手欣一</view>
+  <view class="app-slogan">开启你的专属健身计划</view>
+
+  <!-- 进入提示 -->
+  <view class="status-tip">请先阅读并勾选下方协议，再点击「进入小程序」</view>
+
+  <!-- 6. 进入小程序按钮（需先同意协议） -->
+  <button
+    class="btn-primary btn-block login-btn {{agreed ? '' : 'disabled'}}"
+    bindtap="onEnter">
+    进入小程序
+  </button>
+
+  <!-- 3/4/5. 用户协议 + 隐私政策 + 协议勾选框（无背景框，紧贴底部） -->
+  <view class="agreement-bottom">
+    <view class="agree-row" bindtap="onToggleAgree">
+      <view class="checkbox {{agreed ? 'checked' : ''}}">
+        <text wx:if="{{agreed}}" class="check-mark">✓</text>
+      </view>
+      <view class="agree-text">
+        我已阅读并同意
+        <text class="link" catchtap="onOpenTerms">《用户协议》</text>
+        和
+        <text class="link" catchtap="onOpenPrivacy">《隐私政策》</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部提示（页面最下方，安全区上方） -->
+  <view class="tip">开启即表示你已同意《用户协议》与《隐私政策》</view>
+</view>

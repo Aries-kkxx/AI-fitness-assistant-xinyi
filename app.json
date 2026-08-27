@@ -1,51 +1,79 @@
 {
   "pages": [
+    "pages/login/login",
+    "pages/agreement/agreement",
     "pages/index/index",
     "pages/workout/workout",
+    "pages/workout-detail/workout-detail",
     "pages/exercise/exercise",
     "pages/water/water",
     "pages/profile/profile",
     "pages/water-setting/water-setting",
     "pages/water-add/water-add",
     "pages/user-info/user-info",
-    "pages/ai/ai"
+    "pages/ai/ai",
+    "pages/weight/weight",
+    "pages/stats/stats",
+    "pages/water-history/water-history",
+    "pages/water-history-detail/water-history-detail",
+    "pages/week-plan-edit/week-plan-edit",
+    "pages/exercise-history/exercise-history",
+    "pages/recovery/recovery",
+    "pages/fitness-memory/fitness-memory",
+    "pages/cycle/cycle",
+    "pages/cycle-create/cycle-create",
+    "pages/body-measure/body-measure",
+    "pages/data-manage/data-manage"
   ],
   "window": {
-    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarBackgroundColor": "#f8fbfa",
     "navigationBarTitleText": "AI健身助手",
     "navigationBarTextStyle": "black",
-    "backgroundColor": "#f7f8fa",
+    "backgroundColor": "#f8fbfa",
     "backgroundTextStyle": "light"
   },
   "tabBar": {
-    "color": "#999999",
-    "selectedColor": "#07c160",
+    "color": "#888888",
+    "selectedColor": "#4CD964",
     "backgroundColor": "#ffffff",
-    "borderStyle": "black",
+    "borderStyle": "white",
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "首页"
+        "text": "首页",
+        "iconPath": "assets/tabbar/home-inactive.png",
+        "selectedIconPath": "assets/tabbar/home-active.png"
       },
       {
         "pagePath": "pages/workout/workout",
-        "text": "训练"
+        "text": "训练",
+        "iconPath": "assets/tabbar/workout-inactive.png",
+        "selectedIconPath": "assets/tabbar/workout-active.png"
       },
       {
         "pagePath": "pages/exercise/exercise",
-        "text": "动作"
+        "text": "动作",
+        "iconPath": "assets/tabbar/exercise-inactive.png",
+        "selectedIconPath": "assets/tabbar/exercise-active.png"
       },
       {
         "pagePath": "pages/water/water",
-        "text": "饮水"
+        "text": "饮水",
+        "iconPath": "assets/tabbar/water-inactive.png",
+        "selectedIconPath": "assets/tabbar/water-active.png"
       },
       {
         "pagePath": "pages/profile/profile",
-        "text": "我的"
+        "text": "我的",
+        "iconPath": "assets/tabbar/profile-inactive.png",
+        "selectedIconPath": "assets/tabbar/profile-active.png"
       }
     ]
   },
   "style": "v2",
   "lazyCodeLoading": "requiredComponents",
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "usingComponents": {
+    "float-ball": "/components/float-ball/float-ball"
+  }
 }

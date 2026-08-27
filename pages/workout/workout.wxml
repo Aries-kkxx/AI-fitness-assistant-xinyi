@@ -1,5 +1,5 @@
-<!-- pages/workout/workout.wxml - 训练页 -->
-<view class="page">
+<!-- pages/workout/workout.wxml - 训练页（卡通猫咪健身风格 · 新参考图 1:1 还原） -->
+<view class="page sky-bg">
 
   <!-- 加载中 -->
   <view class="loading" wx:if="{{loading}}">加载中...</view>
@@ -13,50 +13,121 @@
     </view>
   </block>
 
-  <!-- 已填写资料：展示推荐结果 -->
+  <!-- 已填写资料 -->
   <block wx:else>
-    <!-- 今日训练卡片 -->
-    <view class="card today-card">
-      <view class="card-title">{{workout.isRestDay ? '今日休息' : '今日训练 · ' + workout.weekday}}</view>
-
-      <block wx:if="{{workout.isRestDay}}">
-        <view class="rest-tip">今天是休息日，好好恢复，明天再战！💪</view>
-      </block>
-
-      <block wx:else>
-        <view class="today-parts">{{workout.partsText}}</view>
-        <view class="today-meta">
-          <text class="meta-item">目标：{{workout.goal}}</text>
-          <text class="meta-item">{{workout.count}} 个动作</text>
-          <text class="meta-item">约 {{workout.totalMinutes}} 分钟</text>
-        </view>
-
-        <!-- 动作列表 -->
-        <view class="ex-item" wx:for="{{workout.exercises}}" wx:key="name">
-          <view class="ex-info">
-            <text class="ex-name">{{index + 1}}. {{item.name}}</text>
-            <view class="ex-tags">
-              <text class="tag tag-green">{{item.sets}}组 × {{item.reps}}{{item.repsUnit}}</text>
-              <text class="tag tag-gray">{{item.difficulty}}</text>
-              <text class="tag tag-gray">{{item.equipment}}</text>
-            </view>
-          </view>
-          <text class="ex-rest" wx:if="{{item.restSeconds > 0}}">休息{{item.restSeconds}}s</text>
-        </view>
-
-        <view class="source-tip">动作来自动作库，点击下方可查看全部动作</view>
-        <view class="btn-outline ex-btn" bindtap="onGoExercises">查看动作库</view>
-      </block>
+    <!-- 顶部标题区 -->
+    <view class="page-header">
+      <text class="page-title">训练</text>
+      <view class="header-deco">
+        <cat-illustration pose="success" size="200" class="header-cat" />
+      </view>
     </view>
 
-    <!-- 本周计划卡片 -->
-    <view class="card week-card">
-      <view class="card-title">本周训练计划</view>
-      <view class="week-row" wx:for="{{weekPlan}}" wx:key="weekday">
-        <text class="week-day {{item.isToday ? 'active' : ''}}">{{item.weekday}}</text>
-        <text class="week-parts {{item.isRest ? 'rest' : ''}}">{{item.partsText}}</text>
-        <text class="week-today" wx:if="{{item.isToday}}">今天</text>
+    <!-- 本周计划 -->
+    <view class="week-plan">
+      <view class="week-day-item {{item.isToday ? 'today' : ''}} {{item.done ? 'done' : ''}}" wx:for="{{weekPlan}}" wx:key="weekday">
+        <text class="week-day-name">{{item.weekday}}</text>
+        <view class="week-day-dot">
+          <image wx:if="{{item.done}}" class="week-check" src="/assets/icons/calendar-check.png" mode="aspectFit" />
+        </view>
       </view>
+    </view>
+
+    <!-- 今日训练卡片 -->
+    <view class="card today-card {{workout.isRestDay ? 'rest' : ''}}">
+      <view class="today-main">
+        <text class="today-label">{{workout.isRestDay ? '今天 · ' + workout.weekday : '今天 · ' + workout.weekday}}</text>
+        <block wx:if="{{workout.isRestDay}}">
+          <text class="today-parts">休息日</text>
+          <text class="today-meta">好好恢复，明天再战 💪</text>
+        </block>
+        <block wx:else>
+          <text class="today-parts">{{workout.partsText}}</text>
+          <view class="today-meta">
+            <text>{{workout.count}} 个动作</text>
+            <text class="today-dot">·</text>
+            <text>约 {{workout.totalMinutes}} 分钟</text>
+          </view>
+        </block>
+      </view>
+      <cat-illustration pose="workout" size="190" class="today-cat" />
+    </view>
+
+    <!-- 训练周期横幅 -->
+    <view class="cycle-banner" wx:if="{{cycleInfo}}" bindtap="onGoCycle">
+      <view class="cycle-banner-text">
+        <text class="cycle-banner-title">🗓️ 周期计划 · 第 {{cycleInfo.currentWeek}} / {{cycleInfo.totalWeeks}} 周</text>
+        <text class="cycle-banner-sub" wx:if="{{cycleInfo.deload}}">本周减量周：降低重量与组数，促进恢复</text>
+        <text class="cycle-banner-sub" wx:else>{{cycleInfo.name}} · 训练中</text>
+      </view>
+      <view class="cycle-banner-btn">查看 ›</view>
+    </view>
+
+    <!-- 未完成训练草稿：自动保存兜底，回来继续 -->
+    <view class="resume-card" wx:if="{{hasDraft}}" bindtap="onResumeTraining">
+      <view class="resume-text">
+        <text class="resume-title">有未完成的训练记录</text>
+        <text class="resume-sub" wx:if="{{draftCount > 0}}">已记录 {{draftCount}} 个动作，点击继续训练</text>
+        <text class="resume-sub" wx:else>点击继续上次训练</text>
+      </view>
+      <view class="resume-btn">继续 ›</view>
+    </view>
+
+    <!-- 未完成 / 已完成 Tab -->
+    <view class="filter-row" wx:if="{{!workout.isRestDay}}">
+      <view class="filter-tab {{filter === 'pending' ? 'active' : ''}}" data-filter="pending" bindtap="onFilterChange">
+        未完成 ({{workout.count - completedCount}})
+      </view>
+      <view class="filter-tab {{filter === 'done' ? 'active' : ''}}" data-filter="done" bindtap="onFilterChange">
+        已完成 ({{completedCount}})
+      </view>
+    </view>
+
+    <!-- 开始训练：力量训练记录（重量/次数/RPE/组间休息/计时器） -->
+    <view class="start-training" wx:if="{{!workout.isRestDay}}" bindtap="onStartTraining">
+      <text class="start-training-text">开始训练</text>
+      <text class="start-training-sub">记录重量 · 次数 · RPE</text>
+    </view>
+
+    <!-- 动作列表 -->
+    <view class="ex-list" wx:if="{{!workout.isRestDay}}">
+      <view class="ex-card {{completedMap[item._id] ? 'done' : ''}}" wx:for="{{showExercises}}" wx:key="_id" bindtap="onGoDetail" data-id="{{item._id}}">
+        <view class="ex-info">
+          <text class="ex-index">{{index + 1}}</text>
+          <view class="ex-text">
+            <text class="ex-name">{{item.name}}</text>
+            <text class="ex-tags">{{item.sets}}组 × {{item.reps}}{{item.repsUnit}}</text>
+            <text class="ex-record" wx:if="{{completedMap[item._id] && completedMap[item._id].setsText}}">{{completedMap[item._id].setsText}}</text>
+          </view>
+        </view>
+        <view class="ex-status {{completedMap[item._id] ? 'done' : 'pending'}}" catchtap="onToggleStatus" data-id="{{item._id}}">
+          {{completedMap[item._id] ? '已完成' : '未完成'}}
+        </view>
+      </view>
+
+      <view class="empty" wx:if="{{showExercises.length === 0}}">
+        <cat-illustration pose="empty" size="160" />
+        <text class="empty-text">{{filter === 'done' ? '还没有完成任何动作，快去训练吧' : '太棒了，今日动作已全部完成！'}}</text>
+      </view>
+    </view>
+
+    <!-- 全部完成提示 -->
+    <view class="done-card" wx:if="{{completedCount === workout.count && workout.count > 0}}">
+      <view class="done-text">
+        <text class="done-title">坚持就是胜利！🔥</text>
+        <text class="done-sub">你今天已经很棒了！</text>
+      </view>
+      <cat-illustration pose="home" size="120" />
+    </view>
+
+    <!-- 底部操作 -->
+    <view class="bottom-actions" wx:if="{{!workout.isRestDay}}">
+      <view class="btn-outline" bindtap="onEditPlan">编辑计划</view>
+      <view class="btn-outline" bindtap="onSmartRecommend">智能推荐</view>
     </view>
   </block>
 </view>
+
+<!-- 全局AI悬浮球 -->
+<float-ball />
+

@@ -1,8 +1,46 @@
 {
   "description": "AI健身助手微信小程序",
   "packOptions": {
-    "ignore": [],
-    "include": []
+    "ignore": [
+      {
+        "type": "folder",
+        "value": "design"
+      },
+      {
+        "type": "folder",
+        "value": "tools"
+      },
+      {
+        "type": "folder",
+        "value": "docs"
+      },
+      {
+        "type": "folder",
+        "value": ".workbuddy"
+      },
+      {
+        "type": "folder",
+        "value": ".git"
+      },
+      {
+        "type": "file",
+        "value": "PROJECT_README.md"
+      },
+      {
+        "type": "file",
+        "value": "PROJECT_REQUIREMENTS.md"
+      },
+      {
+        "type": "file",
+        "value": "UI_REFACTOR_PLAN.md"
+      }
+    ],
+    "include": [
+      {
+        "type": "folder",
+        "value": "assets/cat"
+      }
+    ]
   },
   "setting": {
     "urlCheck": true,
@@ -43,7 +81,7 @@
     "useCompilerPlugins": false,
     "compileWorklet": false,
     "localPlugins": false,
-    "condition": false,
+    "condition": true,
     "swc": false,
     "disableSWC": true
   },
@@ -57,5 +95,8 @@
     "tabIndent": "insertSpaces",
     "tabSize": 2
   },
-  "simulatorPluginLibVersion": {}
+  "simulatorPluginLibVersion": {
+    "wxext14566970e7e9f62": "2.27.3"
+  },
+  "projectArchitecture": "multiPlatform"
 }

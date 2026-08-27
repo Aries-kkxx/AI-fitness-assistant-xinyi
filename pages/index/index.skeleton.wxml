@@ -1,0 +1,70 @@
+<!--
+此文件为开发者工具生成，生成时间: 2026/8/18下午4:09:39
+使用方法：
+在 E:\Sport\pages\index\index.wxml 引入模板
+
+```
+<import src="index.skeleton.wxml"/>
+<template is="skeleton" wx:if="{{loading}}" />
+```
+
+在 E:\Sport\pages\index\index.wxss 中引入样式
+```
+@import "./index.skeleton.wxss";
+```
+
+更多详细信息可以参考文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/skeleton.html
+-->
+<template name="skeleton">
+  <view class="sk-container">
+    <view class="page">
+      <view class="hero-card sk-image">
+        <view class="hero-top">
+          <text class="hero-label sk-transparent sk-text-18-7500-162 sk-text">今日训练 · 周二</text>
+          <text class="hero-goal sk-transparent sk-text-18-7500-970 sk-text">减脂</text>
+        </view>
+        <text class="hero-parts sk-transparent sk-text-18-7500-400 sk-text">背 + 二头</text>
+        <view class="hero-meta">
+          <text class="sk-transparent sk-text-18-7500-737 sk-text">4 个动作</text>
+          <text class="sk-transparent sk-text-18-7500-82 sk-text">约 60 分钟</text>
+        </view>
+        <view class="hero-btn sk-transparent sk-text-18-7500-956 sk-text">查看今日训练 →</view>
+      </view>
+      <view class="card body-card">
+        <view class="card-title sk-transparent sk-text-18-7500-168 sk-text">我的身体数据</view>
+        <view class="body-row">
+          <view class="body-item">
+            <text class="body-num sk-transparent sk-text-18-7500-8 sk-text" style="background-position-x: 50%;">180</text>
+            <text class="body-label sk-transparent sk-text-18-7500-873 sk-text" style="background-position-x: 50%;">身高 cm</text>
+          </view>
+          <view class="body-item">
+            <text class="body-num sk-transparent sk-text-18-7500-46 sk-text" style="background-position-x: 50%;">75</text>
+            <text class="body-label sk-transparent sk-text-18-7500-225 sk-text" style="background-position-x: 50%;">体重 kg</text>
+          </view>
+          <view class="body-item">
+            <text class="body-num green sk-transparent sk-text-18-7500-207 sk-text" style="background-position-x: 50%;">23.1</text>
+            <text class="body-label sk-transparent sk-text-18-7500-927 sk-text" style="background-position-x: 50%;">BMI（正常）</text>
+          </view>
+          <view class="body-item">
+            <text class="body-num goal sk-transparent sk-text-18-7500-551 sk-text" style="background-position-x: 50%;">减脂</text>
+            <text class="body-label sk-transparent sk-text-18-7500-655 sk-text" style="background-position-x: 50%;">健身目标</text>
+          </view>
+        </view>
+        <view class="body-tip sk-transparent sk-text-18-7500-559 sk-text" style="background-position-x: 50%;">BMI 仅作参考，不作为医疗诊断依据</view>
+      </view>
+      <view class="card weight-card">
+        <view class="card-title sk-transparent sk-text-18-7500-801 sk-text">体重趋势</view>
+        <view class="weight-current">
+          <text class="weight-num sk-transparent sk-text-18-7500-312 sk-text">75</text>
+          <text class="weight-unit sk-transparent sk-text-18-7500-754 sk-text">kg</text>
+          <text class="weight-days sk-transparent sk-text-18-7500-733 sk-text">过去30天</text>
+        </view>
+        <view class="weight-chart sk-transparent sk-text-18-7500-229 sk-text sk-image" id="home-weight-chart" type="2d">绘图区域</view>
+        <view class="btn-outline weight-btn sk-transparent sk-text-18-7500-835 sk-text" style="background-position-x: 50%;">记录 / 查看体重 ›</view>
+      </view>
+      <view class="card water-card">
+        <view class="card-title sk-transparent sk-text-18-7500-698 sk-text">今日饮水</view>
+      </view>
+    </view>
+  </view>
+</template>

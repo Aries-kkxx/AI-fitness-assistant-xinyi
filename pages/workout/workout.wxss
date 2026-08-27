@@ -1,145 +1,498 @@
-/* pages/workout/workout.wxss - 训练页样式 */
+/* pages/workout/workout.wxss - 训练页（卡通猫咪健身风格 · 新参考图 1:1 还原） */
 
 .page {
-  padding: 30rpx;
+  min-height: 100vh;
+  padding: var(--space-xl);
+  padding-bottom: calc(var(--space-3xl) + env(safe-area-inset-bottom));
 }
 
-.loading {
-  text-align: center;
+.sky-bg {
+  background: linear-gradient(180deg, #E8F7FF 0%, #F7F8FA 30%, #F7F8FA 100%);
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-xl);
+}
+
+.page-title {
+  font-size: var(--fs-page-title);
+  font-weight: 800;
+  color: #222222;
+}
+
+.header-deco {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 160rpx;
+  height: 130rpx;
+}
+
+.header-cloud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 56rpx;
+  height: 56rpx;
+}
+
+.header-cat {
+  width: 130rpx;
+  height: 130rpx;
+  transform: translate(-20rpx, -55rpx);
+}
+
+/* ===== 本周计划 ===== */
+.week-plan {
+  display: flex;
+  justify-content: space-between;
+  background-color: #FFFFFF;
+  border-radius: var(--cat-radius-lg);
+  padding: var(--space-md) var(--space-lg);
+  margin-bottom: var(--space-xl);
+  box-shadow: var(--cat-shadow-md);
+}
+
+.week-day-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.week-day-name {
+  font-size: 22rpx;
   color: #999999;
-  padding: 100rpx 0;
+  margin-bottom: var(--space-xs);
 }
 
-/* 引导卡片 */
-.guide-card {
-  text-align: center;
-  padding: 80rpx 40rpx;
+.week-day-dot {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  border: 2rpx solid #DDDDDD;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFFFFF;
 }
 
-.guide-title {
-  font-size: 36rpx;
-  font-weight: 600;
-  color: #333333;
-  margin-bottom: 20rpx;
-}
-
-.guide-desc {
-  font-size: 26rpx;
-  color: #999999;
-  margin-bottom: 40rpx;
-}
-
-.guide-btn {
-  width: 60%;
-  margin: 0 auto;
-}
-
-/* 今日训练 */
-.today-parts {
-  font-size: 44rpx;
+.week-day-item.today .week-day-name {
+  color: #222222;
   font-weight: 700;
-  color: #07c160;
-  margin-bottom: 16rpx;
+}
+
+.week-day-item.today .week-day-dot {
+  border-color: #66CDAA;
+  background-color: #EAFBF4;
+}
+
+.week-day-item.done .week-day-dot {
+  border-color: #66CDAA;
+  background-color: #66CDAA;
+}
+
+.week-check {
+  width: 28rpx;
+  height: 28rpx;
+}
+
+/* ===== 今日训练卡片 ===== */
+.today-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #FFF9E8 0%, #FFF3D6 100%);
+  border: 2rpx solid rgba(255, 209, 102, 0.3);
+  border-radius: var(--cat-radius-lg);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-xl);
+  box-shadow: var(--cat-shadow-md);
+}
+
+.today-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.today-label {
+  font-size: var(--fs-caption);
+  color: #999999;
+  margin-bottom: var(--space-xs);
+}
+
+.today-parts {
+  font-size: 48rpx;
+  font-weight: 800;
+  color: #222222;
+  margin-bottom: var(--space-sm);
 }
 
 .today-meta {
   display: flex;
-  margin-bottom: 24rpx;
-}
-
-.meta-item {
-  font-size: 24rpx;
+  font-size: var(--fs-caption);
   color: #999999;
-  margin-right: 30rpx;
 }
 
-.rest-tip {
-  font-size: 30rpx;
-  color: #666666;
-  padding: 30rpx 0;
+.today-meta text {
+  margin-right: var(--space-sm);
 }
 
-/* 动作条目 */
-.ex-item {
+.today-dot {
+  margin: 0 var(--space-xs);
+}
+
+.today-card.rest {
+  background: linear-gradient(135deg, #E8F7FF 0%, #D6F0FF 100%);
+  border-color: rgba(77, 158, 255, 0.3);
+}
+
+.today-card.rest .today-parts {
+  color: #4D9EFF;
+}
+
+.today-cat {
+  width: 190rpx;
+  height: 190rpx;
+  margin-left: var(--space-md);
+  transform: translateY(-30rpx);
+}
+
+/* ===== 筛选 Tab ===== */
+.filter-row {
+  display: flex;
+  background-color: #FFFFFF;
+  border-radius: var(--cat-radius-pill);
+  padding: 6rpx;
+  margin-bottom: var(--space-xl);
+  box-shadow: var(--cat-shadow-sm);
+}
+
+.filter-tab {
+  flex: 1;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: #888888;
+  border-radius: var(--cat-radius-pill);
+}
+
+.filter-tab.active {
+  color: #FFFFFF;
+  background: linear-gradient(135deg, #66CDAA 0%, #4CD964 100%);
+  box-shadow: 0 4rpx 12rpx rgba(76, 217, 100, 0.25);
+}
+
+/* ===== 训练周期横幅 ===== */
+.cycle-banner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20rpx 0;
-  border-bottom: 1rpx solid #f5f5f5;
+  background: linear-gradient(135deg, #E6EEFF 0%, #D6E6FF 100%);
+  border: 2rpx solid rgba(77, 158, 255, 0.3);
+  border-radius: var(--cat-radius-lg);
+  padding: var(--space-lg) var(--space-xl);
+  margin-bottom: var(--space-xl);
+  box-shadow: var(--cat-shadow-md);
 }
 
-.ex-item:last-child {
-  border-bottom: none;
+.cycle-banner-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.cycle-banner-title {
+  font-size: var(--fs-body);
+  font-weight: 800;
+  color: #2B5FD9;
+  margin-bottom: var(--space-xs);
+}
+
+.cycle-banner-sub {
+  font-size: var(--fs-caption);
+  color: #5B7FD9;
+}
+
+.cycle-banner-btn {
+  height: 52rpx;
+  padding: 0 var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+  background: linear-gradient(135deg, #4D9EFF 0%, #3D8BFF 100%);
+  border-radius: var(--cat-radius-pill);
+  flex-shrink: 0;
+  margin-left: var(--space-md);
+}
+
+/* ===== 未完成草稿恢复卡 ===== */
+.resume-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #EAFBF4 0%, #D8F5E7 100%);
+  border: 2rpx solid rgba(102, 205, 170, 0.35);
+  border-radius: var(--cat-radius-lg);
+  padding: var(--space-lg) var(--space-xl);
+  margin-bottom: var(--space-xl);
+  box-shadow: var(--cat-shadow-md);
+}
+
+.resume-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.resume-title {
+  font-size: var(--fs-body);
+  font-weight: 700;
+  color: #1F6B4C;
+  margin-bottom: var(--space-xs);
+}
+
+.resume-sub {
+  font-size: var(--fs-caption);
+  color: #4C9C78;
+}
+
+.resume-btn {
+  height: 56rpx;
+  padding: 0 var(--space-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+  background: linear-gradient(135deg, #66CDAA 0%, #4CD964 100%);
+  border-radius: var(--cat-radius-pill);
+  box-shadow: 0 4rpx 12rpx rgba(76, 217, 100, 0.25);
+  flex-shrink: 0;
+  margin-left: var(--space-md);
+}
+
+/* ===== 开始训练按钮 ===== */
+.start-training {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #FFB54D 0%, #FF9F1C 100%);
+  border-radius: var(--cat-radius-lg);
+  padding: var(--space-lg) var(--space-xl);
+  margin-bottom: var(--space-xl);
+  box-shadow: 0 8rpx 20rpx rgba(255, 159, 28, 0.28);
+}
+
+.start-training-text {
+  font-size: var(--fs-card-title);
+  font-weight: 800;
+  color: #FFFFFF;
+}
+
+.start-training-sub {
+  font-size: var(--fs-caption);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* ===== 动作列表 ===== */
+.ex-list {
+  margin-bottom: var(--space-xl);
+}
+
+.ex-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #FFFFFF;
+  border-radius: var(--cat-radius-lg);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-md);
+  box-shadow: var(--cat-shadow-sm);
+}
+
+.ex-info {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.ex-index {
+  width: 56rpx;
+  height: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  font-weight: 800;
+  color: #222222;
+  background-color: #F2F2F2;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-right: var(--space-md);
+}
+
+.ex-text {
+  display: flex;
+  flex-direction: column;
 }
 
 .ex-name {
-  font-size: 30rpx;
-  color: #333333;
-  font-weight: 500;
+  font-size: var(--fs-body);
+  font-weight: 700;
+  color: #222222;
+  margin-bottom: var(--space-xs);
 }
 
 .ex-tags {
-  margin-top: 10rpx;
-  display: flex;
+  font-size: var(--fs-caption);
+  color: #66CDAA;
+  font-weight: 600;
 }
 
-.ex-rest {
-  font-size: 24rpx;
-  color: #999999;
-  flex-shrink: 0;
-  margin-left: 16rpx;
+.ex-record {
+  font-size: 20rpx;
+  color: #FF9F1C;
+  font-weight: 600;
+  margin-top: var(--space-xs);
 }
 
-.source-tip {
-  font-size: 22rpx;
-  color: #bbbbbb;
-  text-align: center;
-  margin: 20rpx 0;
-}
-
-.ex-btn {
-  font-size: 28rpx;
-  padding: 14rpx 0;
-}
-
-/* 本周计划 */
-.week-row {
+.ex-status {
+  height: 52rpx;
+  padding: 0 var(--space-md);
   display: flex;
   align-items: center;
-  padding: 18rpx 0;
-  border-bottom: 1rpx solid #f5f5f5;
-}
-
-.week-row:last-child {
-  border-bottom: none;
-}
-
-.week-day {
-  width: 100rpx;
-  font-size: 28rpx;
-  color: #333333;
-  font-weight: 500;
-}
-
-.week-day.active {
-  color: #07c160;
+  justify-content: center;
+  font-size: 24rpx;
   font-weight: 700;
+  border-radius: var(--cat-radius-pill);
 }
 
-.week-parts {
+.ex-status.pending {
+  color: #FFB54D;
+  background-color: #FFF9E8;
+  border: 2rpx solid #FFB54D;
+}
+
+.ex-status.done {
+  color: #FFFFFF;
+  background: linear-gradient(135deg, #66CDAA 0%, #4CD964 100%);
+}
+
+/* ===== 全部完成提示卡 ===== */
+.done-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #FFEFF2 0%, #FFE6F2 100%);
+  border: 2rpx solid rgba(255, 107, 107, 0.2);
+  border-radius: var(--cat-radius-lg);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-xl);
+  box-shadow: var(--cat-shadow-md);
+}
+
+.done-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.done-title {
+  font-size: var(--fs-card-title);
+  font-weight: 800;
+  color: #FF6B6B;
+  margin-bottom: var(--space-xs);
+}
+
+.done-sub {
+  font-size: var(--fs-body);
+  color: #888888;
+}
+
+/* ===== 空状态 ===== */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-3xl) 0;
+}
+
+.empty-text {
+  margin-top: var(--space-md);
+  font-size: var(--fs-body);
+  color: #888888;
+}
+
+/* ===== 底部操作 ===== */
+.bottom-actions {
+  display: flex;
+  gap: var(--space-md);
+  margin-bottom: var(--space-3xl);
+}
+
+.bottom-actions .btn-outline {
   flex: 1;
-  font-size: 28rpx;
-  color: #333333;
+  height: 76rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-body);
+  font-weight: 700;
+  color: #666666;
+  background-color: #FFFFFF;
+  border: 2rpx solid #EEEEEE;
+  border-radius: var(--cat-radius-pill);
+  box-shadow: var(--cat-shadow-sm);
 }
 
-.week-parts.rest {
-  color: #bbbbbb;
+/* ===== 引导卡 ===== */
+.guide-card {
+  background-color: #FFFFFF;
+  border-radius: var(--cat-radius-lg);
+  padding: var(--space-2xl);
+  box-shadow: var(--cat-shadow-md);
+  text-align: center;
 }
 
-.week-today {
-  font-size: 22rpx;
-  color: #ffffff;
-  background-color: #07c160;
-  border-radius: 8rpx;
-  padding: 4rpx 12rpx;
+.guide-title {
+  font-size: var(--fs-card-title);
+  font-weight: 700;
+  color: #222222;
+  margin-bottom: var(--space-md);
+}
+
+.guide-desc {
+  font-size: var(--fs-body);
+  color: #888888;
+  margin-bottom: var(--space-xl);
+  line-height: 1.6;
+}
+
+.guide-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 80rpx;
+  padding: 0 var(--space-2xl);
+  font-size: var(--fs-btn);
+  font-weight: 700;
+  color: #FFFFFF;
+  background: linear-gradient(135deg, #FFB54D 0%, #FF9F1C 100%);
+  border-radius: var(--cat-radius-pill);
+  box-shadow: 0 8rpx 20rpx rgba(255, 159, 28, 0.28);
+}
+
+.loading {
+  text-align: center;
+  padding: var(--space-3xl);
+  color: #999999;
 }

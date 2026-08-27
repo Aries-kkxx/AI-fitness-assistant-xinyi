@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI 健身助手 · 全页面 UI 预览 V2</title>
+<style>
+  :root{--orange:#FFB54D;--orange-deep:#FF9F1C;--green:#66CDAA;--green-bright:#4CD964;--blue:#4D9EFF;--red:#FF6B6B;--yellow:#FFD166;--sky:#E8F7FF;--bg:#F7F8FA;--text:#222;--sub:#888;--card:#fff;--radius:32px;--pill:999px;--shadow:0 8px 24px rgba(31,74,58,.06),0 2px 6px rgba(31,74,58,.04);}
+  *{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;}
+  body{margin:0;background:#f0f2f5;padding:20px;}
+  .phone{width:375px;background:linear-gradient(180deg,#E8F7FF 0%,#F7F8FA 30%);border-radius:40px;box-shadow:0 20px 60px rgba(0,0,0,.12);margin:0 auto 40px;padding:20px;position:relative;overflow:hidden;min-height:760px;}
+  .nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+  .nav .back{font-size:36px;font-weight:700;color:#222;}
+  .nav .title{font-size:20px;font-weight:800;}
+  .nav .ph{width:40px;}
+  .hello{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+  .hello h1{font-size:28px;margin:0;display:flex;align-items:center;gap:6px;}
+  .hello h1 img{width:26px;height:26px;}
+  .hello p{color:#888;font-size:15px;margin:6px 0 0;}
+  .hello>img{width:110px;height:110px;}
+  .card{background:#fff;border-radius:var(--radius);padding:20px;margin-bottom:16px;box-shadow:var(--shadow);}
+  .card-title{font-size:20px;font-weight:700;color:#222;margin-bottom:10px;display:block;}
+  .hero{display:flex;justify-content:space-between;}
+  .hero-main{flex:1;display:flex;flex-direction:column;justify-content:space-between;}
+  .hero .label{color:#666;font-size:14px;}
+  .hero .parts{font-size:32px;font-weight:800;margin:6px 0;}
+  .hero .meta{color:#999;font-size:14px;}
+  .hero .btn{width:150px;height:44px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#FFB54D,#FF9F1C);color:#fff;font-weight:700;border-radius:var(--pill);}
+  .hero-deco{position:relative;width:110px;height:160px;}
+  .hero-deco img{position:absolute;right:0;bottom:0;width:100px;height:100px;}
+  .hero-deco .plant{position:absolute;right:10px;bottom:80px;width:50px;height:50px;}
+  .water-big{display:flex;align-items:baseline;margin-bottom:6px;}
+  .water-big b{font-size:50px;line-height:1;}
+  .water-big span{font-size:20px;color:#999;margin-left:4px;}
+  .water-cups{color:#666;font-weight:600;margin-bottom:12px;}
+  .wpr{display:flex;align-items:center;margin-bottom:16px;}
+  .progress{flex:1;height:10px;background:#eee;border-radius:var(--pill);overflow:hidden;}
+  .progress i{display:block;height:100%;background:linear-gradient(90deg,#66CDAA,#4CD964);width:88%;}
+  .wpr .pct{font-weight:700;margin-left:12px;}
+  .actions{display:flex;gap:12px;}
+  .btn-g,.btn-b{flex:1;height:44px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;border-radius:var(--pill);}
+  .btn-g{background:linear-gradient(135deg,#66CDAA,#4CD964);}
+  .btn-b{background:linear-gradient(135deg,#4D9EFF,#2B7BBD);}
+  .week-plan{display:flex;justify-content:space-between;background:#fff;border-radius:var(--radius);padding:12px 16px;margin-bottom:16px;box-shadow:var(--shadow);}
+  .wd{display:flex;flex-direction:column;align-items:center;}
+  .wd span{font-size:12px;color:#999;margin-bottom:4px;}
+  .wd .dot{width:34px;height:34px;border-radius:50%;border:2px solid #ddd;display:flex;align-items:center;justify-content:center;background:#fff;}
+  .wd.done .dot{background:#66CDAA;border-color:#66CDAA;}
+  .wd.done .dot img{width:20px;height:20px;}
+  .today-card{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,#FFF9E8,#FFF3D6);border-radius:var(--radius);padding:20px;margin-bottom:16px;box-shadow:var(--shadow);}
+  .today-main{flex:1;}
+  .today-main .l{color:#999;font-size:13px;}
+  .today-main .p{font-size:30px;font-weight:800;margin:6px 0;}
+  .today-main .m{color:#999;font-size:13px;}
+  .today-card>img{width:90px;height:90px;}
+  .filter{display:flex;background:#fff;border-radius:var(--pill);padding:4px;margin-bottom:16px;box-shadow:var(--shadow);}
+  .filter div{flex:1;height:38px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;color:#888;border-radius:var(--pill);}
+  .filter div.active{color:#fff;background:linear-gradient(135deg,#66CDAA,#4CD964);}
+  .ex-card{display:flex;justify-content:space-between;align-items:center;background:#fff;border-radius:var(--radius);padding:14px;margin-bottom:10px;box-shadow:var(--shadow);}
+  .ex-info{display:flex;align-items:center;}
+  .ex-info img{width:60px;height:60px;margin-right:12px;}
+  .ex-name{font-size:16px;font-weight:700;}
+  .ex-tags{color:#66CDAA;font-size:13px;font-weight:600;}
+  .ex-status{height:34px;padding:0 14px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border-radius:var(--pill);}
+  .ex-status.pending{color:#FFB54D;background:#FFF9E8;border:2px solid #FFB54D;}
+  .ex-status.done{color:#fff;background:linear-gradient(135deg,#66CDAA,#4CD964);}
+  .encourage{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,#FFEFF2,#FFE6F2);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);}
+  .encourage .t{font-size:20px;font-weight:800;color:#FF6B6B;display:block;margin-bottom:4px;}
+  .encourage .s{color:#888;font-size:15px;}
+  .encourage img{width:90px;height:90px;}
+  .record-row{display:flex;align-items:center;padding:10px 0;border-bottom:1px solid #f5f5f5;}
+  .record-row .t{width:70px;font-weight:600;}
+  .record-row .ml{width:80px;font-weight:700;}
+  .record-row .type{flex:1;font-size:13px;color:#888;background:#f5f8ff;border-radius:8px;padding:2px 10px;text-align:center;margin-right:10px;}
+  .record-row .del{width:28px;height:28px;}
+  .hist{display:flex;justify-content:space-between;background:linear-gradient(135deg,#FFF9E8,#FFF3D6);border-radius:var(--radius);padding:18px;margin-bottom:12px;box-shadow:var(--shadow);}
+  .hist-main{flex:1;}
+  .hist .date{color:#888;font-size:14px;margin-bottom:6px;}
+  .hist .big{display:flex;align-items:baseline;margin-bottom:4px;}
+  .hist .big b{font-size:30px;font-weight:800;}
+  .hist .big span{color:#999;margin-left:4px;}
+  .hist .meta{display:flex;justify-content:space-between;margin-bottom:8px;font-weight:600;}
+  .hist-deco{position:relative;width:80px;height:90px;}
+  .hist-deco img{position:absolute;right:0;bottom:0;width:70px;height:70px;}
+  .hist-deco .badge{position:absolute;right:-6px;bottom:0;width:32px;height:32px;}
+  .tabbar{position:absolute;bottom:0;left:0;right:0;height:70px;background:#fff;display:flex;justify-content:space-around;align-items:flex-start;padding-top:8px;box-shadow:0 -2px 10px rgba(0,0,0,.05);}
+  .tabbar-item{display:flex;flex-direction:column;align-items:center;}
+  .tabbar-item img{width:28px;height:28px;margin-bottom:2px;}
+  .tabbar-item span{font-size:11px;color:#888;}
+  .tabbar-item.active span{color:#66CDAA;font-weight:700;}
+</style>
+</head>
+<body>
+
+<!-- 首页 -->
+<div class="phone">
+  <div class="hello">
+    <div>
+      <h1>Hi，小明 <img src="../assets/icons/star.png"/></h1>
+      <p>今天也要加油哦！</p>
+    </div>
+    <img src="../assets/cat/cat-home.png"/>
+  </div>
+
+  <div class="card hero">
+    <div class="hero-main">
+      <div><div class="label">今日训练</div><div class="parts">胸 + 三头</div><div class="meta">4 个动作 · 约 60 分钟</div></div>
+      <div class="btn">开始训练 ›</div>
+    </div>
+    <div class="hero-deco">
+      <img class="plant" src="../assets/icons/calendar-check.png"/>
+      <img src="../assets/cat/cat-workout.png"/>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="margin-bottom:14px;">今日饮水 💧</div>
+    <div class="water-big"><b>1750</b><span>/ 2000ml</span></div>
+    <div class="water-cups">7 / 8 杯</div>
+    <div class="wpr"><div class="progress"><i></i></div><span class="pct">88%</span></div>
+    <div class="actions"><div class="btn-g">喝一杯</div><div class="btn-b">添加记录</div></div>
+  </div>
+
+  <div class="card" style="display:flex;justify-content:space-between;align-items:center;">
+    <div><span class="card-title">本周概览</span><div style="color:#666;font-weight:600;margin-top:8px;">训练 4 次</div><div style="color:#666;font-weight:600;margin-top:4px;">饮水达标 5 天</div></div>
+    <img src="../assets/cat/cat-calendar.png" style="width:90px;height:90px;"/>
+  </div>
+
+  <div class="tabbar">
+    <div class="tabbar-item active"><img src="../assets/tabbar/home-active.png"/><span>首页</span></div>
+    <div class="tabbar-item"><img src="../assets/tabbar/workout-inactive.png"/><span>训练</span></div>
+    <div class="tabbar-item"><img src="../assets/tabbar/exercise-inactive.png"/><span>动作</span></div>
+    <div class="tabbar-item"><img src="../assets/tabbar/water-inactive.png"/><span>饮水</span></div>
+    <div class="tabbar-item"><img src="../assets/tabbar/profile-inactive.png"/><span>我的</span></div>
+  </div>
+</div>
+
+<!-- 训练页 -->
+<div class="phone">
+  <div class="nav"><div class="ph"></div><div class="title">训练</div><img src="../assets/cat/cat-success.png" style="width:50px;height:50px;"/></div>
+
+  <div class="week-plan">
+    <div class="wd done"><span>一</span><div class="dot"><img src="../assets/icons/calendar-check.png"/></div></div>
+    <div class="wd"><span>二</span><div class="dot"></div></div>
+    <div class="wd"><span>三</span><div class="dot"></div></div>
+    <div class="wd"><span>四</span><div class="dot"></div></div>
+    <div class="wd"><span>五</span><div class="dot"></div></div>
+    <div class="wd"><span>六</span><div class="dot"></div></div>
+    <div class="wd"><span>日</span><div class="dot"></div></div>
+  </div>
+
+  <div class="today-card">
+    <div class="today-main"><div class="l">今天 · 周二</div><div class="p">背 + 二头</div><div class="m">4 个动作 · 约 60 分钟</div></div>
+    <img src="../assets/cat/cat-workout.png"/>
+  </div>
+
+  <div class="filter"><div class="active">未完成 (2)</div><div>已完成 (2)</div></div>
+
+  <div class="ex-card"><div class="ex-info"><img src="../assets/cat/cat-workout.png"/><div><div class="ex-name">1. 超人式</div><div class="ex-tags">2组 × 15次</div></div></div><div class="ex-status pending">未完成</div></div>
+  <div class="ex-card"><div class="ex-info"><img src="../assets/cat/cat-workout.png"/><div><div class="ex-name">2. 哑铃弯举</div><div class="ex-tags">3组 × 16次</div></div></div><div class="ex-status pending">未完成</div></div>
+
+  <div class="tabbar">
+    <div class="tabbar-item"><img src="../assets/tabbar/home-inactive.png"/><span>首页</span></div>
+    <div class="tabbar-item active"><img src="../assets/tabbar/workout-active.png"/><span>训练</span></div>
+    <div class="tabbar-item"><img src="../assets/tabbar/exercise-inactive.png"/><span>动作</span></div>
+    <div class="tabbar-item"><img src="../assets/tabbar/water-inactive.png"/><span>饮水</span></div>
+    <div class="tabbar-item"><img src="../assets/tabbar/profile-inactive.png"/><span>我的</span></div>
+  </div>
+</div>
+
+<!-- 训练详情 -->
+<div class="phone">
+  <div class="nav"><div class="back">‹</div><div class="title">训练详情</div><div class="ph"></div></div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><span class="card-title">今日训练完成进度</span><img src="../assets/icons/star.png" style="width:40px;height:40px;"/></div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="font-size:24px;font-weight:800;">2 / 4</span><span style="font-weight:700;">58%</span></div>
+    <div class="progress"><i style="width:58%;background:linear-gradient(90deg,#FF8C6B,#FF6B6B);"></i></div>
+  </div>
+
+  <div class="ex-card"><div class="ex-info"><img src="../assets/cat/cat-workout.png"/><div><div class="ex-name">1. 超人式</div><div class="ex-tags">2组 × 15次</div></div></div><div class="ex-status done">✓ 已完成</div></div>
+  <div class="ex-card"><div class="ex-info"><img src="../assets/cat/cat-workout.png"/><div><div class="ex-name">2. 哑铃弯举</div><div class="ex-tags">3组 × 16次</div></div></div><div class="ex-status done">✓ 已完成</div></div>
+  <div class="ex-card"><div class="ex-info"><img src="../assets/cat/cat-workout.png"/><div><div class="ex-name">3. 哑铃高举</div><div class="ex-tags">4组 × 12次</div></div></div><div class="ex-status pending">未完成</div></div>
+
+  <div class="encourage"><div><span class="t">坚持就是胜利！🔥</span><span class="s">你今天已经很棒了！</span></div><img src="../assets/cat/cat-home.png"/></div>
+</div>
+
+<!-- 饮水页 -->
+<div class="phone">
+  <div class="nav"><img src="../assets/icons/cloud.png" style="width:40px;height:40px;"/><div class="title">饮水</div><img src="../assets/cat/cat-water.png" style="width:60px;height:60px;"/></div>
+
+  <div class="card">
+    <div class="card-title" style="margin-bottom:14px;">今日饮水</div>
+    <div class="water-big"><b>1750</b><span>/ 2000ml</span></div>
+    <div class="water-cups">7 / 8 杯</div>
+    <div class="wpr"><div class="progress"><i></i></div><span class="pct">88%</span></div>
+    <div class="actions"><div class="btn-g">喝一杯</div><div class="btn-b">添加记录</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="margin-bottom:6px;">今日饮水记录</div>
+    <div class="record-row"><span class="t">09:22</span><span class="ml">250ml</span><span class="type">白水</span><img class="del" src="../assets/icons/trash.png"/></div>
+    <div class="record-row"><span class="t">09:22</span><span class="ml">250ml</span><span class="type">白水</span><img class="del" src="../assets/icons/trash.png"/></div>
+    <div class="record-row"><span class="t">09:22</span><span class="ml">250ml</span><span class="type">白水</span><img class="del" src="../assets/icons/trash.png"/></div>
+  </div>
+
+  <div class="tabbar">
+    <div class="tabbar-item"><img src="../assets/tabbar/home-inactive.png"/><span>首页</span></div>
+    <div class="tabbar-item"><img src="../assets/tabbar/workout-inactive.png"/><span>训练</span></div>
+    <div class="tabbar-item"><img src="../assets/tabbar/exercise-inactive.png"/><span>动作</span></div>
+    <div class="tabbar-item active"><img src="../assets/tabbar/water-active.png"/><span>饮水</span></div>
+    <div class="tabbar-item"><img src="../assets/tabbar/profile-inactive.png"/><span>我的</span></div>
+  </div>
+</div>
+
+<!-- 饮水历史 -->
+<div class="phone">
+  <div class="nav"><div class="back">‹</div><div class="title">饮水历史</div><div class="ph"></div></div>
+
+  <div class="hist">
+    <div class="hist-main">
+      <div class="date">2026-08-18</div>
+      <div class="big"><b>1750</b><span>/ 2000ml</span></div>
+      <div class="meta"><span>7 / 8 杯</span><span>88%</span></div>
+      <div class="progress"><i style="width:88%;"></i></div>
+    </div>
+    <div class="hist-deco"><img src="../assets/icons/cup.png"/><img class="badge" src="../assets/icons/star.png"/></div>
+  </div>
+
+  <div class="hist">
+    <div class="hist-main">
+      <div class="date">2026-08-17</div>
+      <div class="big"><b>2000</b><span>/ 2000ml</span></div>
+      <div class="meta"><span>8 / 8 杯</span><span>100%</span></div>
+      <div class="progress"><i style="width:100%;"></i></div>
+    </div>
+    <div class="hist-deco"><img src="../assets/icons/cup.png"/><img class="badge" src="../assets/icons/star.png"/></div>
+  </div>
+
+  <div class="hist">
+    <div class="hist-main">
+      <div class="date">2026-08-16</div>
+      <div class="big"><b>1500</b><span>/ 2000ml</span></div>
+      <div class="meta"><span>6 / 8 杯</span><span>75%</span></div>
+      <div class="progress"><i style="width:75%;"></i></div>
+    </div>
+    <div class="hist-deco"><img src="../assets/icons/cup.png"/><img class="badge" src="../assets/icons/heart.png"/></div>
+  </div>
+</div>
+
+</body>
+</html>

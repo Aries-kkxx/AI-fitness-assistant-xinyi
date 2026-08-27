@@ -1,0 +1,50 @@
+<!-- pages/cycle-create/cycle-create.wxml - 创建训练周期 -->
+<view class="page sky-bg">
+
+  <!-- 自定义导航栏 -->
+  <view class="nav-bar">
+    <view class="nav-back" bindtap="onBack">‹</view>
+    <text class="nav-title">创建周期</text>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <view class="card form-card">
+    <view class="form-tip">周期模板基于你的自定义周计划生成；没有自定义计划时使用智能推荐。</view>
+
+    <!-- 目标 -->
+    <view class="form-block">
+      <text class="form-label">周期目标</text>
+      <view class="chips">
+        <view class="chip {{goal === item ? 'active' : ''}}" wx:for="{{goals}}" wx:key="*this" data-goal="{{item}}" bindtap="onGoalTap">{{item}}</view>
+      </view>
+    </view>
+
+    <!-- 周数 -->
+    <view class="form-block">
+      <text class="form-label">周期长度</text>
+      <view class="chips">
+        <view class="chip {{totalWeeks === item ? 'active' : ''}}" wx:for="{{weekOptions}}" wx:key="*this" data-weeks="{{item}}" bindtap="onWeekTap">{{item}} 周</view>
+      </view>
+    </view>
+
+    <!-- 名称 -->
+    <view class="form-block">
+      <text class="form-label">周期名称</text>
+      <input class="name-input" value="{{name}}" bindinput="onNameInput" placeholder="如：增肌周期 2026" maxlength="20" />
+    </view>
+
+    <view class="feature-list">
+      <text class="feature-title">周期内自动完成</text>
+      <view class="feature-item">📈 渐进负荷：每 2 周增加组数 / 重量</view>
+      <view class="feature-item">🛌 减量周：周期中段自动降低重量与组数</view>
+      <view class="feature-item">📊 每周 AI 总结：训练/完成率/容量/PR/体重/饮水/恢复</view>
+      <view class="feature-item">🏁 周期总结：完成率/总容量/纪录/下周期建议</view>
+    </view>
+  </view>
+
+  <view class="bottom-bar">
+    <view class="btn-primary create-btn {{creating ? 'disabled' : ''}}" bindtap="onCreate">
+      {{creating ? '创建中...' : '创建周期'}}
+    </view>
+  </view>
+</view>

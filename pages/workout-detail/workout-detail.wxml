@@ -1,0 +1,199 @@
+<!-- pages/workout-detail/workout-detail.wxml - 训练记录编辑页（力量训练明细） -->
+<view class="page sky-bg">
+
+  <!-- 自定义导航栏 -->
+  <view class="nav-bar">
+    <view class="nav-back" bindtap="onBack">‹</view>
+    <text class="nav-title">训练记录</text>
+    <view class="nav-save" wx:if="{{session.status !== 'idle'}}">自动保存中</view>
+    <view class="nav-placeholder" wx:else></view>
+  </view>
+
+  <!-- 加载中 -->
+  <view class="loading" wx:if="{{loading}}">加载中...</view>
+
+  <!-- 未填写资料 -->
+  <block wx:elif="{{!hasUser}}">
+    <view class="card guide-card">
+      <view class="guide-title">还没有你的训练资料</view>
+      <view class="guide-desc">填写身高、体重、健身目标和器械情况后，我们为你生成训练计划</view>
+      <view class="btn-primary guide-btn" bindtap="onGoUserInfo">立即填写资料</view>
+    </view>
+  </block>
+
+  <block wx:else>
+    <!-- 计时器卡 -->
+    <view class="card timer-card {{session.status}}">
+      <view class="timer-head">
+        <text class="timer-label">{{session.status === 'idle' ? '本次训练' : '训练计时'}}</text>
+        <text class="timer-status running" wx:if="{{session.status === 'active'}}">训练中</text>
+        <text class="timer-status paused" wx:elif="{{session.status === 'paused'}}">已暂停</text>
+        <text class="timer-status done" wx:elif="{{session.status === 'ended'}}">已结束</text>
+        <text class="timer-status idle" wx:else>未开始</text>
+      </view>
+      <text class="timer-text">{{session.timerText}}</text>
+      <view class="timer-btns">
+        <block wx:if="{{session.status === 'idle'}}">
+          <view class="btn-primary timer-start" bindtap="onStartSession">开始训练</view>
+        </block>
+        <block wx:elif="{{session.status === 'active'}}">
+          <view class="btn-outline timer-btn" bindtap="onPauseSession">暂停</view>
+          <view class="btn-primary timer-btn" bindtap="onFinishWorkout">结束</view>
+        </block>
+        <block wx:elif="{{session.status === 'paused'}}">
+          <view class="btn-primary timer-btn" bindtap="onResumeSession">继续</view>
+          <view class="btn-outline timer-btn" bindtap="onFinishWorkout">结束训练</view>
+        </block>
+      </view>
+    </view>
+
+    <!-- 草稿恢复提示 -->
+    <view class="draft-tip" wx:if="{{draftRestored}}">已恢复上次未完成的训练记录，可继续</view>
+
+    <!-- 完成进度 -->
+    <view class="progress-row">
+      <text class="progress-text">已完成 {{completedCount}}/{{exercises.length}} 个动作</text>
+      <view class="progress-wrap">
+        <view class="progress-inner" style="width: {{percent}}%;"></view>
+      </view>
+    </view>
+
+    <!-- 动作列表 -->
+    <view class="ex-list">
+      <view class="card ex-card {{ex.completed ? 'done' : ''}}" wx:for="{{exercises}}" wx:for-item="ex" wx:for-index="index" wx:key="_id" bindtap="onToggleEdit" data-index="{{index}}">
+        <view class="ex-head">
+          <view class="ex-info">
+            <text class="ex-index">{{index + 1}}</text>
+            <view class="ex-text">
+              <text class="ex-name">{{ex.name}}</text>
+              <text class="ex-tags">计划 {{ex.plannedSets}}组 × {{ex.plannedReps}}{{ex.repsUnit}} · 组间休息 {{ex.restSeconds}}s</text>
+            </view>
+          </view>
+          <view class="ex-actions">
+            <view class="ex-history-btn" catchtap="onGoHistory" data-id="{{ex._id}}" data-name="{{ex.name}}">📊</view>
+            <view class="ex-badge {{ex.completed ? 'done' : (ex.sets.length > 0 ? 'doing' : '')}}">
+              {{ex.completed ? '✓ 已完成' : (ex.sets.length > 0 ? '进行中' : '未开始')}}
+            </view>
+          </view>
+        </view>
+
+        <!-- 已记录组列表 -->
+        <view class="set-list" wx:if="{{ex.sets.length > 0}}">
+          <view class="set-row" wx:for="{{ex.sets}}" wx:for-item="set" wx:for-index="setIndex" wx:key="key">
+            <text class="set-no">第{{setIndex + 1}}组</text>
+            <text class="set-detail">{{set.weight > 0 ? set.weight + 'kg' : '自重'}} × {{set.reps}}{{ex.repsUnit}}</text>
+            <text class="set-rpe" wx:if="{{set.rpe}}">RPE{{set.rpe}}</text>
+            <text class="set-fail" wx:if="{{set.is_failure}}">力竭</text>
+            <text class="set-rest" wx:if="{{set.rest_seconds}}">休{{set.rest_seconds}}s</text>
+            <view class="set-del" catchtap="onDeleteSet" data-index="{{index}}" data-set-index="{{setIndex}}">✕</view>
+          </view>
+        </view>
+
+        <!-- 编辑区 -->
+        <view class="edit-panel" wx:if="{{ex.expanded}}">
+          <view class="input-row">
+            <view class="input-item">
+              <text class="input-label">重量(kg)</text>
+              <input class="input" type="digit" placeholder="自重" value="{{ex.draftWeight}}" data-index="{{index}}" bindinput="onWeightInput" catchtap="onStopTap" />
+            </view>
+            <view class="input-item">
+              <text class="input-label">次数</text>
+              <input class="input" type="number" placeholder="0" value="{{ex.draftReps}}" data-index="{{index}}" bindinput="onRepsInput" catchtap="onStopTap" />
+            </view>
+            <view class="input-item">
+              <text class="input-label">RPE(1-10)</text>
+              <input class="input" type="number" placeholder="选填" value="{{ex.draftRpe}}" data-index="{{index}}" bindinput="onRpeInput" catchtap="onStopTap" />
+            </view>
+          </view>
+          <view class="input-row2">
+            <view class="input-item rest-item">
+              <text class="input-label">休息(秒)</text>
+              <input class="input" type="number" value="{{ex.draftRest}}" data-index="{{index}}" bindinput="onRestInput" catchtap="onStopTap" />
+            </view>
+            <view class="fail-switch">
+              <text class="input-label">力竭</text>
+              <switch checked="{{ex.draftFailure}}" data-index="{{index}}" bindchange="onFailureChange" color="#FFB54D" catchtap="onStopTap" />
+            </view>
+          </view>
+          <view class="add-set-row">
+            <view
+              class="btn-add-set {{restTimer && restTimer.exerciseId === ex._id ? 'resting' : ''}}"
+              data-index="{{index}}"
+              catchtap="onAddSet"
+            >
+              {{restTimer && restTimer.exerciseId === ex._id ? '休息中...' : '+ 添加训练组'}}
+            </view>
+            <view class="btn-complete" data-index="{{index}}" catchtap="onCompleteExercise">
+              {{ex.completed ? '更新完成' : '完成动作'}}
+            </view>
+          </view>
+          <view class="note-row">
+            <textarea
+              class="note-input"
+              placeholder="动作备注（可选，如：最后一组力竭、手腕不适）"
+              value="{{ex.note}}"
+              data-index="{{index}}"
+              bindinput="onNoteInput"
+              maxlength="200"
+              auto-height
+              catchtap="onStopTap"
+            />
+          </view>
+          <view class="delete-record" wx:if="{{ex.recordId || ex.completed || ex.sets.length > 0}}" data-index="{{index}}" catchtap="onDeleteExerciseRecord">删除该动作今日记录</view>
+        </view>
+      </view>
+
+      <!-- 空状态 -->
+      <view class="empty" wx:if="{{exercises.length === 0}}">
+        <text class="empty-text">今天没有计划动作，点击下方「添加动作」从动作库选择</text>
+      </view>
+    </view>
+
+    <!-- 添加动作（选择动作，来自动作库） -->
+    <view class="add-more" bindtap="onToggleAddPanel">
+      {{showAddPanel ? '收起动作库 ▴' : '＋ 添加动作'}}
+    </view>
+    <view class="card add-panel" wx:if="{{showAddPanel}}">
+      <scroll-view class="cats" scroll-x="true" enhanced="true" show-scrollbar="false">
+        <view
+          class="cat {{activeCat === index ? 'active' : ''}}"
+          wx:for="{{categories}}"
+          wx:key="*this"
+          data-index="{{index}}"
+          bindtap="onCatChange"
+        >{{item}}</view>
+      </scroll-view>
+      <view
+        class="add-item {{item.added ? 'added' : ''}}"
+        wx:for="{{addFiltered}}"
+        wx:key="_id"
+        data-id="{{item._id}}"
+        bindtap="onAddExercisePick"
+      >
+        <view class="add-item-info">
+          <text class="add-item-name">{{item.name}}</text>
+          <view class="add-item-tags">
+            <text class="tag tag-green">{{item.recommended_sets}}组 × {{item.recommended_reps}}{{item.reps_unit}}</text>
+            <text class="tag tag-gray">{{item.difficulty}}</text>
+            <text class="tag tag-gray">{{item.equipment}}</text>
+          </view>
+        </view>
+        <view class="add-item-state">{{item.added ? '已添加' : '+'}}</view>
+      </view>
+      <view class="empty" wx:if="{{addFiltered.length === 0}}">该分类暂无动作</view>
+    </view>
+
+    <!-- 组间休息倒计时 -->
+    <view class="rest-banner" wx:if="{{restTimer}}">
+      <text class="rest-text">组间休息 {{restText}}</text>
+      <view class="rest-skip" bindtap="onSkipRest">跳过休息</view>
+    </view>
+
+    <!-- 底部：完成训练 -->
+    <view class="bottom-bar">
+      <view class="btn-primary finish-btn {{session.status === 'idle' ? 'disabled' : ''}}" bindtap="onFinishWorkout">
+        完成训练
+      </view>
+    </view>
+  </block>
+</view>

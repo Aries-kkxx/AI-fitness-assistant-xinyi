@@ -86,10 +86,21 @@ exports.main = async (event) => {
           '参数=', JSON.stringify(args),
           '结果=', JSON.stringify(result).slice(0, 300)
         );
+        // 工具结果回填：超过长度上限时明确标记「数据被截断」，
+        // 防止 LLM 误以为看到的是完整数据而基于残缺信息回答
+        const rawContent = JSON.stringify(result);
+        const MAX_TOOL_CONTENT = 6000;
+        let content = rawContent;
+        if (content.length > MAX_TOOL_CONTENT) {
+          content =
+            content.slice(0, MAX_TOOL_CONTENT) +
+            '\n[注意：工具返回数据超过长度限制已被截断，以上不是完整数据；' +
+            '请基于已有信息回答，不要猜测被截断部分；如需更多数据请缩小查询范围（如降低 limit）]';
+        }
         messages.push({
           role: 'tool',
           tool_call_id: tc.id,
-          content: JSON.stringify(result).slice(0, 4000)
+          content
         });
       }
     }

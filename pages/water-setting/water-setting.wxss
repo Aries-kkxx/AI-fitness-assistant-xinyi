@@ -1,7 +1,7 @@
 /* pages/water-setting/water-setting.wxss - 饮水设置页样式 */
 
 .page {
-  padding: 30rpx;
+  padding: 30rpx 30rpx 200rpx; /* 底部预留固定保存栏空间 */
 }
 
 /* 设置项一行：左侧文字 + 右侧步进器 */
@@ -32,23 +32,24 @@
   width: 64rpx;
   height: 64rpx;
   border-radius: 50%;
-  background-color: #f0faf5;
-  color: #07c160;
+  background-color: #fff3d6;
+  color: #ff9f1c;
   font-size: 40rpx;
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .stepper-btn:active {
-  background-color: #d9f2e4;
+  background-color: #ffe3b3;
 }
 
 .stepper-num {
   min-width: 100rpx;
   text-align: center;
   font-size: 34rpx;
-  font-weight: 600;
+  font-weight: 700;
   color: #333333;
 }
 
@@ -66,11 +67,22 @@
 
 .target-value {
   font-size: 34rpx;
-  font-weight: 600;
-  color: #07c160;
+  font-weight: 700;
+  color: #ff9f1c;
 }
 
-/* 保存按钮 */
+/* 固定底部保存栏（滚动不跟随） */
+.save-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ffffff;
+  padding: 16rpx 30rpx calc(16rpx + env(safe-area-inset-bottom));
+  box-shadow: 0 -4rpx 16rpx rgba(0, 0, 0, 0.06);
+  z-index: 100;
+}
+
 .save-btn {
-  margin-top: 40rpx;
+  margin-top: 0;
 }

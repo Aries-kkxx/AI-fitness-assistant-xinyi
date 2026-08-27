@@ -1,0 +1,60 @@
+<!-- pages/data-manage/data-manage.wxml - 数据导出与导入 -->
+<view class="page sky-bg">
+
+  <view class="nav-bar">
+    <view class="nav-back" bindtap="onBack">‹</view>
+    <text class="nav-title">数据管理</text>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <!-- 导出 -->
+  <view class="card">
+    <view class="card-title">导出数据</view>
+    <view class="card-sub">选择要导出的数据，生成 JSON / CSV 文件</view>
+
+    <view class="type-chips">
+      <view
+        class="type-chip {{selected.indexOf(item.key) >= 0 ? 'active' : ''}}"
+        wx:for="{{typeOptions}}"
+        wx:key="key"
+        data-key="{{item.key}}"
+        bindtap="onTypeTap"
+      >{{item.label}}</view>
+    </view>
+
+    <view class="format-row">
+      <text class="format-label">格式</text>
+      <picker mode="selector" range="{{['JSON（推荐，可再导入）', 'CSV（仅单类型可用）']}}" value="{{format === 'csv' ? 1 : 0}}" bindchange="onFormatChange">
+        <view class="format-value">{{format === 'json' ? 'JSON（推荐，可再导入）' : 'CSV（仅单类型可用）'}} ›</view>
+      </picker>
+    </view>
+
+    <view class="btn-primary export-btn {{exporting ? 'disabled' : ''}}" bindtap="onExport">
+      {{exporting ? '导出中...' : '导出'}}
+    </view>
+  </view>
+
+  <!-- 导入 -->
+  <view class="card">
+    <view class="card-title">导入数据</view>
+    <view class="card-sub">粘贴之前导出的 JSON（已存在的记录自动跳过，不会覆盖现有数据，导入出错自动回滚）</view>
+    <textarea
+      class="import-input"
+      placeholder="在此粘贴导出的 JSON 内容..."
+      value="{{importText}}"
+      bindinput="onImportText"
+      maxlength="500000"
+      auto-height
+    />
+    <view class="btn-outline preview-btn {{importing ? 'disabled' : ''}}" bindtap="onPreviewImport">
+      {{importing ? '导入中...' : '校验并导入'}}
+    </view>
+
+    <view class="import-preview" wx:if="{{importPreview}}">
+      <view class="preview-item" wx:for="{{importPreview}}" wx:key="type">
+        <text class="preview-label">{{item.label}}</text>
+        <text class="preview-count">{{item.count}} 条</text>
+      </view>
+    </view>
+  </view>
+</view>

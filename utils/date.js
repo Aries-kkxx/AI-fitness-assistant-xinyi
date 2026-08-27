@@ -16,7 +16,22 @@ function formatTime(d) {
   return pad(d.getHours()) + ':' + pad(d.getMinutes());
 }
 
+// 返回本周一日期 YYYY-MM-DD（周一为一周起点，与训练计划一致）
+function getMondayDate(d) {
+  const date = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const day = date.getDay() || 7; // getDay(): 0=周日 → 转成 7
+  date.setDate(date.getDate() - day + 1);
+  return formatDate(date);
+}
+
+// 返回本月第一天 YYYY-MM-DD
+function getMonthStartDate(d) {
+  return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-01';
+}
+
 module.exports = {
   formatDate,
-  formatTime
+  formatTime,
+  getMondayDate,
+  getMonthStartDate
 };

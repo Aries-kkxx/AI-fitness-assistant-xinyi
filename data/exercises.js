@@ -123,6 +123,15 @@ module.exports = [
     tips: '躯干保持稳定，只有手臂和肩胛在运动。',
     image_url: '', video_url: '', recommended_sets: 3, recommended_reps: 12, reps_unit: '次', rest_seconds: 60
   },
+  {
+    sort: 102, name: '俯卧游泳式', category: '背部', target_muscle: ['竖脊肌', '斜方肌', '三角肌后束'],
+    difficulty: '初级', equipment: '无器械',
+    description: '俯卧交替抬臂，无器械强化背部与后链，改善体态。',
+    steps: ['俯卧垫上，双臂向前伸直', '交替抬起左右手臂与对侧腿', '像游泳一样缓慢交替'],
+    common_mistakes: ['动作过快借力', '抬头过高'],
+    tips: '动作缓慢有控制，感受背部收缩。',
+    image_url: '', video_url: '', recommended_sets: 3, recommended_reps: 16, reps_unit: '次', rest_seconds: 45
+  },
 
   // ========== 肩部 ==========
   {
@@ -161,6 +170,15 @@ module.exports = [
     tips: '收紧臀部和核心，重量循序渐进，注意保护腰椎。',
     image_url: '', video_url: '', recommended_sets: 4, recommended_reps: 8, reps_unit: '次', rest_seconds: 90
   },
+  {
+    sort: 100, name: '派克俯卧撑', category: '肩部', target_muscle: ['三角肌', '三头肌'],
+    difficulty: '初级', equipment: '无器械',
+    description: '倒V字俯卧撑变式，无需器械即可有效训练肩部三角肌。',
+    steps: ['双手撑地、臀部抬高呈倒V字', '屈肘下放头部接近地面', '肩部发力推起还原'],
+    common_mistakes: ['臀部下沉变成普通俯卧撑', '下放过快'],
+    tips: '膝盖可微屈降低难度，重点感受肩部发力。',
+    image_url: '', video_url: '', recommended_sets: 3, recommended_reps: 12, reps_unit: '次', rest_seconds: 60
+  },
 
   // ========== 手臂 ==========
   {
@@ -171,6 +189,15 @@ module.exports = [
     common_mistakes: ['手肘向外打开', '下放过浅'],
     tips: '肘部始终贴紧身体，感受三头肌发力。',
     image_url: '', video_url: '', recommended_sets: 3, recommended_reps: 10, reps_unit: '次', rest_seconds: 60
+  },
+  {
+    sort: 101, name: '反手俯卧撑', category: '手臂', target_muscle: ['二头肌', '三头肌', '胸大肌'],
+    difficulty: '初级', equipment: '无器械',
+    description: '掌心朝后的俯卧撑变式，无器械条件下兼顾肱二头肌刺激。',
+    steps: ['双手撑地但掌心朝向身体后方，身体呈直线', '屈肘下放身体', '推起还原'],
+    common_mistakes: ['手腕不适时强行做', '肘部外张'],
+    tips: '手腕压力大时改为常规俯卧撑，二头可配合其他动作刺激。',
+    image_url: '', video_url: '', recommended_sets: 3, recommended_reps: 8, reps_unit: '次', rest_seconds: 60
   },
   {
     sort: 18, name: '哑铃弯举', category: '手臂', target_muscle: ['二头肌'],

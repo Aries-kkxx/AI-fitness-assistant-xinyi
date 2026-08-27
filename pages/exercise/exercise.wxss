@@ -1,10 +1,39 @@
-/* pages/exercise/exercise.wxss - 动作库页样式 */
+/* pages/exercise/exercise.wxss - 动作库页样式（卡通漫画风格） */
 
 .page {
   padding: 0 30rpx 30rpx;
 }
 
-/* 分类 Tab 栏 */
+/* 推荐栏说明（清新蓝） */
+.rec-banner {
+  background-color: #eef5ff;
+  color: #4d9eff;
+  font-size: 24rpx;
+  border-radius: 16rpx;
+  padding: 14rpx 20rpx;
+  margin-bottom: 20rpx;
+}
+
+/* 推荐栏未填资料引导 */
+.rec-guide {
+  text-align: center;
+  padding: 60rpx 40rpx;
+}
+
+.rec-guide-text {
+  font-size: 26rpx;
+  color: #999999;
+  margin-bottom: 30rpx;
+}
+
+.rec-guide-btn {
+  width: 50%;
+  margin: 0 auto;
+  font-size: 28rpx;
+  padding: 12rpx 0;
+}
+
+/* 分类 Tab 栏（卡通胶囊） */
 .tabs {
   white-space: nowrap;
   padding: 20rpx 0;
@@ -19,15 +48,17 @@
   font-size: 28rpx;
   color: #666666;
   background-color: #ffffff;
-  border-radius: 32rpx;
+  border-radius: 36rpx;
   padding: 12rpx 30rpx;
   margin-right: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
 }
 
 .tab.active {
   color: #ffffff;
-  background-color: #07c160;
-  font-weight: 600;
+  background-image: linear-gradient(135deg, #ffc566 0%, #ffb54d 60%, #ff9f1c 100%);
+  font-weight: 700;
+  box-shadow: 0 4rpx 12rpx rgba(255, 181, 77, 0.3);
 }
 
 .loading {
@@ -46,7 +77,7 @@
 
 .ex-name {
   font-size: 32rpx;
-  font-weight: 600;
+  font-weight: 700;
   color: #333333;
 }
 
@@ -59,6 +90,13 @@
 .ex-tags {
   display: flex;
   flex-wrap: wrap;
+}
+
+.ex-history-link {
+  margin-top: 14rpx;
+  font-size: 22rpx;
+  color: #4D9EFF;
+  font-weight: 600;
 }
 
 /* 空状态 */

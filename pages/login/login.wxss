@@ -1,0 +1,124 @@
+/* pages/login/login.wxss - 欢迎页样式（复用 app.wxss 设计令牌与通用类） */
+.login-page {
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 140rpx 56rpx calc(48rpx + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f7f8fa; /* 与全站页面背景一致 */
+  overflow-x: hidden;        /* 杜绝横向滚动 */
+}
+
+/* 1. Logo（复用猫咪健身素材） */
+.logo-wrap {
+  margin-bottom: 40rpx;
+}
+.logo {
+  width: 280rpx;
+  height: 280rpx;
+}
+
+/* 2. 名称与标语 */
+.app-name {
+  font-size: 44rpx;
+  font-weight: 800;
+  color: #222222;
+  text-align: center;
+}
+.app-slogan {
+  margin-top: 16rpx;
+  margin-bottom: 56rpx;
+  font-size: 26rpx;
+  color: #999999;
+  text-align: center;
+}
+
+/* 3/4/5. 协议区域（无背景框，紧贴页面底部） */
+.agreement-bottom {
+  width: 100%;
+  margin-top: auto;       /* 推到页面最下方 */
+  margin-bottom: 16rpx;
+}
+.agree-row {
+  display: flex;
+  align-items: flex-start;
+}
+.checkbox {
+  flex: none;
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 16rpx;
+  margin-top: 4rpx;
+  border: 2rpx solid #cccccc;
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.checkbox.checked {
+  background-image: linear-gradient(135deg, #7bdcb8 0%, #66cdaa 50%, #4cd964 100%);
+  border-color: transparent;
+}
+.check-mark {
+  color: #ffffff;
+  font-size: 24rpx;
+  font-weight: 800;
+  line-height: 1;
+}
+.agree-text {
+  flex: 1;
+  font-size: 26rpx;
+  color: #666666;
+  line-height: 1.6;
+}
+.link {
+  color: #4d9eff;
+  font-weight: 600;
+}
+
+/* 8. 登录状态提示（健康绿） */
+.status-tip {
+  width: 100%;
+  margin-bottom: 24rpx;
+  font-size: 26rpx;
+  color: #3fae85;
+  text-align: center;
+}
+
+/* 9. 登录失败提示（警示红） */
+.error-tip {
+  width: 100%;
+  margin-bottom: 24rpx;
+  font-size: 26rpx;
+  color: #ff6b6b;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* 6. 进入小程序按钮（复用 .btn-primary 活力橙渐变胶囊） */
+.login-btn {
+  width: 100%;
+  margin-top: 8rpx;
+  border: none;
+  line-height: normal;
+  /* 强制白色文字：微信原生 <button> 会覆盖继承色，必须显式声明 */
+  color: #ffffff !important;
+}
+/* 去除微信 button 默认边框伪元素，避免"丑陋的系统按钮" */
+.login-btn::after {
+  border: none;
+}
+
+/* 底部提示（页面最末尾，安全区上方） */
+.tip {
+  margin-top: 8rpx;
+  margin-bottom: 0;
+  font-size: 22rpx;
+  color: #bbbbbb;
+  text-align: center;
+  line-height: 1.6;
+}

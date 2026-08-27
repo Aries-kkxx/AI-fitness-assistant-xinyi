@@ -1,0 +1,48 @@
+/* components/cat-illustration/cat-illustration.wxss */
+/* 统一卡通猫咪插画容器 */
+
+.cat-illust {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cat-illust-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 形状 */
+.cat-illust.circle {
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.cat-illust.square {
+  border-radius: 24rpx;
+  overflow: hidden;
+}
+
+/* 动画：上下浮动 */
+.cat-illust.float .cat-illust-img {
+  animation: cat-float 2.4s ease-in-out infinite;
+}
+
+@keyframes cat-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10rpx); }
+}
+
+/* 动画：轻弹 */
+.cat-illust.bounce .cat-illust-img {
+  animation: cat-bounce 0.9s ease-in-out infinite;
+}
+
+@keyframes cat-bounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  40% { transform: translateY(-14rpx) scale(1.04); }
+  60% { transform: translateY(-6rpx) scale(0.98); }
+}

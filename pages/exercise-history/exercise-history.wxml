@@ -1,0 +1,131 @@
+<!-- pages/exercise-history/exercise-history.wxml - 动作历史与表现分析页 -->
+<view class="page sky-bg">
+
+  <!-- 自定义导航栏 -->
+  <view class="nav-bar">
+    <view class="nav-back" bindtap="onBack">‹</view>
+    <text class="nav-title">{{exerciseName || '动作历史'}}</text>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <!-- 加载中 -->
+  <view class="loading" wx:if="{{loading}}">加载中...</view>
+
+  <!-- 无数据 -->
+  <block wx:elif="{{!hasData}}">
+    <view class="empty-state">
+      <cat-illustration pose="empty" size="160" />
+      <text class="empty-title">还没有「{{exerciseName}}」的训练记录</text>
+      <text class="empty-sub">去训练页开始记录，系统将自动分析你的进步与个人最佳</text>
+      <view class="btn-primary empty-btn" bindtap="onGoWorkout">去训练</view>
+    </view>
+  </block>
+
+  <block wx:else>
+    <!-- PR 卡 -->
+    <view class="card pr-card">
+      <view class="card-head">
+        <text class="card-title">个人最佳 PR</text>
+        <text class="card-sub">创造新纪录时会有提示</text>
+      </view>
+      <view class="pr-grid">
+        <view class="pr-item" wx:for="{{prItems}}" wx:key="key">
+          <text class="pr-label">{{item.label}}</text>
+          <text class="pr-value">{{item.value}}</text>
+          <text class="pr-sub">{{item.sub}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 最近 vs 上次 -->
+    <view class="card">
+      <view class="card-head">
+        <text class="card-title">最近一次 vs 上一次</text>
+        <text class="card-sub">{{recentText}}</text>
+      </view>
+      <view class="cmp-head">
+        <text class="cmp-col"></text>
+        <text class="cmp-col">最近一次</text>
+        <text class="cmp-col">上一次</text>
+        <text class="cmp-col"></text>
+      </view>
+      <view class="cmp-row" wx:for="{{compare}}" wx:key="label">
+        <text class="cmp-label">{{item.label}}</text>
+        <text class="cmp-val last">{{item.lastText}}</text>
+        <text class="cmp-val prev">{{item.prevText}}</text>
+        <text class="cmp-trend up" wx:if="{{item.up}}">↑</text>
+        <text class="cmp-trend down" wx:elif="{{item.same}}">=</text>
+        <text class="cmp-trend" wx:else></text>
+      </view>
+    </view>
+
+    <!-- 渐进超负荷建议 -->
+    <view class="card suggest-card" wx:if="{{suggestion}}">
+      <view class="card-head">
+        <text class="card-title">下次训练建议</text>
+        <text class="card-sub">基于历史数据推算</text>
+      </view>
+      <view class="suggest-main">
+        <text class="suggest-action {{suggestion.action}}">{{suggestion.actionText}}</text>
+        <text class="suggest-reason">{{suggestion.reason}}</text>
+      </view>
+      <view class="suggest-nums" wx:if="{{suggestion.nextWeightKg || suggestion.nextReps}}">
+        <view class="num-item" wx:if="{{suggestion.nextWeightKg}}">
+          <text class="num-label">建议重量</text>
+          <text class="num-value">{{suggestion.nextWeightKg}}kg</text>
+        </view>
+        <view class="num-item" wx:if="{{suggestion.nextReps}}">
+          <text class="num-label">建议次数</text>
+          <text class="num-value">{{suggestion.nextReps}} 次</text>
+        </view>
+        <view class="num-item" wx:if="{{suggestion.nextSets}}">
+          <text class="num-label">建议组数</text>
+          <text class="num-value">{{suggestion.nextSets}} 组</text>
+        </view>
+      </view>
+      <view class="suggest-near" wx:if="{{suggestion.nearPR}}">⚠️ 接近个人最佳重量，建议谨慎加重，优先保证动作质量</view>
+    </view>
+
+    <!-- 趋势图 -->
+    <view class="card chart-card">
+      <view class="card-head">
+        <text class="card-title">重量趋势</text>
+      </view>
+      <canvas type="2d" id="chart-weight" class="chart-canvas"></canvas>
+    </view>
+    <view class="card chart-card">
+      <view class="card-head">
+        <text class="card-title">次数趋势</text>
+      </view>
+      <canvas type="2d" id="chart-reps" class="chart-canvas"></canvas>
+    </view>
+    <view class="card chart-card">
+      <view class="card-head">
+        <text class="card-title">训练容量趋势</text>
+        <text class="card-sub">容量 = 重量 × 次数 × 组数</text>
+      </view>
+      <canvas type="2d" id="chart-volume" class="chart-canvas"></canvas>
+    </view>
+
+    <!-- 最近训练列表 -->
+    <view class="card">
+      <view class="card-head">
+        <text class="card-title">最近训练</text>
+      </view>
+      <view class="his-row his-head">
+        <text class="his-col date">日期</text>
+        <text class="his-col">组数</text>
+        <text class="his-col">重量</text>
+        <text class="his-col">次数</text>
+        <text class="his-col vol">容量</text>
+      </view>
+      <view class="his-row" wx:for="{{recentList}}" wx:key="date">
+        <text class="his-col date">{{item.date}}</text>
+        <text class="his-col">{{item.sets}}</text>
+        <text class="his-col">{{item.maxWeight > 0 ? item.maxWeight + 'kg' : '—'}}</text>
+        <text class="his-col">{{item.maxReps > 0 ? item.maxReps : '—'}}</text>
+        <text class="his-col vol">{{item.volume > 0 ? item.volume + 'kg' : '—'}}</text>
+      </view>
+    </view>
+  </block>
+</view>

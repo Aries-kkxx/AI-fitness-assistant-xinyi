@@ -1,0 +1,205 @@
+/* pages/water-history/water-history.wxss - 饮水历史页 */
+
+.page {
+  min-height: 100vh;
+  padding: calc(88rpx + env(safe-area-inset-top)) var(--space-xl) var(--space-xl);
+  padding-bottom: calc(var(--space-3xl) + env(safe-area-inset-bottom));
+}
+
+.sky-bg {
+  background: linear-gradient(180deg, #E8F7FF 0%, #F7F8FA 30%, #F7F8FA 100%);
+}
+
+/* ===== 自定义导航栏 ===== */
+.nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(88rpx + env(safe-area-inset-top));
+  padding-top: env(safe-area-inset-top);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: var(--space-md);
+  padding-right: var(--space-md);
+  background-color: #E8F7FF;
+  z-index: 100;
+}
+
+.nav-back {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+  color: #222222;
+  font-weight: 700;
+}
+
+.nav-title {
+  font-size: 36rpx;
+  font-weight: 800;
+  color: #222222;
+}
+
+.nav-placeholder {
+  width: 60rpx;
+}
+
+/* ===== 历史卡片 ===== */
+.history-list {
+  margin-top: var(--space-xl);
+}
+
+.history-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #FFF9E8 0%, #FFF3D6 100%);
+  border: 2rpx solid rgba(255, 209, 102, 0.25);
+  border-radius: var(--cat-radius-lg);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-md);
+  box-shadow: var(--cat-shadow-sm);
+}
+
+.history-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.history-date {
+  font-size: var(--fs-body);
+  color: #888888;
+  margin-bottom: var(--space-sm);
+}
+
+.history-big {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: var(--space-xs);
+}
+
+.history-num {
+  font-size: 48rpx;
+  font-weight: 800;
+  color: #222222;
+}
+
+.history-sep {
+  font-size: 30rpx;
+  color: #999999;
+  margin: 0 var(--space-xs);
+}
+
+.history-target {
+  font-size: 28rpx;
+  color: #999999;
+  font-weight: 600;
+}
+
+.history-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-sm);
+}
+
+.history-cups {
+  font-size: var(--fs-body);
+  color: #666666;
+  font-weight: 600;
+}
+
+.history-rate {
+  font-size: var(--fs-body);
+  font-weight: 800;
+  color: #222222;
+}
+
+.history-progress {
+  width: 70%;
+}
+
+.progress-wrap {
+  height: 14rpx;
+  background-color: #EEEEEE;
+  border-radius: var(--cat-radius-pill);
+  overflow: hidden;
+}
+
+.progress-inner {
+  height: 100%;
+  background: linear-gradient(90deg, #66CDAA 0%, #4CD964 100%);
+  border-radius: var(--cat-radius-pill);
+}
+
+/* ===== 装饰 ===== */
+.history-deco {
+  position: relative;
+  width: 120rpx;
+  height: 140rpx;
+  margin-left: var(--space-md);
+}
+
+.history-cup {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.history-badge {
+  position: absolute;
+  right: -10rpx;
+  bottom: 0;
+  width: 48rpx;
+  height: 48rpx;
+}
+
+/* ===== 加载更多 ===== */
+.load-more {
+  text-align: center;
+  padding: var(--space-lg);
+  font-size: var(--fs-body);
+  color: #4D9EFF;
+  font-weight: 600;
+}
+
+/* ===== 空状态 ===== */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: var(--space-3xl);
+}
+
+.empty-text {
+  margin-top: var(--space-md);
+  font-size: var(--fs-body);
+  color: #888888;
+}
+
+.empty-btn {
+  margin-top: var(--space-xl);
+  height: 80rpx;
+  padding: 0 var(--space-2xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-btn);
+  font-weight: 700;
+  color: #FFFFFF;
+  background: linear-gradient(135deg, #4D9EFF 0%, #2B7BBD 100%);
+  border-radius: var(--cat-radius-pill);
+}
+
+.loading {
+  text-align: center;
+  padding: var(--space-3xl);
+  color: #999999;
+}

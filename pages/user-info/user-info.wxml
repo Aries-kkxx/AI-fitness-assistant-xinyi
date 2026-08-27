@@ -2,7 +2,10 @@
 <view class="page">
   <!-- 基本信息 -->
   <view class="card">
-    <view class="card-title">基本信息</view>
+    <view class="card-title-row">
+      <image class="card-title-icon" src="/assets/icons_pet/哈士奇.png" mode="aspectFill" />
+      <text class="card-title">基本信息</text>
+    </view>
 
     <view class="form-row">
       <text class="form-label">昵称</text>
@@ -12,7 +15,7 @@
     <view class="form-row">
       <text class="form-label">性别</text>
       <picker range="{{genders}}" value="{{genderIndex}}" bindchange="onGenderChange">
-        <view class="form-value">{{genders[genderIndex]}}</view>
+        <view class="form-value form-value-plain">{{genders[genderIndex]}}</view>
       </picker>
     </view>
 
@@ -41,7 +44,10 @@
 
   <!-- 训练偏好 -->
   <view class="card">
-    <view class="card-title">训练偏好</view>
+    <view class="card-title-row">
+      <image class="card-title-icon" src="/assets/icons_pet/金毛.png" mode="aspectFill" />
+      <text class="card-title">训练偏好</text>
+    </view>
 
     <view class="form-row">
       <text class="form-label">健身目标</text>
@@ -79,5 +85,7 @@
     </view>
   </view>
 
-  <view class="btn-primary save-btn" bindtap="onSave">保存资料</view>
+  <view class="save-bar">
+    <view class="btn-primary save-btn" bindtap="onSave">保存资料</view>
+  </view>
 </view>

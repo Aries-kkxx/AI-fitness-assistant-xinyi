@@ -2,6 +2,7 @@
 // 功能：填写个人资料（性别/年龄/身高/体重/目标/经验/频率/时长/器械），
 //       实时计算 BMI，保存到 users 集合，作为训练推荐引擎的输入
 const userService = require('../../services/user');
+const weightService = require('../../services/weight');
 const { calcBMI, getBMICategory } = require('../../utils/bmi');
 
 Page({
@@ -144,6 +145,12 @@ Page({
         training_duration: d.durations[d.durationIndex],
         equipment: d.equipmentOptions[d.equipmentIndex]
       });
+      // 同步记录今天的体重（同一天重复保存会更新当天记录），失败不阻塞主流程
+      try {
+        await weightService.addWeightRecord(weight);
+      } catch (wErr) {
+        console.error('[user-info] 同步体重记录失败', wErr);
+      }
       wx.hideLoading();
       wx.showToast({ title: '保存成功', icon: 'success' });
       setTimeout(() => wx.navigateBack(), 800);

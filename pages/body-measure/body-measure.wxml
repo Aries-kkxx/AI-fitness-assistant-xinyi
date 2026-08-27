@@ -1,0 +1,49 @@
+<!-- pages/body-measure/body-measure.wxml - 身体围度记录 -->
+<view class="page sky-bg">
+
+  <view class="nav-bar">
+    <view class="nav-back" bindtap="onBack">‹</view>
+    <text class="nav-title">身体围度</text>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <view class="loading" wx:if="{{loading}}">加载中...</view>
+
+  <block wx:else>
+    <view class="card form-card">
+      <view class="form-head">
+        <view class="form-title-wrap">
+          <text class="form-title">{{currentDate === '' ? '' : (currentDate === today ? '今天的身体数据' : '编辑 ' + currentDate)}}</text>
+          <text class="form-sub">体脂率可选 · 围度单位 cm</text>
+        </view>
+        <view class="back-today" wx:if="{{currentDate !== today}}" bindtap="onBackToToday">回到今天</view>
+      </view>
+
+      <view class="input-item">
+        <text class="input-label">体脂率（%）</text>
+        <input class="input" type="digit" placeholder="选填" value="{{form.body_fat_pct}}" data-key="body_fat_pct" bindinput="onInput" />
+      </view>
+      <view class="input-item" wx:for="{{fields}}" wx:key="key">
+        <text class="input-label">{{item.label}}（{{item.unit}}）</text>
+        <input class="input" type="digit" placeholder="0" value="{{form[item.key]}}" data-key="{{item.key}}" bindinput="onInput" />
+      </view>
+
+      <view class="form-actions">
+        <view class="btn-primary save-btn" bindtap="onSave">保存</view>
+        <view class="btn-delete" wx:if="{{hasCurrent}}" bindtap="onDelete">删除当天</view>
+      </view>
+    </view>
+
+    <view class="card history-card">
+      <view class="form-title-wrap">
+        <text class="form-title">历史记录</text>
+        <text class="form-sub">点击可修改</text>
+      </view>
+      <view class="his-empty" wx:if="{{history.length === 0}}">还没有围度记录</view>
+      <view class="his-item" wx:for="{{history}}" wx:key="date" data-date="{{item.date}}" bindtap="onEditHistory">
+        <text class="his-date">{{item.date}}</text>
+        <text class="his-summary">{{item.summary}}</text>
+      </view>
+    </view>
+  </block>
+</view>

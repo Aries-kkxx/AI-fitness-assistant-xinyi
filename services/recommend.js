@@ -11,6 +11,8 @@
 // 5. equipment   → 过滤动作所需器械（哑铃用户看不到杠铃动作）
 
 const exerciseService = require('./exercise');
+const cache = require('../utils/cache');
+const { formatDate } = require('../utils/date');
 
 // ===== 规则表 =====
 
@@ -237,29 +239,15 @@ function getWeekPlan(user) {
  *   totalMinutes, count
  * }
  */
-async function getTodayWorkout(user) {
-  // 周一为一周起点：getDay() 0=周日 → (getDay()+6)%7 得 0=周一
-  const weekdayIndex = (new Date().getDay() + 6) % 7;
-  const week = buildWeekTemplate(user.goal, user.training_days);
-  const today = week[weekdayIndex];
-
-  if (!today) {
-    return {
-      isRestDay: true,
-      weekday: WEEK_DAYS[weekdayIndex],
-      partsText: '休息日',
-      exercises: [],
-      totalMinutes: 0,
-      count: 0,
-      goal: user.goal
-    };
-  }
-
-  const parts = today.parts;
+/**
+ * 为指定部位组合挑选动作（供今日训练 / 按天生成共用）
+ * @param {Array} parts 部位组合
+ * @param {Object} user 用户资料
+ * @returns {Promise<Array>} 动作列表（含 _id，用于完成记录与自定义计划）
+ */
+async function pickExercisesForParts(parts, user) {
   const totalCount = DURATION_COUNT[String(user.training_duration)] || 5;
   const counts = splitCount(totalCount, parts.length);
-
-  // 各部位并行查询
   const exercises = [];
   const pickedList = await Promise.all(
     parts.map((part, i) => pickExercises(part, user, counts[i]))
@@ -267,6 +255,7 @@ async function getTodayWorkout(user) {
   pickedList.forEach((list) => {
     list.forEach((e) => {
       exercises.push({
+        _id: e._id, // 动作 ID：用于保存完成记录（幂等键之一）
         name: e.name,
         sets: adjustSets(e.recommended_sets, user.experience),
         reps: e.recommended_reps,
@@ -279,21 +268,88 @@ async function getTodayWorkout(user) {
       });
     });
   });
+  return exercises;
+}
 
-  return {
-    isRestDay: false,
-    weekday: WEEK_DAYS[weekdayIndex],
-    partsText: parts.join(' + '),
-    goal: user.goal,
-    exercises,
-    totalMinutes: Number(user.training_duration) || 45,
-    count: exercises.length
-  };
+/**
+ * 生成某一天（0=周一）的训练动作（规则引擎）
+ * 供今日训练与自定义计划编辑页「智能推荐预填」共用
+ * @param {Object} user 用户资料
+ * @param {number} weekdayIndex 0=周一 ... 6=周日
+ * @returns {Promise<Object>} { parts, partsText, exercises }
+ */
+async function getDayWorkout(user, weekdayIndex) {
+  const week = buildWeekTemplate(user.goal, user.training_days);
+  const today = week[weekdayIndex];
+  if (!today) {
+    return { parts: [], partsText: '休息日', exercises: [] };
+  }
+  const exercises = await pickExercisesForParts(today.parts, user);
+  return { parts: today.parts, partsText: today.parts.join(' + '), exercises };
+}
+
+/**
+ * 获取今日推荐训练
+ * 性能：结果按「日期 + 用户资料特征」缓存 24 小时——
+ *   - 当天内切 Tab/回页面秒开，不再重复查询数据库
+ *   - 动作当天固定不变（不再每次随机变化）
+ *   - 用户资料变化（目标/器械/经验/频率/时长）后自动生成新缓存
+ * @param {Object} user 用户资料（来自 users 集合）
+ * @returns {Promise<Object>} 今日训练（休息日或动作列表）
+ */
+async function getTodayWorkout(user) {
+  // 缓存键：日期 + 资料特征（资料任一变化 → 新键）
+  const sig = [
+    user.goal,
+    user.experience,
+    user.training_days,
+    user.training_duration,
+    user.equipment
+  ].join('|');
+  const key = 'workout_today_' + formatDate(new Date()) + '_' + sig;
+
+  const cached = cache.get(key);
+  if (cached) return cached;
+
+  // 周一为一周起点：getDay() 0=周日 → (getDay()+6)%7 得 0=周一
+  const weekdayIndex = (new Date().getDay() + 6) % 7;
+  const day = await getDayWorkout(user, weekdayIndex);
+
+  let result;
+  if (day.parts.length === 0) {
+    result = {
+      isRestDay: true,
+      weekday: WEEK_DAYS[weekdayIndex],
+      partsText: '休息日',
+      exercises: [],
+      totalMinutes: 0,
+      count: 0,
+      goal: user.goal
+    };
+  } else {
+    result = {
+      isRestDay: false,
+      weekday: WEEK_DAYS[weekdayIndex],
+      partsText: day.partsText,
+      goal: user.goal,
+      exercises: day.exercises,
+      totalMinutes: Number(user.training_duration) || 45,
+      count: day.exercises.length
+    };
+  }
+
+  cache.set(key, result, 24 * 60 * 60 * 1000);
+  return result;
 }
 
 module.exports = {
   buildWeekTemplate,
   getWeekPlan,
+  getDayWorkout,
   getTodayWorkout,
-  WEEK_DAYS
+  WEEK_DAYS,
+  // 规则常量导出：供动作页「推荐」栏等复用（器械兼容 / 难度等级）
+  EQUIPMENT_COMPAT,
+  DIFF_LEVEL,
+  EXP_LEVEL
 };

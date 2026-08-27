@@ -1,22 +1,135 @@
+# =========================
 # Windows
+# =========================
 [Dd]esktop.ini
 Thumbs.db
 $RECYCLE.BIN/
 
+# =========================
 # macOS
+# =========================
 .DS_Store
 .fseventsd
 .Spotlight-V100
 .TemporaryItems
 .Trashes
 
+# =========================
 # Node.js
+# =========================
 node_modules/
+jspm_packages/
+web_modules/
 
-# 环境变量（含 AppSecret，严禁提交）
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Diagnostic reports
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# =========================
+# Environment variables
+# 含 AppSecret 等敏感信息，严禁提交
+# =========================
 .env
+.env.*
+!.env.example
 server/.env
 
-# 本机工具缓存/记忆（不属于项目代码，不提交）
+# =========================
+# Build / coverage
+# =========================
+build/Release
+lib-cov
+coverage
+*.lcov
+.nyc_output
+
+# =========================
+# Tool caches
+# =========================
+.grunt
+.cache
+.parcel-cache
+.npm
+.eslintcache
+.stylelintcache
+.pnpm-store
+
+# 本机工具缓存/记忆，不属于项目代码
 .dsh-vision-router/
 .workbuddy/
+
+# =========================
+# Frontend framework / build
+# =========================
+.next
+out
+.nuxt
+dist
+.output
+.vuepress/dist
+.temp
+.svelte-kit/
+**/.vitepress/dist
+**/.vitepress/cache
+.docusaurus
+.serverless/
+.fusebox/
+.dynamodb/
+.firebase/
+
+# =========================
+# Gatsby
+# =========================
+# public
+
+# =========================
+# Vite
+# =========================
+.vite/
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# =========================
+# TypeScript
+# =========================
+*.tsbuildinfo
+
+# =========================
+# Package managers
+# =========================
+bower_components
+.lock-wscript
+.tgz
+.yarn-integrity
+
+# pnpm
+.pnpm-store
+
+# Yarn 3+
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# =========================
+# Other caches / files
+# =========================
+.node_repl_history
+.tern-port
+.vscode-test

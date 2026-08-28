@@ -1,7 +1,7 @@
 // components/float-ball/float-ball.js - 「欣一」AI 悬浮球组件
 // 使用普通 view + 手动触摸事件实现拖拽，无 movable-view 内置动画；
 // 位置记忆到 storage，所有页面共享同一位置，越界自动修正；
-// 纵向带 tabBar 下限：悬浮球底部不允许低于底部页签栏顶部（含底部安全区）。
+// 纵向带 tabBar 下限：悬浮球底部（含标签 + 阴影）对齐页签栏顶部，不越过页签栏。
 //
 // 关键点：页面级生命周期（show/hide）必须写在 pageLifetimes 中，
 // 写在 lifetimes 里不会触发。这样每次页面重新可见（tab 切换、
@@ -9,18 +9,13 @@
 // 保证「在任意页面拖动后，切到其他页面显示同一位置」。
 
 const BALL_W = 96;
-const BALL_H = 116;
+// 悬浮球容器高度需覆盖「图片 + 名称标签 + 底部阴影」的实际视觉高度。
+// WXSS 中 .float-ball 高度与此常量必须保持一致。
+const BALL_H = 118;
 
-// 微信原生 tabBar 实际占用屏幕高度 ≈ 64px
-//（50rpx 内容区 + icon 上下 padding ≈ 6~8px + 文本行高 ≈ 6px，合计 ~64px）。
-// 50rpx 是 text/icon 内容区，不含 padding/阴影，单独使用会让浮球底部贴到 tabBar 内容，
-// 视觉上"欣一"标签阴影会侵入"动作"等 tabLabel。
-// 这里取一个偏保守的值，让 maxY 公式自然留出缓冲；再做一次 BALL_TABBAR_GAP 加固。
-const TAB_BAR_HEIGHT = 64;
-
-// 浮球底部（含"欣一"标签 + 阴影）到页签栏顶部之间的强制留白，
-// 防止 y 触顶时浮球视觉侵入 tabBar（强约束：悬浮球永远不能"超过"页签栏）。
-const BALL_TABBAR_GAP = 8;
+// 浮球底部（含"欣一"标签 + 阴影）与页签栏顶部对齐，
+// 不额外留白；靠 BALL_H 本身的视觉余量保证不压住 tabBar。
+const BALL_TABBAR_GAP = 0;
 
 const HIDDEN_PAGES = [
   'pages/ai/ai',
@@ -83,13 +78,11 @@ Component({
       }
     },
 
-    // 悬浮球 top 的最大值：保证球的底部（包含"欣一"标签 + 阴影）严格位于 tabBar 顶部之上，
-    // 中间保留 BALL_TABBAR_GAP 的视觉缓冲，绝不会出现"压住页签栏"的情况。
+    // 悬浮球 top 的最大值：让球底部（含"欣一"标签 + 阴影）对齐 tabBar 顶部。
+    // wx.getWindowInfo().windowHeight 在现代基础库中已不包含 tabBar 高度，
+    // 因此页签栏顶部即 windowHeight 下边界，无需再减去 tabBar 高度或安全区。
     getMaxY() {
-      return Math.max(
-        0,
-        this._winH - BALL_H - TAB_BAR_HEIGHT - this._bottomInset - BALL_TABBAR_GAP
-      );
+      return Math.max(0, this._winH - BALL_H - BALL_TABBAR_GAP);
     },
 
     initPosition() {
@@ -127,6 +120,7 @@ Component({
       const touch = e && e.touches && e.touches[0];
       if (!touch) return;
       this._moved = false;
+      this._tapHandled = false; // 每次触摸重置：允许本次触摸产生点击
       this._startX = touch.clientX;
       this._startY = touch.clientY;
       this._baseX = this.data.x;
@@ -140,7 +134,10 @@ Component({
       const deltaX = touch.clientX - this._startX;
       const deltaY = touch.clientY - this._startY;
 
-      if (Math.abs(deltaX) > 3 || Math.abs(deltaY) > 3) {
+      // 位移阈值 5px（与微信「轻点」判定一致）：
+      // 阈值过小（如 3px）会把日常轻点时的微小手抖误判为拖动，
+      // 导致 _moved=true 后点击被屏蔽，表现为「点击悬浮球没反应」。
+      if (Math.abs(deltaX) > 5 || Math.abs(deltaY) > 5) {
         this._moved = true;
       }
       if (!this._moved) return;
@@ -158,24 +155,38 @@ Component({
     onTouchEnd() {
       if (this._moved) {
         this.persistPosition();
+        return; // 拖动结束，不视为点击
       }
-      // 注意：不要在 touchend 里重置 _moved —— touchend 之后会紧跟 tap，
-      // 需要靠 _moved 仍为 true 来屏蔽「拖动后误触发的点击跳转」；
-      // _moved 会在下一次 touchstart 时被重置。
+      // 未拖动（位移 <= 阈值）→ 判定为点击并立即跳转。
+      // 关键：不依赖 tap 事件 —— 真机上绑定了 touchmove 的视图，
+      // 轻点时即使位移很小，系统也可能不派发 tap（拖拽组件与 tap 冲突的
+      // 常见问题），导致 onTap 从不执行，表现为「点击悬浮球没反应」。
+      this.handleTap();
     },
 
     onTouchCancel() {
+      // 触摸被系统打断（如来电/手势抢占）：不算点击，仅保存位置
       if (this._moved) {
         this.persistPosition();
       }
     },
 
     onTap() {
-      if (this._moved) return;
-      const pages = getCurrentPages();
-      const current = pages.length > 0 ? pages[pages.length - 1] : null;
-      if (current && HIDDEN_PAGES.indexOf(current.route) >= 0) return;
-      wx.navigateTo({ url: '/pages/ai/ai' });
+      // 兜底：若系统仍派发了 tap（touchend 已处理过点击），这里直接返回防止双跳
+      if (this._tapHandled) return;
+      this.handleTap();
+    },
+
+    handleTap() {
+      if (this._tapHandled) return;
+      this._tapHandled = true;
+      wx.navigateTo({
+        url: '/pages/ai/ai',
+        fail: () => {
+          // 打开失败给出明确提示，避免「点了没反应」的困惑
+          wx.showToast({ title: '暂时无法打开，请稍后再试', icon: 'none' });
+        }
+      });
     }
   }
 });

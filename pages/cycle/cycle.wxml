@@ -5,8 +5,11 @@
   <view class="nav-bar">
     <view class="nav-back" bindtap="onBack">‹</view>
     <text class="nav-title">训练周期</text>
-    <view class="nav-create" bindtap="onGoCreate">＋ 创建</view>
+    <view class="nav-placeholder"></view>
   </view>
+
+  <!-- 创建按钮：放在胶囊按钮（关闭小程序组件）下方，不占导航栏右上角 -->
+  <view class="page-create" bindtap="onGoCreate">＋ 创建</view>
 
   <view class="loading" wx:if="{{loading}}">加载中...</view>
 

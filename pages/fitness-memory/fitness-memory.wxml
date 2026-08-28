@@ -5,8 +5,11 @@
   <view class="nav-bar">
     <view class="nav-back" bindtap="onBack">‹</view>
     <text class="nav-title">欣一记住的事情</text>
-    <view class="nav-clear" bindtap="onClearAll">清空</view>
+    <view class="nav-placeholder"></view>
   </view>
+
+  <!-- 清空按钮：放在胶囊按钮（关闭小程序组件）下方，不占导航栏右上角 -->
+  <view class="page-clear" bindtap="onClearAll">清空</view>
 
   <view class="loading" wx:if="{{loading}}">加载中...</view>
 

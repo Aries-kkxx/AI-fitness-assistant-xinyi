@@ -1,8 +1,10 @@
 /* pages/fitness-memory/fitness-memory.wxss - 「欣一记住的事情」长期健身记忆 */
 
 .page {
+  position: relative;
   min-height: 100vh;
-  padding: calc(88rpx + env(safe-area-inset-top)) var(--space-xl) calc(200rpx + env(safe-area-inset-bottom));
+  /* 顶部多留 48rpx 给导航栏下方的"清空"按钮 */
+  padding: calc(88rpx + env(safe-area-inset-top) + 48rpx) var(--space-xl) calc(200rpx + env(safe-area-inset-bottom));
 }
 
 .sky-bg {
@@ -43,12 +45,29 @@
   color: #222222;
 }
 
-.nav-clear {
-  width: 120rpx;
-  text-align: right;
+/* 占位元素：与 nav-back 等宽，保持标题在导航栏居中 */
+.nav-placeholder {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+/* ===== 清空按钮：位于胶囊按钮（关闭小程序组件）下方、导航栏之下 ===== */
+.page-clear {
+  position: absolute;
+  top: calc(88rpx + env(safe-area-inset-top) + 12rpx);
+  right: var(--space-xl);
+  z-index: 99;
   font-size: 24rpx;
   color: #FF6B6B;
   font-weight: 600;
+  padding: 8rpx 20rpx;
+  background-color: #FFFFFF;
+  border-radius: var(--cat-radius-pill);
+  box-shadow: 0 2rpx 8rpx rgba(31, 74, 58, 0.08);
+}
+
+.page-clear:active {
+  transform: scale(0.96);
 }
 
 /* ===== 通用 ===== */

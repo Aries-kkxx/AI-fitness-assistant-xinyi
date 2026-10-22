@@ -4,11 +4,7 @@
     "ignore": [
       {
         "type": "folder",
-        "value": "design"
-      },
-      {
-        "type": "folder",
-        "value": "tools"
+        "value": "cloudfunctions"
       },
       {
         "type": "folder",
@@ -16,23 +12,7 @@
       },
       {
         "type": "folder",
-        "value": ".workbuddy"
-      },
-      {
-        "type": "folder",
-        "value": ".git"
-      },
-      {
-        "type": "file",
-        "value": "PROJECT_README.md"
-      },
-      {
-        "type": "file",
-        "value": "PROJECT_REQUIREMENTS.md"
-      },
-      {
-        "type": "file",
-        "value": "UI_REFACTOR_PLAN.md"
+        "value": "scripts"
       }
     ],
     "include": [
@@ -86,6 +66,7 @@
     "disableSWC": true
   },
   "compileType": "miniprogram",
+  "miniprogramRoot": "miniprogram/",
   "libVersion": "3.17.1",
   "appid": "wxb234666c120487ef",
   "projectname": "AI-fitness-assistant",
@@ -97,6 +78,5 @@
   },
   "simulatorPluginLibVersion": {
     "wxext14566970e7e9f62": "2.27.3"
-  },
-  "projectArchitecture": "multiPlatform"
+  }
 }

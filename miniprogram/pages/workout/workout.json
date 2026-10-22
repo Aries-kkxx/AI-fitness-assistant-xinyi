@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "cat-illustration": "/components/cat-illustration/cat-illustration"
+  },
+  "navigationBarBackgroundColor": "#E8F7FF",
+  "navigationBarTitleText": "训练"
+}

@@ -1,0 +1,233 @@
+<!-- pages/fitness-memory/fitness-memory.wxml - 「欣一记住的事情」长期健身记忆 -->
+<view class="page sky-bg">
+
+  <!-- 自定义导航栏 -->
+  <view class="nav-bar">
+    <view class="nav-back" bindtap="onBack">‹</view>
+    <text class="nav-title">欣一记住的事情</text>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <!-- 清空按钮：放在胶囊按钮（关闭小程序组件）下方，不占导航栏右上角 -->
+  <view class="page-clear" bindtap="onClearAll">清空</view>
+
+  <view class="loading" wx:if="{{loading}}">加载中...</view>
+
+  <block wx:else>
+    <!-- 说明卡 -->
+    <view class="card intro-card">
+      <view class="intro-text">
+        <view class="intro-title-row">
+          <image class="intro-icon" src="/assets/pets/橘猫.png" mode="aspectFill" />
+          <text class="intro-title">长期健身记忆</text>
+        </view>
+        <text class="intro-sub">这里保存 欣一 记住的你的训练偏好、习惯与身体反馈，用于长期个性化建议。可随时修改或删除，敏感信息不会被记录。</text>
+      </view>
+    </view>
+
+    <!-- 训练偏好 -->
+    <view class="card section-card">
+      <view class="section-head">
+        <text class="section-title">训练偏好</text>
+        <text class="section-sub">你喜欢的训练方式</text>
+      </view>
+      <view class="chip-block">
+        <text class="chip-label">喜欢的训练方式</text>
+        <view class="chips">
+          <view class="chip" wx:for="{{prefStyles}}" wx:key="*this">
+            <text>{{item}}</text>
+            <text class="chip-del" catchtap="onRemoveChip" data-list="prefStyles" data-index="{{index}}">×</text>
+          </view>
+          <view class="chip chip-empty" wx:if="{{prefStyles.length === 0}}">如：力量训练 / HIIT / 徒手</view>
+        </view>
+        <view class="chip-add">
+          <input class="chip-input" value="{{input.styles}}" data-key="styles" bindinput="onInputChange" placeholder="输入训练方式" />
+          <view class="chip-add-btn" data-list="prefStyles" data-key="styles" bindtap="onAddChip">添加</view>
+        </view>
+      </view>
+
+      <view class="chip-block">
+        <text class="chip-label">喜欢的动作</text>
+        <view class="chips">
+          <view class="chip" wx:for="{{prefFav}}" wx:key="*this">
+            <text>{{item}}</text>
+            <text class="chip-del" catchtap="onRemoveChip" data-list="prefFav" data-index="{{index}}">×</text>
+          </view>
+          <view class="chip chip-empty" wx:if="{{prefFav.length === 0}}">如：卧推 / 深蹲</view>
+        </view>
+        <view class="chip-add">
+          <input class="chip-input" value="{{input.fav}}" data-key="fav" bindinput="onInputChange" placeholder="输入动作名称" />
+          <view class="chip-add-btn" data-list="prefFav" data-key="fav" bindtap="onAddChip">添加</view>
+        </view>
+      </view>
+
+      <view class="chip-block">
+        <text class="chip-label">不喜欢的动作</text>
+        <view class="chips">
+          <view class="chip chip-red" wx:for="{{prefDislike}}" wx:key="*this">
+            <text>{{item}}</text>
+            <text class="chip-del" catchtap="onRemoveChip" data-list="prefDislike" data-index="{{index}}">×</text>
+          </view>
+          <view class="chip chip-empty" wx:if="{{prefDislike.length === 0}}">如：跑步 / 波比跳</view>
+        </view>
+        <view class="chip-add">
+          <input class="chip-input" value="{{input.dislike}}" data-key="dislike" bindinput="onInputChange" placeholder="输入动作名称" />
+          <view class="chip-add-btn" data-list="prefDislike" data-key="dislike" bindtap="onAddChip">添加</view>
+        </view>
+      </view>
+
+      <view class="field-row">
+        <text class="chip-label">喜欢的训练时间</text>
+        <input class="field-input" value="{{prefTime}}" data-field="prefTime" bindinput="onFieldInput" placeholder="如：早上 / 晚上" />
+      </view>
+
+      <view class="field-row">
+        <text class="chip-label">喜欢的训练时长</text>
+        <picker mode="selector" range="{{durationOptions}}" value="{{durationOptions.indexOf(prefDuration) < 0 ? 1 : durationOptions.indexOf(prefDuration)}}" bindchange="onDurationChange">
+          <view class="picker-value">{{prefDuration}} 分钟 ›</view>
+        </picker>
+      </view>
+    </view>
+
+    <!-- 训练习惯 -->
+    <view class="card section-card">
+      <view class="section-head">
+        <text class="section-title">训练习惯</text>
+        <text class="section-sub">系统根据你的行为总结</text>
+      </view>
+
+      <view class="field-row">
+        <text class="chip-label">每周训练频率</text>
+        <picker mode="selector" range="{{frequencyOptions}}" value="{{habitFrequency}}" bindchange="onFrequencyChange">
+          <view class="picker-value">每周 {{habitFrequency}} 次 ›</view>
+        </picker>
+      </view>
+
+      <view class="field-row">
+        <text class="chip-label">常见训练时间</text>
+        <input class="field-input" value="{{habitTime}}" data-field="habitTime" bindinput="onFieldInput" placeholder="如：晚上 8 点" />
+      </view>
+
+      <view class="chip-block">
+        <text class="chip-label">经常缺席的训练日</text>
+        <view class="chips">
+          <view class="chip chip-red" wx:for="{{habitMissed}}" wx:key="*this">
+            <text>{{item}}</text>
+            <text class="chip-del" catchtap="onRemoveChip" data-list="habitMissed" data-index="{{index}}">×</text>
+          </view>
+          <view class="chip chip-empty" wx:if="{{habitMissed.length === 0}}">如：周三 / 周末</view>
+        </view>
+        <view class="chip-add">
+          <input class="chip-input" value="{{input.missed}}" data-key="missed" bindinput="onInputChange" placeholder="输入星期" />
+          <view class="chip-add-btn" data-list="habitMissed" data-key="missed" bindtap="onAddChip">添加</view>
+        </view>
+      </view>
+
+      <view class="chip-block">
+        <text class="chip-label">常见训练模式</text>
+        <view class="chips">
+          <view class="chip" wx:for="{{habitPatterns}}" wx:key="*this">
+            <text>{{item}}</text>
+            <text class="chip-del" catchtap="onRemoveChip" data-list="habitPatterns" data-index="{{index}}">×</text>
+          </view>
+          <view class="chip chip-empty" wx:if="{{habitPatterns.length === 0}}">如：胸+三头 / 背+二头</view>
+        </view>
+        <view class="chip-add">
+          <input class="chip-input" value="{{input.patterns}}" data-key="patterns" bindinput="onInputChange" placeholder="输入部位组合" />
+          <view class="chip-add-btn" data-list="habitPatterns" data-key="patterns" bindtap="onAddChip">添加</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 身体反馈 -->
+    <view class="card section-card">
+      <view class="section-head">
+        <text class="section-title">身体反馈</text>
+        <text class="section-sub">你对训练的身体感受</text>
+      </view>
+
+      <view class="chip-block">
+        <text class="chip-label">恢复较慢的部位</text>
+        <view class="chips">
+          <view class="chip" wx:for="{{slowParts}}" wx:key="*this">
+            <text>{{item}}</text>
+            <text class="chip-del" catchtap="onRemoveChip" data-list="slowParts" data-index="{{index}}">×</text>
+          </view>
+          <view class="chip chip-empty" wx:if="{{slowParts.length === 0}}">如：腿部 / 肩部</view>
+        </view>
+        <view class="chip-add">
+          <input class="chip-input" value="{{input.slow}}" data-key="slow" bindinput="onInputChange" placeholder="输入部位" />
+          <view class="chip-add-btn" data-list="slowParts" data-key="slow" bindtap="onAddChip">添加</view>
+        </view>
+      </view>
+
+      <view class="chip-block">
+        <text class="chip-label">容易疲劳的动作</text>
+        <view class="chips">
+          <view class="chip" wx:for="{{tiredEx}}" wx:key="*this">
+            <text>{{item}}</text>
+            <text class="chip-del" catchtap="onRemoveChip" data-list="tiredEx" data-index="{{index}}">×</text>
+          </view>
+          <view class="chip chip-empty" wx:if="{{tiredEx.length === 0}}">如：硬拉 / 深蹲</view>
+        </view>
+        <view class="chip-add">
+          <input class="chip-input" value="{{input.tired}}" data-key="tired" bindinput="onInputChange" placeholder="输入动作名称" />
+          <view class="chip-add-btn" data-list="tiredEx" data-key="tired" bindtap="onAddChip">添加</view>
+        </view>
+      </view>
+
+      <view class="note-list" wx:if="{{feedback.length > 0}}">
+        <text class="chip-label">历史反馈</text>
+        <view class="note-item" wx:for="{{feedback}}" wx:key="index">
+          <text class="note-content">{{item.content}}</text>
+          <text class="note-date">{{item.date}}</text>
+          <text class="note-del" catchtap="onRemoveNote" data-list="feedback" data-index="{{index}}">×</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 目标 -->
+    <view class="card section-card">
+      <view class="section-head">
+        <text class="section-title">目标</text>
+        <text class="section-sub">你的健身目标变化</text>
+      </view>
+
+      <view class="field-row">
+        <text class="chip-label">当前目标</text>
+        <input class="field-input" value="{{goalCurrent}}" data-field="goalCurrent" bindinput="onFieldInput" placeholder="如：减脂 5kg / 增肌" />
+      </view>
+
+      <view class="note-list" wx:if="{{goalHistory.length > 0}}">
+        <text class="chip-label">历史目标</text>
+        <view class="note-item" wx:for="{{goalHistory}}" wx:key="index">
+          <text class="note-content">{{item.content}}</text>
+          <text class="note-date">{{item.date}}</text>
+          <text class="note-del" catchtap="onRemoveNote" data-list="goalHistory" data-index="{{index}}">×</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- AI 备注 -->
+    <view class="card section-card" wx:if="{{aiNotes.length > 0}}">
+      <view class="section-head">
+        <text class="section-title">AI 备注</text>
+        <text class="section-sub">教练认为对你有长期价值的提醒</text>
+      </view>
+      <view class="note-list">
+        <view class="note-item" wx:for="{{aiNotes}}" wx:key="index">
+          <text class="note-content">{{item.content}}</text>
+          <text class="note-date">{{item.date}}</text>
+          <text class="note-del" catchtap="onRemoveNote" data-list="aiNotes" data-index="{{index}}">×</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部保存 -->
+    <view class="bottom-bar">
+      <view class="btn-primary save-btn {{saving ? 'disabled' : ''}}" bindtap="onSave">
+        {{saving ? '保存中...' : '保存记忆'}}
+      </view>
+    </view>
+  </block>
+</view>

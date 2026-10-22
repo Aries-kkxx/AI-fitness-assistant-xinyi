@@ -1,0 +1,68 @@
+<!-- pages/water/water.wxml - 饮水页（卡通猫咪健身风格 · 新参考图 1:1 还原） -->
+<view class="page sky-bg">
+
+  <!-- 顶部标题区 -->
+  <view class="page-header">
+    <text class="page-title">饮水</text>
+    <cat-illustration pose="water" size="200" />
+  </view>
+
+  <view class="header-actions">
+    <view class="header-action" bindtap="onGoHistory">历史</view>
+    <view class="header-action" bindtap="onGoSetting">设置</view>
+  </view>
+
+  <!-- 今日饮水统计卡片 -->
+  <view class="card water-card" wx:if="{{stats}}">
+    <view class="water-head">
+      <text class="card-title">今日饮水</text>
+    </view>
+
+    <view class="water-main">
+      <view class="water-big">
+        <text class="water-big-num">{{stats.total}}</text>
+        <text class="water-big-sep">/</text>
+        <text class="water-big-target">{{stats.target}}ml</text>
+      </view>
+
+      <view class="water-cups">{{stats.cups}} / {{stats.dailyCups}} 杯</view>
+
+      <view class="water-progress-row">
+        <view class="progress-wrap water-progress">
+          <view class="progress-inner water-inner" style="width: {{stats.percent}}%;"></view>
+        </view>
+        <text class="water-percent">{{stats.percent}}%</text>
+      </view>
+    </view>
+
+    <view class="water-actions">
+      <view class="btn-success drink-btn" bindtap="onDrinkOne">喝一杯</view>
+      <view class="btn-primary add-btn" bindtap="onAddRecord">添加记录</view>
+    </view>
+  </view>
+
+  <!-- 今日饮水记录列表 -->
+  <view class="card list-card safe-bottom">
+    <view class="card-title">今日饮水记录</view>
+
+    <block wx:if="{{records.length > 0}}">
+      <view class="record-row" wx:for="{{records}}" wx:key="_id">
+        <text class="record-time">{{item.drink_time}}</text>
+        <view class="record-info">
+          <text class="record-ml">{{item.amount_ml}}ml</text>
+          <text class="record-type">{{item.drink_type}}</text>
+          <text class="record-remark" wx:if="{{item.remark}}">{{item.remark}}</text>
+        </view>
+        <view class="record-del" data-id="{{item._id}}" catchtap="onDelete">删除</view>
+      </view>
+    </block>
+    <view class="empty" wx:else>
+      <cat-illustration pose="empty" size="160" />
+      <text class="empty-text">今天还没有喝水记录，点击上方「喝一杯」开始吧</text>
+    </view>
+  </view>
+</view>
+
+<!-- 全局AI悬浮球 -->
+<float-ball />
+

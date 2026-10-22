@@ -1,0 +1,73 @@
+<!-- pages/weight/weight.wxml - 体重记录页 -->
+<view class="page">
+
+  <!-- 当前体重 + 记录输入 -->
+  <view class="card">
+    <view class="card-title-row">
+      <image class="card-title-icon" src="/assets/pets/三花猫.png" mode="aspectFill" />
+      <text class="card-title">当前体重</text>
+    </view>
+
+    <block wx:if="{{stats && stats.hasData}}">
+      <view class="current-row">
+        <text class="current-num">{{stats.current}}</text>
+        <text class="current-unit">kg</text>
+        <view class="delta-tag" wx:if="{{stats.delta !== null}}">
+          <text>{{stats.deltaText}}</text>
+          <text class="delta-sub">/ 近30天</text>
+        </view>
+        <view class="delta-tag" wx:else>首次记录</view>
+      </view>
+    </block>
+    <block wx:else>
+      <view class="no-data">还没有体重记录，从今天开始记录吧</view>
+    </block>
+
+    <!-- 体重输入 -->
+    <view class="input-row">
+      <input
+        class="weight-input"
+        type="digit"
+        value="{{inputWeight}}"
+        placeholder="输入体重 kg"
+        bindinput="onInput"
+      />
+    </view>
+  </view>
+
+  <!-- 保存按钮（固定底部） -->
+  <view class="save-bar">
+    <view class="btn-primary save-btn {{saving ? 'disabled' : ''}}" bindtap="onSave">
+      {{saving ? '保存中' : '记录'}}
+    </view>
+  </view>
+
+  <!-- 30 天曲线 -->
+  <view class="card">
+    <view class="card-title-row">
+      <image class="card-title-icon" src="/assets/pets/可达鸭.png" mode="aspectFill" />
+      <text class="card-title">体重变化（近30天）</text>
+    </view>
+    <view class="chart-wrap" wx:if="{{stats && stats.hasData && stats.records.length >= 1}}">
+      <canvas type="2d" id="weight-chart" class="chart-canvas"></canvas>
+    </view>
+    <view class="no-data" wx:else>记录 2 次以上即可查看变化曲线</view>
+  </view>
+
+  <!-- 历史记录 -->
+  <view class="card">
+    <view class="card-title-row">
+      <image class="card-title-icon" src="/assets/pets/藏獒.png" mode="aspectFill" />
+      <text class="card-title">历史记录</text>
+    </view>
+    <block wx:if="{{stats && stats.records.length > 0}}">
+      <view class="record-row" wx:for="{{stats.records}}" wx:key="_id">
+        <text class="record-date">{{item.date}}</text>
+        <text class="record-weight">{{item.weight}} kg</text>
+        <view class="record-del" data-id="{{item._id}}" catchtap="onDelete">删除</view>
+      </view>
+    </block>
+    <view class="no-data" wx:else>暂无记录</view>
+  </view>
+</view>
+

@@ -306,6 +306,7 @@ async function saveWorkoutRecord(openid, args) {
       .get();
 
     const recordData = {
+      _openid: openid, // 云函数端 add 不自动注入 _openid，必须显式写入，否则前端按 openid 查询不可见（与 saveWaterRecord 一致）
       openid,
       exercise_id: ids[i],
       workout_date: date,
@@ -833,6 +834,7 @@ async function saveFitnessMemory(openid, args) {
     return { ok: false, message: '记忆内容过长，请精简后保存（最多 8000 字符）' };
   }
   const payload = {
+    _openid: openid, // 云函数端 add 不自动注入 _openid；缺失会让 getFitnessMemory/updateFitnessMemory 按 _openid 查询永远找不到新文档（与 saveWaterRecord 一致）
     training_preferences: normalized.training_preferences,
     training_habits: normalized.training_habits,
     body_response: normalized.body_response,
@@ -909,6 +911,7 @@ async function updateFitnessMemory(openid, args) {
 
     const normalized = memoryUtil.normalizeMemory(memory);
     const payload = {
+      _openid: openid, // 新建分支 add 时必须显式写入 _openid，否则文档成为孤儿数据（与 saveFitnessMemory 一致）
       training_preferences: normalized.training_preferences,
       training_habits: normalized.training_habits,
       body_response: normalized.body_response,

@@ -101,7 +101,7 @@ cd Sport
 
 1. 在微信开发者工具中选择“导入项目”。
 2. 项目目录选择本仓库根目录；`project.config.json` 已将 `miniprogram/` 配置为小程序源码目录。
-3. 填写自己的 AppID。仓库中的 `project.config.json` 带有现有 AppID；如果你没有该小程序的管理权限，请替换为自己的 AppID。
+3. 仓库使用 `touristappid` 作为公开占位值。导入后请在 `project.config.json` 中填写自己的小程序 AppID；云开发能力和真机调试需要有效 AppID。
 4. 确认项目类型为“小程序”，不是小游戏或公众号网页。
 
 ### 3. 开通云开发

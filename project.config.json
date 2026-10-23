@@ -68,7 +68,7 @@
   "compileType": "miniprogram",
   "miniprogramRoot": "miniprogram/",
   "libVersion": "3.17.1",
-  "appid": "wxb234666c120487ef",
+  "appid": "touristappid",
   "projectname": "AI-fitness-assistant",
   "cloudfunctionRoot": "cloudfunctions/",
   "condition": {},
